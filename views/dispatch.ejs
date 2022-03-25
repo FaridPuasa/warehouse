@@ -18,10 +18,11 @@
     <input type="text" id="success" name="success">
     <input type="text" id="failed" name="failed">
     <input type="text" id="cancel" name="cancel">
-    <input type="text" id="pickup" name="pickup">
+    <input type="text" id="selfCollect" name="selfCollect">
+    <input type="text" id="pickup" name="pickup"> //yes or no
     <input type="text" id="pickupValue" name="pickupValue">
     <textarea type="text" id="pickupTN" name="pickupTN" row="10">Input the pickup parcel tracking number here</textarea>
-    <input type="text" id="return" name="return">
+    <input type="text" id="return" name="return"> //yes or no
     <input type="text" id="returnValue" name="returnValue">
     <textarea type="text" id="returnTN" name="returnTN" row="10">Input the return parcel tracking number here</textarea>
     <input type="text" id="collection" name="collection">
@@ -29,8 +30,8 @@
   </div>
 
   <!--This form should be fill in by the dispatchers-->
-
   <input type="text" id="formMETHOD" name="formMETHOD" value="DISPATCH_REPORT" hidden>
+  
   <!--above is the hidden input as identifier for zalora inventory--> 
   <button class="button" type="submit">test</button>
 </form>

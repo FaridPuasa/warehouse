@@ -334,18 +334,20 @@ function itemOut(req,res){
     })
 }
 
+//
 function itemin(req,res){
     let status = "In Warehouse" + "["+req.body.area+"]";
     let inventory = new zaloraInventory({
        trackingNumber: req.body.trackingNumber,
        name: req.body.name,
-       contact1: req.body.contact1,
+       contact: req.body.contact,
        address: req.body.address,
        area: req.body.area,
        product: req.body.formMETHOD,
        value: req.body.value,
        status: status,
-       reEntry: "FALSE"
+       reEntry: "FALSE",
+       dateEntry: req.body.dateEntry,
     })
     inventory.save((err) => {
         if (err) {
