@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body style="text-align: center;">
+    <h1>Create POD + Assign Task(s)</h1>
+
+    <div id="podInfoArea">
+
+        <p>Date of POD:</p>
+        <input type="text" class="text-field-79 w-input" name="podDateTemp" id="podDateTemp"><br><br>
+        <p>Date of Completion:</p>
+        <input type="text" class="text-field-79 w-input" name="completionDateTemp" id="completionDateTemp"><br><br>
+        <p>Area</p>
+        <select name="areaCodeTemp" id="areaCodeTemp" class="select-field-50 w-select" style="border-radius: 5px;">
+            <option value="">Select one...</option>
+            <option value="B1">B1</option>
+            <option value="B2">B2</option>
+            <option value="G1">G1</option>
+            <option value="G2">G2</option>
+            <option value="JT3">JT3</option>
+            <option value="JT2">JT2</option>
+            <option value="JT1">JT1</option>
+            <option value="TEMBURONG">TEMBURONG</option>
+            <option value="TUTONG">TUTONG</option>
+            <option value="KB">KB</option>
+            <option value="SERIA">SERIA</option>
+        </select><br><br>
+        <p>POD done by:</p>
+        <input type="text" class="text-field-79 w-input" name="podDoneByTemp" id="podDoneByTemp"><br><br>
+        <p>Agent To Be Assigned:</p>
+        <select name="agentTemp" id="agentTemp" style="border-radius: 5px;" class="select-field-50 w-select">
+            <option value="">Select one...</option>
+            <option value="994634">FD SOWDEQ</option>
+            <option value="997381">FD RAHIM</option>
+            <option value="1029275">FD AIMI</option>
+            <option value="1050947">FD HASBUL</option>
+            <option value="1071388">FD FADARUS</option>
+            <option value="1079095">FD HAMIDIN</option>
+            <option value="1113078">FD HANAFI</option>
+            <option value="1230427">FD FAEZ</option>
+            <option value="1254189">FDZUL</option>
+            <option value="1130495">EFR HAJID</option>
+            <option value="1130524">EFR FAKHRIAH</option>
+            <option value="1268554">EFR GHAFUR</option>
+            <option value="1106491">EFR RASHID</option>
+            <option value="1105549">EFR NAZRY</option>
+            <option value="1124160">EFR HANIZAN</option>
+            <option value="996642">IFR ZIZAH</option>
+            <option value="977110">IFR NAN</option>
+            <option value="1268557">EFR KHAIRUL</option>
+            <option value="1311747">FD IQBAL</option>
+            <option value="1166672">FD AZRI</option>
+            <option value="1290342">IFR UMAR</option>
+            <option value="1276415">IFR ZUDIN</option>
+            <option value="1295953">EFR ROSMAWATI</option>
+            <option value="1104714">IFR AQEELAH</option>
+            <option value="1303254">FD HAFIZ</option>
+            <option value="1140555">EFR ASIKIN</option>
+            <option value="1003154">IFR DYLAN</option>
+        </select>
+
+        <br><br><button id="submitPodInfoButton">Confirm</button>
+    </div>
+
+    <div id="podArea">
+        <div id="tasklist">
+        </div>
+    </div>
+
+    <div id="inputTnArea">
+        <p id="trackingNumField">Tracking Number:</p>
+        <input name="trackingNum" id="trackingNum" onkeyup="checkTrackingNum(this, 'trackingNum')" type="text"
+            maxlength="9" /><br>
+        <br><br><button id="donePodButton">Done</button>
+    </div>
+
+    <p id="loading">Please wait</p>
+
+    <div id="excelDbArea">
+        <br><br><button onclick="exportTableToExcel('tasklisttable')">Download POD as Excel</button>
+        <form id="itemOut" class="itemOut"  action="/success" method="POST">
+
+            <input type="hidden" id="podDate" name="podDate">
+            <input type="hidden" id="completionDate" name="completionDate">
+            <input type="hidden" id="areaCode" name="areaCode">
+            <input type="hidden" id="podDoneBy" name="podDoneBy">
+            <input type="hidden" id="agent" name="agent">
+            <input type="hidden" id="agentName" name="agentName">
+            <input type="hidden" id="dateTime" name="dateTime">
+            <input type="hidden" id="dateTimeClose" name="dateTimeClose">
+
+            <input type="hidden" id="parcelNumber" name="parcelNumber">
+            <input type="hidden" id="taskID" name="taskID">
+            <input type="hidden" id="contactName" name="contactName">
+            <input type="hidden" id="address" name="address">
+            <input type="hidden" id="phone" name="phone">
+            <input type="hidden" id="price" name="price">
+
+            <input type="hidden" id="content" name="content">
+
+            <br><br><button id="submitDbButton">Save To DB</button>
+        </form>
+    </div>
+
+    <script>
+        let countTN = 1;
+        let createTable = 0;
+        let endLoop = 0;
+        let countContent = 0;
+
+        var content = [];
+
+        var responsetn = '';
+        var json_responsetn = '';
+
+        //create table
+        let table = document.createElement('table');
+        table.setAttribute("id", "tasklisttable");
+        table.setAttribute("border", "1");
+        table.setAttribute('contenteditable', true);
+        table.className = "table table-striped table-hover table-bordered table-responsive";
+        let thead = document.createElement('thead');
+        let tbody = document.createElement('tbody');
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+        document.getElementById('tasklist').appendChild(table);
+
+        function checkTrackingNum(field, autoMove) {
+            endLoop = 0;
+            if (field.value.length >= field.maxLength) {
+                if ((countTN == 1) && (createTable == 0)) {
+
+                    var request = new XMLHttpRequest();
+                    request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
+                    request.setRequestHeader('Content-Type', 'application/json');
+
+                    request.onreadystatechange = function () {
+                        if ((this.readyState === 4) && (createTable == 0)) {
+                            console.log('Status:', this.status);
+                            console.log('Headers:', this.getAllResponseHeaders());
+                            console.log('Body:', this.responseText);
+
+                            document.getElementById(autoMove).focus();
+
+                            responsetn = this.responseText;
+                            json_responsetn = JSON.parse(responsetn);
+
+                            var assignTaskToAgent = 0;
+                            var assignDateTimeToTask = 0;
+
+                            // Creating and adding data to first row of the table
+                            let row_h = document.createElement('tr');
+                            let row_h_data_1 = document.createElement('th');
+                            row_h_data_1.innerHTML = "DATE: ";
+                            let row_h_data_2 = document.createElement('td');
+                            row_h_data_2.innerHTML = document.getElementById("podDate").value;
+                            let row_h_data_3 = document.createElement('th');
+                            row_h_data_3.innerHTML = "AREA: ";
+                            let row_h_data_4 = document.createElement('td');
+                            row_h_data_4.innerHTML = document.getElementById("areaCode").value;
+                            /* row_h_data_4.setAttribute('colspan', '7'); */
+                            let row_h_data_5 = document.createElement('th');
+                            row_h_data_5.innerHTML = "MADE BY: ";
+                            let row_h_data_6 = document.createElement('td');
+                            row_h_data_6.innerHTML = document.getElementById("podDoneBy").value;
+                            let row_h_data_7 = document.createElement('th');
+                            row_h_data_7.innerHTML = "DISPATCHER NAME: ";
+                            let row_h_data_8 = document.createElement('td');
+                            row_h_data_8.innerHTML = document.getElementById("agentName").value;
+
+                            row_h.appendChild(row_h_data_1);
+                            row_h.appendChild(row_h_data_2);
+                            row_h.appendChild(row_h_data_3);
+                            row_h.appendChild(row_h_data_4);
+                            row_h.appendChild(row_h_data_5);
+                            row_h.appendChild(row_h_data_6);
+                            row_h.appendChild(row_h_data_7);
+                            row_h.appendChild(row_h_data_8);
+                            thead.appendChild(row_h);
+
+                            let row_1 = document.createElement('tr');
+                            let heading_1 = document.createElement('th');
+                            heading_1.innerHTML = "No.";
+                            let heading_2 = document.createElement('th');
+                            heading_2.innerHTML = "P/N";
+                            let heading_3 = document.createElement('th');
+                            heading_3.innerHTML = "ITEM WITH ME";
+                            let heading_4 = document.createElement('th');
+                            heading_4.innerHTML = "Task ID";
+                            let heading_5 = document.createElement('th');
+                            heading_5.innerHTML = "Contact Name";
+                            let heading_6 = document.createElement('th');
+                            heading_6.innerHTML = "Address";
+                            let heading_7 = document.createElement('th');
+                            heading_7.innerHTML = "Phone";
+                            let heading_8 = document.createElement('th');
+                            heading_8.innerHTML = "Price";
+                            let heading_9 = document.createElement('th');
+                            heading_9.innerHTML = "Amount Collected";
+                            let heading_10 = document.createElement('th');
+                            heading_10.innerHTML = "I have uploaded the BT";
+
+                            row_1.appendChild(heading_1);
+                            row_1.appendChild(heading_2);
+                            row_1.appendChild(heading_3);
+                            row_1.appendChild(heading_4);
+                            row_1.appendChild(heading_5);
+                            row_1.appendChild(heading_6);
+                            row_1.appendChild(heading_7);
+                            row_1.appendChild(heading_8);
+                            row_1.appendChild(heading_9);
+                            row_1.appendChild(heading_10);
+                            thead.appendChild(row_1);
+
+                            var row_2 = document.createElement('tr');
+
+                            var row_2_data_1 = document.createElement('td');
+                            row_2_data_1.innerHTML = countTN;
+                            var row_2_data_2 = document.createElement('td');
+                            row_2_data_2.innerHTML = json_responsetn.data[0].order_id;
+                            var row_2_data_3 = document.createElement('td');
+                            var row_2_data_4 = document.createElement('td');
+                            row_2_data_4.innerHTML = json_responsetn.data[0].job_id;
+                            var row_2_data_5 = document.createElement('td');
+                            row_2_data_5.innerHTML = json_responsetn.data[0].customer_username;
+                            var row_2_data_6 = document.createElement('td');
+                            row_2_data_6.innerHTML = json_responsetn.data[0].job_address;
+                            var row_2_data_7 = document.createElement('td');
+                            row_2_data_7.innerHTML = json_responsetn.data[0].customer_phone;
+                            var row_2_data_8 = document.createElement('td');
+                            row_2_data_8.innerHTML = "$" + json_responsetn.data[0].job_description;
+                            var row_2_data_9 = document.createElement('td');
+                            var row_2_data_10 = document.createElement('td');
+
+                            content[countContent] = json_responsetn.data[0].order_id + "," + json_responsetn.data[0].job_id + "," + json_responsetn.data[0].customer_username + "," +
+                                json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description;
+
+                            document.getElementById("content").value = content;
+
+                            row_2.appendChild(row_2_data_1);
+                            row_2.appendChild(row_2_data_2);
+                            row_2.appendChild(row_2_data_3);
+                            row_2.appendChild(row_2_data_4);
+                            row_2.appendChild(row_2_data_5);
+                            row_2.appendChild(row_2_data_6);
+                            row_2.appendChild(row_2_data_7);
+                            row_2.appendChild(row_2_data_8);
+                            row_2.appendChild(row_2_data_9);
+                            row_2.appendChild(row_2_data_10);
+                            tbody.appendChild(row_2);
+
+                            countTN = countTN + 1;
+                            createTable = 1;
+                            countContent = countContent + 1;
+
+                            if (assignTaskToAgent == 0) {
+                                request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
+                                request.setRequestHeader('Content-Type', 'application/json');
+
+                                request.onreadystatechange = function () {
+                                    if ((this.readyState === 4) && (assignTaskToAgent == 0)) {
+                                        console.log('Status:', this.status);
+                                        console.log('Headers:', this.getAllResponseHeaders());
+                                        console.log('Body:', this.responseText);
+
+
+                                        request.open('POST', 'https://api.tookanapp.com/v2/change_job_date');
+                                        request.setRequestHeader('Content-Type', 'application/json');
+
+                                        request.onreadystatechange = function () {
+                                            if ((this.readyState === 4) && (assignDateTimeToTask == 0)) {
+                                                console.log('Status:', this.status);
+                                                console.log('Headers:', this.getAllResponseHeaders());
+                                                console.log('Body:', this.responseText);
+
+                                                document.getElementById("trackingNum").value = "";
+
+                                                assignDateTimeToTask = 1;
+                                            }
+                                        };
+
+                                        var body = {
+                                            'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                                            "job_ids": [document.getElementById("trackingNum").value],
+                                            'layout_type': 0,
+                                            'start_time': document.getElementById("dateTime").value,
+                                            'end_time': document.getElementById("dateTimeClose").value
+                                        };
+                                        request.send(JSON.stringify(body));
+
+                                        assignTaskToAgent = 1;
+                                    }
+                                };
+
+                                var body = {
+                                    'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                                    'job_id': document.getElementById("trackingNum").value,
+                                    'fleet_id': document.getElementById("agent").value,
+                                    'job_status': '0'
+                                };
+                                request.send(JSON.stringify(body));
+                            }
+                        }
+                    };
+
+                    var body = {
+                        'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                        'job_ids': [document.getElementById("trackingNum").value],
+                        'include_task_history': 0
+                    };
+                    request.send(JSON.stringify(body));
+                }
+
+                if ((countTN > 1) && (createTable > 0)) {
+                    var trackingNum = document.getElementById("trackingNum").value;
+
+                    var request = new XMLHttpRequest();
+                    request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
+                    request.setRequestHeader('Content-Type', 'application/json');
+
+                    request.onreadystatechange = function () {
+                        if ((this.readyState === 4) && (endLoop == 0)) {
+                            console.log('Status:', this.status);
+                            console.log('Headers:', this.getAllResponseHeaders());
+                            console.log('Body:', this.responseText);
+
+                            document.getElementById(autoMove).focus();
+
+                            responsetn = this.responseText;
+                            json_responsetn = JSON.parse(responsetn);
+
+                            var assignTaskToAgent = 0;
+                            var assignDateTimeToTask = 0;
+
+                            var row_2 = document.createElement('tr');
+
+                            var row_2_data_1 = document.createElement('td');
+                            row_2_data_1.innerHTML = countTN;
+                            var row_2_data_2 = document.createElement('td');
+                            row_2_data_2.innerHTML = json_responsetn.data[0].order_id;
+                            var row_2_data_3 = document.createElement('td');
+                            var row_2_data_4 = document.createElement('td');
+                            row_2_data_4.innerHTML = json_responsetn.data[0].job_id;
+                            var row_2_data_5 = document.createElement('td');
+                            row_2_data_5.innerHTML = json_responsetn.data[0].customer_username;
+                            var row_2_data_6 = document.createElement('td');
+                            row_2_data_6.innerHTML = json_responsetn.data[0].job_address;
+                            var row_2_data_7 = document.createElement('td');
+                            row_2_data_7.innerHTML = json_responsetn.data[0].customer_phone;
+                            var row_2_data_8 = document.createElement('td');
+                            row_2_data_8.innerHTML = "$" + json_responsetn.data[0].job_description;
+                            var row_2_data_9 = document.createElement('td');
+                            var row_2_data_10 = document.createElement('td');
+
+                            content[countContent] = json_responsetn.data[0].order_id + "," + json_responsetn.data[0].job_id + "," + json_responsetn.data[0].customer_username + "," +
+                                json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description;
+
+                            document.getElementById("content").value = content;
+
+                            row_2.appendChild(row_2_data_1);
+                            row_2.appendChild(row_2_data_2);
+                            row_2.appendChild(row_2_data_3);
+                            row_2.appendChild(row_2_data_4);
+                            row_2.appendChild(row_2_data_5);
+                            row_2.appendChild(row_2_data_6);
+                            row_2.appendChild(row_2_data_7);
+                            row_2.appendChild(row_2_data_8);
+                            row_2.appendChild(row_2_data_9);
+                            row_2.appendChild(row_2_data_10);
+                            tbody.appendChild(row_2);
+
+                            endLoop = endLoop + 1;
+                            countTN = countTN + 1;
+                            countContent = countContent + 1;
+
+                            if (assignTaskToAgent == 0) {
+                                /* var request = new XMLHttpRequest(); */
+                                request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
+                                request.setRequestHeader('Content-Type', 'application/json');
+
+                                request.onreadystatechange = function () {
+                                    if ((this.readyState === 4) && (assignTaskToAgent == 0)) {
+                                        console.log('Status:', this.status);
+                                        console.log('Headers:', this.getAllResponseHeaders());
+                                        console.log('Body:', this.responseText);
+
+
+                                        request.open('POST', 'https://api.tookanapp.com/v2/change_job_date');
+                                        request.setRequestHeader('Content-Type', 'application/json');
+
+                                        request.onreadystatechange = function () {
+                                            if ((this.readyState === 4) && (assignDateTimeToTask == 0)) {
+                                                console.log('Status:', this.status);
+                                                console.log('Headers:', this.getAllResponseHeaders());
+                                                console.log('Body:', this.responseText);
+
+                                                document.getElementById("trackingNum").value = "";
+
+                                                assignDateTimeToTask = 1;
+                                            }
+                                        };
+
+                                        var body = {
+                                            'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                                            "job_ids": [document.getElementById("trackingNum").value],
+                                            'layout_type': 0,
+                                            'start_time': document.getElementById("dateTime").value,
+                                            'end_time': document.getElementById("dateTimeClose").value
+                                        };
+                                        request.send(JSON.stringify(body));
+
+                                        assignTaskToAgent = 1;
+                                    }
+                                };
+
+                                var body = {
+                                    'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                                    'job_id': document.getElementById("trackingNum").value,
+                                    'fleet_id': document.getElementById("agent").value,
+                                    'job_status': '0'
+                                };
+                                request.send(JSON.stringify(body));
+                            }
+
+                            document.getElementById("trackingNum").value = "";
+                        }
+                    };
+
+                    var body = {
+                        'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                        'job_ids': [document.getElementById("trackingNum").value],
+                        'include_task_history': 0
+                    };
+                    request.send(JSON.stringify(body));
+                } 376611866
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            document.getElementById("podArea").style.display = 'none';
+            document.getElementById("inputTnArea").style.display = 'none';
+            document.getElementById("excelDbArea").style.display = 'none';
+            document.getElementById("loading").style.display = 'none';
+
+            document.getElementById("submitPodInfoButton").addEventListener("click", createPODTemplate);
+            document.getElementById("donePodButton").addEventListener("click", donePod);
+            document.getElementById("submitDbButton").addEventListener("click", saveDb);
+
+            function createPODTemplate() {
+
+                if ($("#podDateTemp").val().length == 0) {
+                    alert("Please do not leave the Date of POD field empty!");
+                }
+
+                if ($("#completionDateTemp").val().length == 0) {
+                    alert("Please do not leave the Date of Completion field empty!");
+                }
+
+                if ($("#areaCodeTemp").val().length == 0) {
+                    alert("Please do not leave the Area field empty!");
+                }
+
+                if ($("#podDoneByTemp").val().length == 0) {
+                    alert("Please do not leave the POD done field empty!");
+                }
+
+                if ($("#agentTemp").val().length == 0) {
+                    alert("Please do not leave the Agent field empty!");
+                }
+
+                if (($("#podDateTemp").val().length != 0) && ($("#completionDateTemp").val().length != 0)
+                    && ($("#areaCodeTemp").val().length != 0) && ($("#podDoneByTemp").val().length != 0)
+                    && ($("#agentTemp").val().length != 0)) {
+
+                    document.getElementById("podDate").value = document.getElementById("podDateTemp").value;
+                    document.getElementById("completionDate").value = document.getElementById("completionDateTemp").value;
+                    document.getElementById("areaCode").value = document.getElementById("areaCodeTemp").value;
+                    document.getElementById("podDoneBy").value = document.getElementById("podDoneByTemp").value;
+                    document.getElementById("agent").value = document.getElementById("agentTemp").value;
+
+                    if (document.getElementById("agentTemp").value == "994634") {
+                        document.getElementById("agentName").value = "FD SOWDEQ";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "997381") {
+                        document.getElementById("agentName").value = "FD RAHIM";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1029275") {
+                        document.getElementById("agentName").value = "FD AIMI";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1050947") {
+                        document.getElementById("agentName").value = "FD HASBUL";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1071388") {
+                        document.getElementById("agentName").value = "FD FADARUS";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1079095") {
+                        document.getElementById("agentName").value = "FD HAMIDIN";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1113078") {
+                        document.getElementById("agentName").value = "FD HANAFI";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1230427") {
+                        document.getElementById("agentName").value = "FD FAEZ";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1254189") {
+                        document.getElementById("agentName").value = "FDZUL";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1130495") {
+                        document.getElementById("agentName").value = "EFR HAJID";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1130524") {
+                        document.getElementById("agentName").value = "EFR FAKHRIAH";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1268554") {
+                        document.getElementById("agentName").value = "EFR GHAFUR";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1106491") {
+                        document.getElementById("agentName").value = "EFR RASHID";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1105549") {
+                        document.getElementById("agentName").value = "EFR NAZRY";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1124160") {
+                        document.getElementById("agentName").value = "EFR HANIZAN";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "996642") {
+                        document.getElementById("agenagentNamet").value = "IFR ZIZAH";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "977110") {
+                        document.getElementById("agentName").value = "IFR NAN";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1268557") {
+                        document.getElementById("agentName").value = "EFR KHAIRUL";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1311747") {
+                        document.getElementById("agentName").value = "FD IQBAL";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1166672") {
+                        document.getElementById("agentName").value = "FD AZRI";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1290342") {
+                        document.getElementById("agentName").value = "IFR UMAR";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1276415") {
+                        document.getElementById("agentName").value = "IFR ZUDIN";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1295953") {
+                        document.getElementById("agentName").value = "EFR ROSMAWATI";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1104714") {
+                        document.getElementById("agentName").value = "IFR AQEELAH";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1303254") {
+                        document.getElementById("agentName").value = "FD HAFIZ";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1140555") {
+                        document.getElementById("agentName").value = "EFR ASIKIN";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1003154") {
+                        document.getElementById("agentName").value = "IFR DYLAN";
+                    }
+
+                    var today = new Date();
+                    var todayDate = "";
+                    var todayMonth = "";
+
+                    var nextMonth = (today.getMonth()) + 1;
+
+                    if (today.getDate() < 10) {
+                        todayDate = "0" + (today.getDate());
+                    }
+
+                    if (today.getDate() >= 10) {
+                        todayDate = (today.getDate());
+                    }
+
+                    if (nextMonth < 10) {
+                        todayMonth = "0" + (nextMonth);
+                    }
+
+                    if (nextMonth >= 10) {
+                        todayMonth = (nextMonth);
+                    }
+
+                    var date = today.getFullYear() + '-' + todayMonth + '-' + todayDate;
+                    var time = "01:00:00";
+                    var timeClose = "23:00:00";
+                    document.getElementById("dateTime").value = date + ' ' + time;
+                    document.getElementById("dateTimeClose").value = document.getElementById("completionDate").value + ' ' + timeClose;
+
+                    document.getElementById("podInfoArea").style.display = 'none';
+                    document.getElementById("podArea").style.display = 'block';
+                    document.getElementById("inputTnArea").style.display = 'block';
+                }
+            }
+
+            function donePod() {
+                document.getElementById("excelDbArea").style.display = 'block';
+                document.getElementById("inputTnArea").style.display = 'none';
+            }
+
+            function saveDb() {
+                document.getElementById("loading").style.display = 'block';
+                document.getElementById("excelDbArea").style.display = 'none';
+            }
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $("#podDateTemp").datepicker({
+                minDate: 0,
+                dateFormat: "yy-mm-dd"
+            });
+            $("#completionDateTemp").datepicker({
+                minDate: 0,
+                dateFormat: "yy-mm-dd"
+            });
+        });
+    </script>
+
+    <script>
+        function exportTableToExcel(tasklisttable, filename = '') {
+            var downloadLink;
+            var dataType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tasklisttable);
+            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+            // Specify file name
+            filename = filename ? filename + '.xls' : 'pod_template.xls';
+
+            // Create download link element
+            downloadLink = document.createElement("a");
+
+            document.body.appendChild(downloadLink);
+
+            if (navigator.msSaveOrOpenBlob) {
+                var blob = new Blob(['\ufeff', tableHTML], {
+                    type: dataType
+                });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                // Create a link to the file
+                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+                // Setting the file name
+                downloadLink.download = filename;
+
+                //triggering the function
+                downloadLink.click();
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+</body>
+</html>
