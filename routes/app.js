@@ -15,6 +15,16 @@ const { findOne, findOneAndUpdate } = require('../models/zaloraInventory');
 const { render } = require('ejs');
 const { request } = require('express');
 
+router.get("/", (req,res) => {
+    zaloraInventory.find({}, function(err,zaloraInventory){
+        res.render('itemList', {
+            itemList: zaloraInventory,
+            //age: 10-5
+        })
+        //console.log(10-5)
+    })
+})
+
 router.get('/itemin', (req,res) => {
     res.render('itemin')
 })
@@ -31,17 +41,16 @@ router.get('/reentry', (req,res) => {
     res.render('reEntry')
 })
 
-router.get('/reentry', (req,res) => {
-    res.render('reEntry')
+router.post('/success', (req,res) =>{
+    reEntry(req,res)
 })
 
-router.post('/success',(req,res) => {
+router.post('/itemin',(req,res) => {
     itemin(req,res)
 })
 
 router.post('/success',(req,res) => {
     itemOut(req,res)
-    
 })
 
 router.get('/grpmy',(req,res) => {
@@ -262,10 +271,13 @@ function dispatcherRecord(req,res){
     })
 }
 
+
+
 //reEntry parcels
 function reEntry(req,res){
     let tracker = req.body.trackingNumber
-    zaloraInventory.findOneAndUpdate({trackingNumber: tracker}, {
+    console.log(tracker)
+    zaloraInventory.findOneAndUpdate({trackingNumber: req.body.trackingNumber}, {
         status: req.body.status,
         reason: req.body.reason,
         remark: req.body.remark,
@@ -282,7 +294,14 @@ function reEntry(req,res){
                 solution: "Please contact RDI Department ext 877"
             })
         } 
-        else res.redirect('reentry')
+        else {
+            console.log('update success')
+            let date = req.body.dateSchedule
+            res.render('success',{
+                head: "Tracking Number has been updated",
+                message: `The tracking number has been reSchedule for delivery on ${date}`
+            })
+        }
     })
 }
 
@@ -336,7 +355,7 @@ function itemOut(req,res){
 
 //
 function itemin(req,res){
-    let status = "In Warehouse" + "["+req.body.area+"]";
+    let status = "IN WAREHOUSE"+"/"+req.body.area+"/"+req.body.dateEntry;
     let inventory = new zaloraInventory({
        trackingNumber: req.body.trackingNumber,
        name: req.body.name,
@@ -347,6 +366,11 @@ function itemin(req,res){
        value: req.body.value,
        status: status,
        reEntry: "FALSE",
+       reason: req.body.reason,
+       remark: req.body.reason,
+        reEntry: req.body.reEntry,
+        attemp: req.body.attemp,
+        reSchedule: req.body.reSchedule,
        dateEntry: req.body.dateEntry,
     })
     inventory.save((err) => {
