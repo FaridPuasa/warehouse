@@ -8,7 +8,18 @@
     <title>Login</title>
 </head>
 <body>
-    <input type="hidden" id="dateEntry" name="dateEntry" value="">
+
+  <ul>
+    <li><a href="/">Zalora Main</a></li>
+    <li><a href="/itemin">Zalora In</a></li>
+    <li><a href="/itemout">Zalora POD</a></li>
+    <li><a href="/reentry">Re-Entry</a></li>
+    <li><a href="/pharmacyin">Pharmacy Inventory</a></li>
+    <li><a href="/pharmacyout">Pharmacy POD</a></li>
+    <li><a href="/grpmy">GRP Malaysia</a></li>
+    <li><a href="/dispatch">Dispatcher Report</a></li>
+    <li><a href="/central">General Tracker</a></li>
+  </ul>
 
 <table>
     <tr>
@@ -71,7 +82,7 @@
       //let ages = document.getElementById('age')
       let value = expireDate - entryDate
       let days = Math.round(value /(60*60*24*1000))
-      document.getElementById('days').innerHTML = days + " days"
+      document.getElementById('days').innerHTML = days + " Days"
       console.log(value)
       console.log(days)
    </script>

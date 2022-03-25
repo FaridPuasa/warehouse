@@ -8,7 +8,19 @@
     <title>Login</title>
 </head>
 <body>
-   
+
+  <ul>
+    <li><a href="/">Zalora Main</a></li>
+    <li><a href="/itemin">Zalora In</a></li>
+    <li><a href="/itemout">Zalora POD</a></li>
+    <li><a href="/reentry">Re-Entry</a></li>
+    <li><a href="/pharmacyin">Pharmacy Inventory</a></li>
+    <li><a href="/pharmacyout">Pharmacy POD</a></li>
+    <li><a href="/grpmy">GRP Malaysia</a></li>
+    <li><a href="/dispatch">Dispatcher Report</a></li>
+    <li><a href="/central">General Tracker</a></li>
+  </ul>
+
 <form class="reEntry"  action="/success" method="POST">
   <div class="container">
    <input type="text" id="trackingNumber" name="trackingNumber">
@@ -22,8 +34,24 @@
    <input type="text" id="product" name="product" value="ZALORA" hidden> <!--Hidden input-->
    <input type="text" id="reEntry" name="reEntry" value="TRUE" hidden> <!--Hidden input-->
    <input type="text" id="reason" name="reason"> <!--dropdown menu =>  Cancelled Delivery, Failed Delivery, Reschedule Delivery, Return Delivery, Unattempted Delivery, Change to SC--> 
+   
+   <select id="cars" name="attemp">
+    <option value="Cancelled Delivery">Cancelled Delivery</option>
+    <option value="Failed Delivery">Failed Delivery</option>
+    <option value="Reschedule Delivery">Reschedule Delivery</option>
+    <option value="Unattempted Delivery">Unattempted Delivery</option>
+    <option value="Change to Self Collect">Change to Self Collect</option>
+  </select>
+   
    <input type="text" id="remark" name="remark"> <!--state reason of above matter-->
-   <input type="text" id="attemp" name="attemp"> <!--If failed, cancel, unattempt dropdown menu => 1st Attempt, 2nd Attempt, Final Attempt-->
+   
+   <select id="cars" name="attemp">
+    <option value="1st Attempt">1st Attempt</option>
+    <option value="2nd Attempt">2nd Attemp</option>
+    <option value="Final Attempt">Final Attempt</option>
+    <option value="Return">Return</option>
+  </select>
+
    <input type="text" id="dateSchedule" name="dateSchedule">  <!--mandatory field-->
   </div>
 

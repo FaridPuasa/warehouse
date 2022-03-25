@@ -67,6 +67,32 @@ router.get('/tracking',(req,res) => {
     })
 })
 
+router.get('/central',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
+})
+
+router.get('/pharmacyin',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
+})
+
+router.get('/pharmacyout',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
+})
+
+router.get('/dispatch',(req,res) => {
+    res.render('dispatch')
+})
+
+
 //This is used for return details
 function exportReturn(req,res){
     let exports = req.body
