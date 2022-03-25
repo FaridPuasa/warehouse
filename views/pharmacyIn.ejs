@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/style.css">
+    <title>Login</title>
+</head>
+<body>
+   
+<form class="pharmacyIn"  action="/success" method="POST">
+  <div class="container">
+   <input type="text" id="trackingNumber" name="trackingNumber">
+   <input type="text" id="name" name="name"> <!--Pull detail from tookan-->
+   <input type="text" id="address" name="address"> <!--Pull detail from tookan-->
+   <input type="text" id="contact" name="contact"> <!--Pull detail from tookan-->
+   <input type="text" id="value" name="value"><!--Pull detail from tookan usually under description-->
+   <input type="text" id="zaloraTag" name="zaloraTag"> <!--Pull detail from tookan under tags-->
+   <input type="text" id="area" name="area"> <!--areaCode.js -->
+   <input type="text" id="status" name="status" value="IN WAREHOUSE" hidden> <!--Hidden input-->
+   <input type="text" id="product" name="product" value="ZALORA" hidden> <!--Hidden input-->
+   <input type="text" id="reEntry" name="reEntry" value="FALSE" hidden> <!--Hidden input-->
+   <input type="text" id="reason" name="reason" value="N/A" hidden> <!--Hidden input-->
+   <input type="text" id="remark" name="remark" value="N/A" hidden> <!--Hidden input-->
+   <input type="text" id="attemp" name="attemp" value="NO ATTEMPT" hidden> <!--Hidden input-->
+   <input type="text" id="dateSchedule" name="dateSchedule">  <!--mandatory field-->
+  </div>
+
+
+  <input type="text" id="formMETHOD" name="formMETHOD" value="ZALORA" hidden>
+  <!--above is the hidden input as identifier for zalora inventory--> 
+  <button class="button" type="submit">test</button>
+
+</form>
+
+</body>
+</html>
+

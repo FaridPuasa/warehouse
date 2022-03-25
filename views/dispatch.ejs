@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/style.css">
+    <title>Dispatch</title>
+</head>
+<body>
+   
+<form class="dispatchIn"  action="/success" method="POST">
+  <div class="container">
+    <input type="text" id="ref" name="ref">
+    <input type="text" id="name" name="name">
+    <input type="text" id="car" name="car">
+    <input type="text" id="given" name="given">
+    <input type="text" id="success" name="success">
+    <input type="text" id="failed" name="failed">
+    <input type="text" id="cancel" name="cancel">
+    <input type="text" id="pickup" name="pickup">
+    <input type="text" id="pickupValue" name="pickupValue">
+    <textarea type="text" id="pickupTN" name="pickupTN" row="10">Input the pickup parcel tracking number here</textarea>
+    <input type="text" id="return" name="return">
+    <input type="text" id="returnValue" name="returnValue">
+    <textarea type="text" id="returnTN" name="returnTN" row="10">Input the return parcel tracking number here</textarea>
+    <input type="text" id="collection" name="collection">
+    <input type="text" id="dateSubmit" name="dateSubmit" hidden>
+  </div>
+
+  <!--This form should be fill in by the dispatchers-->
+
+  <input type="text" id="formMETHOD" name="formMETHOD" value="DISPATCH_REPORT" hidden>
+  <!--above is the hidden input as identifier for zalora inventory--> 
+  <button class="button" type="submit">test</button>
+</form>
+
+</body>
+</html>
+

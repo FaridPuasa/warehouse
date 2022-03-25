@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/style.css">
+    <title>Login</title>
+</head>
+<body>
+    <input type="hidden" id="dateEntry" name="dateEntry" value="">
+
+<table>
+    <tr>
+        <th>Tracking Number</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Contact</th>
+        <th>Value</th>
+        <th>Entry Date</th>
+        <th>Date Age</th>
+      </tr>
+</table>
+
+  <%itemList.forEach(zaloraInventory => {%>
+       <table>
+        <tr>
+          <td><%= zaloraInventory.trackingNumber %></td>
+          <td><%= zaloraInventory.name %></td>
+          <td><%= zaloraInventory.address %></td>
+          <td><%= zaloraInventory.contact1 %></td>
+          <td><%= zaloraInventory.value %></td>
+          <td><%= zaloraInventory.entryDate %></td>
+          <td> <input type="text" id="dateEntry" name="dateEntry" value="3"> </td>
+        </tr>
+      </table>
+   <%})%>
+
+
+   <script>
+
+        let dateEntry = document.getElementById('dateEntry').value; //08/25/2020
+
+        let today = new Date();
+
+        if (today.getDate() < 0){
+           todayDay = "0" + today.getDate();
+        } else {
+            todayDay = today.getDate();
+        }
+
+        let todayDate = (today.getMonth() + 1) + '/' + todayDay + '/' + today.getFullYear();
+
+        let age = Math.abs(todayDate-dateEntry);
+        let ageDisplay = age/(1000 * 3600 * 24)
+
+        console.log(ageDisplay)
+
+   </script>
+</body>
+</html>
+
