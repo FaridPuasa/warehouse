@@ -19,6 +19,6 @@ const inventorySchema  = new mongoose.Schema({
     entryDate: {type: Date, default: Date.now}
 })
 
-module.exports = mongoose.model('inventories', inventorySchema)
+module.exports = mongoose.model('pharmacyInventories', inventorySchema)
 
 

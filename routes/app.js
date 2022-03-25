@@ -5,6 +5,7 @@ const router = express.Router();
 const zaloraInventory = require('../models/zaloraInventory');
 const pharmacyInventory = require('../models/pharmacyInventory');
 const podDB = require('../models/pod');
+const content = require('../models/pod');
 const dispatchDB = require('../models/dispatch');
 const exportDB = require('../models/exportReturn');
 const grpMalaysiaDB = require('../models/grpMalaysia');
@@ -34,13 +35,27 @@ router.get('/reentry', (req,res) => {
     res.render('reEntry')
 })
 
-router.post('/confirm',(req,res) => {
+router.post('/success',(req,res) => {
     itemin(req,res)
 })
 
 router.post('/success',(req,res) => {
     itemOut(req,res)
     
+})
+
+router.get('/grpmy',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
+})
+
+router.get('/tracking',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
 })
 
 //This is used for return details
@@ -250,7 +265,7 @@ function dispatcherRecord(req,res){
 //reEntry parcels
 function reEntry(req,res){
     let tracker = req.body.trackingNumber
-    findOneAndUpdate({trackingNumber: tracker}, {
+    zaloraInventory.findOneAndUpdate({trackingNumber: tracker}, {
         status: req.body.status,
         reason: req.body.reason,
         remark: req.body.remark,
@@ -274,7 +289,7 @@ function reEntry(req,res){
 //Zalora Starts here
 function itemOut(req,res){
     let tracker = req.body.trackingNumber
-    findOneAndUpdate({trackingNumber:tracker},{
+    zaloraInventory.findOneAndUpdate({trackingNumber:tracker},{
         status: "Out for Delivery",
     })
     //1st bit is used to update the parcel status
@@ -292,6 +307,14 @@ function itemOut(req,res){
         podCreate: body.dateCreate,
         podMade: body.madeBy,
     })
+    let content = {
+        trackingNumber: body.trackingNumber,
+        name: body.name,
+        contact: body.contact,
+        address: body.address,
+        product: body.product,
+        value: body.value,
+    }
     itemOut.podContent.push(content)
     itemOut.save((err) => {
         if (err){
@@ -313,7 +336,7 @@ function itemOut(req,res){
 
 function itemin(req,res){
     let status = "In Warehouse" + "["+req.body.area+"]";
-    let inventory = new inventoryDB({
+    let inventory = new zaloraInventory({
        trackingNumber: req.body.trackingNumber,
        name: req.body.name,
        contact1: req.body.contact1,
@@ -341,7 +364,7 @@ function itemin(req,res){
 
 function selfCollect(req,res){
     let tracker = req.body.trackingNumber
-    findOneAndUpdate({trackingNumber:tracker},{
+    zaloraInventory.findOneAndUpdate({trackingNumber:tracker},{
         dateCollection: req.body.dateCollection,
         status: "Self Collected",
     }, (err,docs) => {

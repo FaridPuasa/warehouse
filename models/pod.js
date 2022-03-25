@@ -12,7 +12,6 @@ const content = new mongoose.Schema({
     address: reqString,
     product: reqString,
     value: reqString,
-    fridge: reqString,
 })
 
 const podSchema  = new mongoose.Schema({
@@ -29,4 +28,5 @@ const podSchema  = new mongoose.Schema({
     podContent: [{content}],
 })
 
+module.exports = mongoose.model('contents', content)
 module.exports = mongoose.model('pods', podSchema)
