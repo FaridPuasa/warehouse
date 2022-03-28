@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 //Models listing
-//const inventoryDB = require('../models/zaloraInventory')
+//const statusDB = require('../models/zaloraInventory')
 const zaloraInventory = require('../models/zaloraInventory');
 const pharmacyInventory = require('../models/pharmacyInventory');
 const podDB = require('../models/pod');
@@ -15,20 +15,20 @@ const { findOne, findOneAndUpdate } = require('../models/zaloraInventory');
 const { render } = require('ejs');
 const { request } = require('express');
 
-router.get("/", (req,res) => {
-    zaloraInventory.find({}, function(err,zaloraInventory){
-        res.render('itemList', {
-            itemList: zaloraInventory,
-            //age: 10-5
-        })
-        //console.log(10-5)
-    })
-})
 
-router.get('/itemin', (req,res) => {
-    res.render('itemin')
-})
+/*************************** ZALORA *********************************/
+/*
+Add on:
+1. add incremental on parcel numbers + based on area
+2. recheck on zalora pod
+3. add status array to required functions
+4. ageing need to be check
+5. export function need testing
+6. create simple reports (end of day report)
+7. filter / search function
+*/
 
+//use to get all zalora inventory list
 router.get('/itemList', (req,res) => {
     zaloraInventory.find({}, function(err,zaloraInventory){
         res.render('itemList', {
@@ -37,6 +37,25 @@ router.get('/itemList', (req,res) => {
     })
 })
 
+//Zalora In
+router.get('/itemin', (req,res) => {
+    res.render('itemin')
+})
+
+router.post('/itemin',(req,res) => {
+    itemin(req,res)
+})
+
+//Zalora Out
+router.get('/itemout',(req,res) => {
+    res.render('itemout')
+})
+
+router.post('/success',(req,res) => {
+    itemOut(req,res)
+})
+
+//Zalora Re-Entry
 router.get('/reentry', (req,res) => {
     res.render('reEntry')
 })
@@ -45,13 +64,35 @@ router.post('/success', (req,res) =>{
     reEntry(req,res)
 })
 
-router.post('/itemin',(req,res) => {
-    itemin(req,res)
+//Zalora Dispatcher Report
+router.get('/dispatch',(req,res) => {
+    res.render('dispatch')
 })
 
-router.post('/success',(req,res) => {
-    itemOut(req,res)
+router.post('/success', (req,res) => {
+    dispatcherRecord(req,res)
 })
+
+//Zalora Export Return
+router.get('/return', (res,req) => {
+    res.render('return')
+})
+
+router.post('/success', (req,res) => {
+    exportReturn(req,res)
+})
+
+//Zalora Self Collect
+router.get('/selfcollect', (req,res) => {
+    res.render('selfcollect')
+})
+
+router.post('/selfcollect', (req,res) => {
+    selfCollect(req,res)
+})
+/*************************** ZALORA *********************************/
+
+
 
 router.get('/grpmy',(req,res) => {
     res.render('comingsoon', {
@@ -88,9 +129,7 @@ router.get('/pharmacyout',(req,res) => {
     })
 })
 
-router.get('/dispatch',(req,res) => {
-    res.render('dispatch')
-})
+
 
 
 //This is used for return details
@@ -118,142 +157,6 @@ function exportReturn(req,res){
                 message: "Task successfully assigned to <%=  body.assignTo %>.",
             })
         }
-    })
-}
-
-function grpMalaysia(req,res){
-    let grpm = req.body
-    let grpmy = new grpMalaysiaDB({
-        trackingNumber: grpm.trackingNumber,
-        name: grpm.name,
-        contact: grpm.contact,
-        address: grpm.address,
-        weight: grpm.weight,
-        dimension: grpm.dimension,
-        rates: grpm.rates,
-        dateArrivedMy: grpm.dateArrivedMy,
-        status: grpm.status, //In Warehouse (Malaysia)
-    })
-    grpmy.save((err) => {
-        if (err){
-            if (err.name === 'MongoError' && err.code === 11000){
-                res.render('error', {
-                    error_code: '11000',
-                    head:'Invalid Entry',
-                    message:'Tracking Number already exist within the database'
-                })
-            }
-        }else {
-            res.render ('success', {
-                head: "Task Assigned",
-                message: "Task successfully assigned to <%=  body.assignTo %>.",
-            })
-        }
-    })
-}
-
-//Manifest here
-function grpManifest(req,res){
-    let manifest = req.body
-    let grpManifest = new manifestDB({
-        manifestRef: manifest.ref,
-        manifestBox: manifest.box,
-        manifestShipName: manifest.ShipName,
-        manifestName: manifest.name,
-        manifestDate: manifest.date,
-        manifestTotalWeight: manifest.totalWeight, //sumation of weights
-        manifestTotalVolume: manifest.totalVolume, //sumation of volumes
-        /*
-            this script will be executed by JavaScript
-
-            let dimension = document.getElementById(dimension)
-            let length = document.getElementById(length)
-            let breath = document.getElementById(breath)
-            let height = document.getElementById(height)
-
-            let totaldimension = length * breath * height
-            let volume = totaldimension / 5000
-
-            dimension.value = volume
-
-            let totalVolume = document.getElementById(...)
-            totalVolume.value = sum of volumes....
-
-        */
-    })
-    grpManifest.content.push(manifestContent)
-    grpManifest.save((err) => {
-        if (err){
-            if (err.name === 'MongoError' && err.code === 11000){
-                res.render('error', {
-                    error_code: '11000',
-                    head:'Invalid Entry',
-                    message:'Tracking Number already exist within the database'
-                })
-            }
-        }else {
-            res.render ('success', {
-                head: "Task Assigned",
-                message: "Task successfully assigned to <%=  body.assignTo %>.",
-            })
-        }
-    })
-}
-
-function grpMyTransit(req,res){
-    let tracker = req.body.trackingNumber
-    findOneAndUpdate({trackingNumber: tracker},{
-        dateDepartureMY: req.body.dateDepartureMY,
-        status: req.body.status,
-    },(err,docs) => {
-        if(err){
-            console.log(err)
-            res.render('error',{
-                head: "Error",
-                code: "10",
-                message: "Failed to update database",
-                solution: "Please contact RDI Department ext 877"
-            })
-        } 
-        else res.redirect('reentry')
-    })
-}
-
-function grpBrunei(req,res){
-    let tracker = req.body.trackingNumber// tracking number malaysia
-    findOneAndUpdate({trackingNumber: tracker},{
-        dateArrivedBN: req.body.dateArrivedBN,
-        status: req.body.status, //In Warehouse (Brunei)
-    },(err,docs) => {
-        if(err){
-            console.log(err)
-            res.render('error',{
-                head: "Error",
-                code: "10",
-                message: "Failed to update database",
-                solution: "Please contact RDI Department ext 877"
-            })
-        } 
-        else res.redirect('reentry')
-    })
-}
-
-function grpMyOut(req,res){
-    let tracker = req.body.trackingNumber
-    findOneAndUpdate({trackingNumber: tracker}, {
-        dateOut: req.body.dateOut,
-        status: req.body.status, //Self Collect or Out Delivery [POD GRP Manual for now]
-    },(err,docs) => {
-        if(err){
-            console.log(err)
-            res.render('error',{
-                head: "Error",
-                code: "10",
-                message: "Failed to update database",
-                solution: "Please contact RDI Department ext 877"
-            })
-        } 
-        else res.redirect('reentry')
     })
 }
 
@@ -297,8 +200,6 @@ function dispatcherRecord(req,res){
     })
 }
 
-
-
 //reEntry parcels
 function reEntry(req,res){
     let tracker = req.body.trackingNumber
@@ -334,8 +235,12 @@ function reEntry(req,res){
 //Zalora Starts here
 function itemOut(req,res){
     let tracker = req.body.trackingNumber
-    zaloraInventory.findOneAndUpdate({trackingNumber:tracker},{
-        status: "Out for Delivery",
+    zaloraInventory.findOneAndUpdate({trackingNumber:tracker},{$push:{
+        status: {
+            statusDetail:"Out for Delivery",
+            date:req.body.dateCreate,
+            }
+        }
     })
     //1st bit is used to update the parcel status
     let body = req.body
@@ -381,7 +286,8 @@ function itemOut(req,res){
 
 //
 function itemin(req,res){
-    let status = "IN WAREHOUSE"+"/"+req.body.area+"/"+req.body.dateEntry;
+    let statusDetail = "IN WAREHOUSE"+"/"+req.body.area+"/"+req.body.dateEntry
+    let bin = req.body.area +"/"+req.body.dateEntry
     let inventory = new zaloraInventory({
        trackingNumber: req.body.trackingNumber,
        name: req.body.name,
@@ -390,14 +296,18 @@ function itemin(req,res){
        area: req.body.area,
        product: req.body.formMETHOD,
        value: req.body.value,
-       status: status,
+       bin: bin,
        reEntry: "FALSE",
        reason: req.body.reason,
        remark: req.body.reason,
-        reEntry: req.body.reEntry,
-        attemp: req.body.attemp,
-        reSchedule: req.body.reSchedule,
+       reEntry: req.body.reEntry,
+       attemp: req.body.attemp,
+       reSchedule: req.body.reSchedule,
        dateEntry: req.body.dateEntry,
+    })
+    inventory.status.push({
+        statusDetail: statusDetail,
+        date: req.body.dateEntry,
     })
     inventory.save((err) => {
         if (err) {
@@ -432,72 +342,6 @@ function selfCollect(req,res){
         else res.redirect('selfCollect')
     })
 }
-
-//Pharmacy Inventory
-function pharmacyItemin(req,res){
-    let status = "In Warehouse" + "(Med Room)" + "["+req.body.area+"]";
-    let inventory = new inventoryDB({
-       trackingNumber: req.body.trackingNumber,
-       fridge: req.body.fridgeMeds,
-       name: req.body.name,
-       contact1: req.body.contact1,
-       address: req.body.address,
-       area: req.body.area,
-       date: req.body.entry,
-       product: req.body.formMETHOD,
-       value: req.body.value,
-       status: status,
-    })
-    inventory.save((err) => {
-        if (err) {
-            if (err.name === 'MongoError' && err.code === 11000){
-                res.render('error', {
-                    error_code: '11000',
-                    head:'Invalid Entry',
-                    message:'Please check'
-                })
-            }
-        }else {
-            res.redirect ('pharmacyIn')
-        }
-    })
-}
-
-function pharmacyOut (req,res){
-    let tracker = req.body.trackingNumber
-    findOneAndUpdate({trackingNumber:tracker},{
-        status: "Out for Delivery",
-    })
-    let body = req.body
-    let pharmacyOut = new pharmacyPodDB ({
-        podRef: body.ref, //ref is auto generated by the system. To differentiate the products delivered
-        podAssign: body.assignTo,
-        podDate: body.dateAssign,
-        podTotal: body.value, //Total amount of cash to be collected.
-        podTotalParcel: body.parcel, //Total amount of parcel to be delivered.
-        podClass: body.type, //Class is to identify who will be delivering. Freelancer or Full Time. 
-        podProduct: body.product, //Product is used to identify the delivered product.
-        podContent: body.content,
-        podArea: body.area,
-        podCreate: body.dateCreate,
-        podMade: body.madeBy,
-    })
-    pharmacyOut.pharmacyContent.push(content)
-    pharmacyOut.save((err) => {
-        if (err) {
-            if (err.name === 'MongoError' && err.code === 11000){
-                res.render('error', {
-                    error_code: '11000',
-                    head:'Invalid Entry',
-                    message:'Please check'
-                })
-            }
-        }else {
-            res.redirect ('success')
-        }
-    })
-}
-
 
 
 module.exports = router;
