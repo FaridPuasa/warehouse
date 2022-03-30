@@ -42,7 +42,7 @@
 
   <%itemList.forEach(zaloraInventory => {%>
         <tbody>
-          <tr>
+          <tr class="content">
             <th scope="row"><%= zaloraInventory.trackingNumber %></th>
             <td><%= zaloraInventory.name %></td>
             <td><%= zaloraInventory.address %></td>
@@ -50,8 +50,8 @@
             <td><%= zaloraInventory.value %></td>
             <td><%= zaloraInventory.status %></td>
             <td><%= zaloraInventory.entryDate %></td>
-            <td id="expire"><%= zaloraInventory.expireDate %></td>
-            <td id="days"><%= zaloraInventory.age %></td>
+            <td class="expire"><%= zaloraInventory.expireDate %></td>
+            <td class="days"><%= zaloraInventory.age %></td>
           </tr>
         </tbody>
    <%})%>
@@ -79,15 +79,15 @@
    </script>
 
    <script>
-      let expire = document.getElementById('expire').innerHTML
+      let expire = document.querySelectorAll('.expire').innerHTML
       let expireDate = Date.parse(expire)
       //console.log(expireDate)
       //console.log(Date.parse(new Date()))
       
       let value = expireDate - Date.parse(new Date())
       let days = Math.round(value /(60*60*24*1000))
-      document.getElementById('days').innerHTML = days + " Days"
-      //console.log(days)
+      document.querySelectorAll('.days').innerHTML = days + " Days"
+      console.log(days)
    </script>
    
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

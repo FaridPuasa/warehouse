@@ -1,16 +1,19 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 
 const reqString = {
     type: String,
 }
 
-let entryDate = {type: Date, default: Date.now}
+let date = moment().calendar(); 
+
+let entryDate = {type: String, default: date}
 let expireDate = {type: Date, default: () => new Date(+new Date() + 21*24*60*60*1000)}
 //let age = expireDate - entryDate
 
-const statusList = new mongoose.Schema({
+const parcelStatus = new mongoose.Schema({
     statusDetail: reqString,
-    date: {type: Date, deafault: Date.now()}
+    lastEdit: reqString,
 })
 
 const inventorySchema  = new mongoose.Schema({
@@ -19,7 +22,7 @@ const inventorySchema  = new mongoose.Schema({
     contact: reqString,
     address: reqString,
     area: reqString,
-    status: statusList,
+    status: parcelStatus,
     product: reqString,
     value: reqString,
     reason: reqString,
@@ -33,7 +36,7 @@ const inventorySchema  = new mongoose.Schema({
     //age: ageing,
 })
 
-module.exports = mongoose.model('statusHistory', statusList)
+module.exports = mongoose.model('statusHistory', parcelStatus)
 module.exports = mongoose.model('inventories', inventorySchema)
 
 

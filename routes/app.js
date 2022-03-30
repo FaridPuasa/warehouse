@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const moment = require('moment')
 //Models listing
 //const statusDB = require('../models/zaloraInventory')
 const zaloraInventory = require('../models/zaloraInventory');
@@ -355,7 +356,8 @@ function itemOut(req,res){
 
 //
 function itemin(req,res){
-    let statusDetail = "IN WAREHOUSE"+"/"+req.body.area+"/"+req.body.dateEntry
+    //let statusDetail = "IN WAREHOUSE"+"/"+req.body.area+"/"+req.body.dateEntry
+    let parcelStatus = {statusDetail: "IN WAREHOUSE"+"["+req.body.area+"]"+req.body.dateEntry, lastEdit: req.body.dateEntry}
     let bin = req.body.area +"/"+req.body.dateEntry
     let inventory = new zaloraInventory({
        trackingNumber: req.body.trackingNumber,
@@ -374,10 +376,9 @@ function itemin(req,res){
        reSchedule: req.body.reSchedule,
        dateEntry: req.body.dateEntry,
     })
-    inventory.status.push({
-        statusDetail: statusDetail,
-        date: req.body.dateEntry,
-    })
+    console.log("IN WAREHOUSE"+"["+req.body.area+"]"+req.body.dateEntry)
+    console.log(parcelStatus)
+    inventory.status.push(parcelStatus)
     inventory.save((err) => {
         if (err) {
             if (err.name === 'MongoError' && err.code === 11000){
