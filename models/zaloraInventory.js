@@ -5,16 +5,17 @@ const reqString = {
     type: String,
 }
 
-let date = moment().calendar(); 
+let date = moment().format();
+let later = moment(date).add(21,'d')
 
-let entryDate = {type: String, default: date}
-let expireDate = {type: Date, default: () => new Date(+new Date() + 21*24*60*60*1000)}
+let entryDate = {type: Date, default: date}
+let expireDate = {type: Date, default: later}
 //let age = expireDate - entryDate
 
-const parcelStatus = new mongoose.Schema({
+/*const parcelStatus = new mongoose.Schema({
     statusDetail: reqString,
     lastEdit: reqString,
-})
+})*/
 
 const inventorySchema  = new mongoose.Schema({
     trackingNumber: {type: String, unique: true},
@@ -22,7 +23,6 @@ const inventorySchema  = new mongoose.Schema({
     contact: reqString,
     address: reqString,
     area: reqString,
-    status: parcelStatus,
     product: reqString,
     value: reqString,
     reason: reqString,
@@ -33,10 +33,14 @@ const inventorySchema  = new mongoose.Schema({
     dateEntry: reqString,
     entryDate: entryDate,
     expireDate:expireDate,
+    status: reqString,
+    history: [{
+        statusDetail: reqString,
+        lastEdit: reqString,
+    }],
     //age: ageing,
 })
 
-module.exports = mongoose.model('statusHistory', parcelStatus)
 module.exports = mongoose.model('inventories', inventorySchema)
 
 

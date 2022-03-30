@@ -16,6 +16,7 @@ const grpMalaysiaDB = require('../models/grpMalaysia');
 const { findOne, findOneAndUpdate } = require('../models/zaloraInventory');
 const { render } = require('ejs');
 const { request } = require('express');
+const res = require('express/lib/response');
 
 /*************************** USER *********************************/
 
@@ -124,28 +125,12 @@ Add on:
 */
 
 //use to get all zalora inventory list
-
 router.get('/itemList', (req,res) => {
-    zaloraInventory.aggregate([{$trackingNumbers: {
-        duration: {
-            $dateDiff: {
-                expireDate: "$expireDate", today: Date.now(), unit: "days"
-            }
-        }
-    }}])
-    console.log(zaloraInventory.aggregate([{$trackingNumbers: {
-        duration: {
-            $dateDiff: {
-                expireDate: "$expireDate", today: Date.now(), unit: "days"
-            }
-        }
-    }}]))
     zaloraInventory.find({}, function(err,zaloraInventory){
         res.render('itemList', {
             itemList: zaloraInventory,
         })
     })
-    console.log()
 })
 
 //Zalora In
@@ -356,8 +341,11 @@ function itemOut(req,res){
 
 //
 function itemin(req,res){
-    //let statusDetail = "IN WAREHOUSE"+"/"+req.body.area+"/"+req.body.dateEntry
-    let parcelStatus = {statusDetail: "IN WAREHOUSE"+"["+req.body.area+"]"+req.body.dateEntry, lastEdit: req.body.dateEntry}
+    let status = "IN WAREHOUSE"+"/"+req.body.area+"/"+req.body.dateEntry
+    let parcelStatus = {
+        statusDetail: "IN WAREHOUSE"+"["+req.body.area+"]"+req.body.dateEntry, 
+        lastEdit: req.body.dateEntry,
+    }
     let bin = req.body.area +"/"+req.body.dateEntry
     let inventory = new zaloraInventory({
        trackingNumber: req.body.trackingNumber,
@@ -367,6 +355,7 @@ function itemin(req,res){
        area: req.body.area,
        product: req.body.formMETHOD,
        value: req.body.value,
+       status: "IN WAREHOUSE" + "[" + req.body.area + "]",
        bin: bin,
        reEntry: "FALSE",
        reason: req.body.reason,
@@ -376,9 +365,10 @@ function itemin(req,res){
        reSchedule: req.body.reSchedule,
        dateEntry: req.body.dateEntry,
     })
-    console.log("IN WAREHOUSE"+"["+req.body.area+"]"+req.body.dateEntry)
-    console.log(parcelStatus)
-    inventory.status.push(parcelStatus)
+    //console.log("IN WAREHOUSE"+"["+req.body.area+"]"+req.body.dateEntry)
+    //console.log(parcelStatus)
+    //console.log(bin)
+    inventory.history.push(parcelStatus)
     inventory.save((err) => {
         if (err) {
             if (err.name === 'MongoError' && err.code === 11000){
@@ -451,7 +441,5 @@ router.get('/pharmacyout',(req,res) => {
         message: "Coming Soon"
     })
 })
-
-
 
 module.exports = router;
