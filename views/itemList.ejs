@@ -49,7 +49,7 @@
             <td><%= zaloraInventory.contact1 %></td>
             <td><%= zaloraInventory.value %></td>
             <td><%= zaloraInventory.status %></td>
-            <td id="entry"><%= zaloraInventory.entryDate %></td>
+            <td><%= zaloraInventory.entryDate %></td>
             <td id="expire"><%= zaloraInventory.expireDate %></td>
             <td id="days"><%= zaloraInventory.age %></td>
           </tr>
@@ -79,21 +79,17 @@
    </script>
 
    <script>
-      //let entry = document.getElementById('entry').innerHTML
-      //var entryDate = Date.parse(entry)
-      //let entryMS = 1647552857
-      console.log(Date.now())
       let expire = document.getElementById('expire').innerHTML
       let expireDate = Date.parse(expire)
-      console.log(expireDate)
-      //let expireMS = 1650144857
-      //let ages = document.getElementById('age')
-      let value = expireDate - Date.today()
+      //console.log(expireDate)
+      //console.log(Date.parse(new Date()))
+      
+      let value = expireDate - Date.parse(new Date())
       let days = Math.round(value /(60*60*24*1000))
       document.getElementById('days').innerHTML = days + " Days"
-      console.log(value)
-      console.log(days)
+      //console.log(days)
    </script>
+   
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

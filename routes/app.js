@@ -3,6 +3,7 @@ const router = express.Router();
 //Models listing
 //const statusDB = require('../models/zaloraInventory')
 const zaloraInventory = require('../models/zaloraInventory');
+const userDB = require('../models/user')
 const pharmacyInventory = require('../models/pharmacyInventory');
 const podDB = require('../models/pod');
 const content = require('../models/pod');
@@ -15,6 +16,99 @@ const { findOne, findOneAndUpdate } = require('../models/zaloraInventory');
 const { render } = require('ejs');
 const { request } = require('express');
 
+/*************************** USER *********************************/
+
+router.get('/register', (req,res) => {
+    res.render('register')
+})
+
+router.post('/success', (req,res) => {
+    user(req,res)
+})
+
+router.get('/login', (req,res) => {
+    res.render('login')
+})
+
+router.post('/dashboard', (req,res) => {
+    login(req,res)
+})
+
+router.get('/changpassword', (req,res) => {
+    res.render('changepassword')
+})
+
+router.post('/changesuccess', (req,res) => {
+    firstTimeLogin(req,res)
+})
+
+function user(req,res) {
+    let body = req.body
+    let user = new userDB ({
+        name: body.name,
+        password: body.password, //auto generated
+        position: body.position, //admin,GRP,Warehouse,CS,Dispatch
+        icNumber: body.icNumber,
+        email: body.email,
+        contact: body.contact,
+        firstTime: "TRUE"
+    })
+    user.save((err) => {
+        if (err){
+            if (err.name === 'MongoError' && err.code === 11000){
+                res.render('error', {
+                    error_code: '11000',
+                    head:'Invalid Entry',
+                    message:'Tracking Number already exist within the database'
+                })
+            }
+        }else {
+            res.render ('success', {
+                head: "Account Created",
+                message: "Account successfully created",
+            })
+        }
+    })
+}
+
+function login(req,res){
+    let icNumber = req.body.icNumber
+    let password = req.body.password
+    userDB.authenticate(icNumber, password, (error, user) =>{
+        let status = user.firstTime
+        if(status === "TRUE"){
+            res.render('changepassword')
+        }
+        else if (status === "FALSE"){
+            req.session.userId = user._id;
+            res.render('success')
+        }
+        else{
+            res.render('error')
+        }
+    })
+}
+
+function firstTimeLogin(req,res){
+    let icNumber = req.body.icNumber
+    let password = req.body.password
+    userDB.findOneAndUpdate({icNumber:icNumber},{password:password, firstTime:"FALSE"}, (err,docs) => {
+        if(err){
+            console.log(err)
+            res.render('error',{
+                head: "Error",
+                error_code: "10",
+                message: "Failed to Update Password",
+                solution: "Please contact RDI Department ext 877"
+            })
+        } 
+        else{
+            res.redirect('login')
+        }
+    })
+}
+
+/*************************** USER *********************************/
 
 /*************************** ZALORA *********************************/
 /*
@@ -29,12 +123,28 @@ Add on:
 */
 
 //use to get all zalora inventory list
+
 router.get('/itemList', (req,res) => {
+    zaloraInventory.aggregate([{$trackingNumbers: {
+        duration: {
+            $dateDiff: {
+                expireDate: "$expireDate", today: Date.now(), unit: "days"
+            }
+        }
+    }}])
+    console.log(zaloraInventory.aggregate([{$trackingNumbers: {
+        duration: {
+            $dateDiff: {
+                expireDate: "$expireDate", today: Date.now(), unit: "days"
+            }
+        }
+    }}]))
     zaloraInventory.find({}, function(err,zaloraInventory){
         res.render('itemList', {
-            itemList: zaloraInventory
+            itemList: zaloraInventory,
         })
     })
+    console.log()
 })
 
 //Zalora In
@@ -90,47 +200,6 @@ router.get('/selfcollect', (req,res) => {
 router.post('/selfcollect', (req,res) => {
     selfCollect(req,res)
 })
-/*************************** ZALORA *********************************/
-
-
-
-router.get('/grpmy',(req,res) => {
-    res.render('comingsoon', {
-        head: "Page in development",
-        message: "Coming Soon"
-    })
-})
-
-router.get('/tracking',(req,res) => {
-    res.render('comingsoon', {
-        head: "Page in development",
-        message: "Coming Soon"
-    })
-})
-
-router.get('/central',(req,res) => {
-    res.render('comingsoon', {
-        head: "Page in development",
-        message: "Coming Soon"
-    })
-})
-
-router.get('/pharmacyin',(req,res) => {
-    res.render('comingsoon', {
-        head: "Page in development",
-        message: "Coming Soon"
-    })
-})
-
-router.get('/pharmacyout',(req,res) => {
-    res.render('comingsoon', {
-        head: "Page in development",
-        message: "Coming Soon"
-    })
-})
-
-
-
 
 //This is used for return details
 function exportReturn(req,res){
@@ -342,6 +411,46 @@ function selfCollect(req,res){
         else res.redirect('selfCollect')
     })
 }
+
+/*************************** ZALORA *********************************/
+
+/*************************** PHARMACY *********************************/
+
+router.get('/grpmy',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
+})
+
+router.get('/tracking',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
+})
+
+router.get('/central',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
+})
+
+router.get('/pharmacyin',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
+})
+
+router.get('/pharmacyout',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
+})
+
 
 
 module.exports = router;

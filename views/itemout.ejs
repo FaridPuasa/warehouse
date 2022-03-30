@@ -94,6 +94,7 @@
         <br><br><button onclick="exportTableToExcel('tasklisttable')">Download POD as Excel</button>
         <form id="itemOut" class="itemOut"  action="/success" method="POST">
 
+            <input type="hidden" id="podRef" name="podRef">
             <input type="hidden" id="podDate" name="podDate">
             <input type="hidden" id="completionDate" name="completionDate">
             <input type="hidden" id="areaCode" name="areaCode">
@@ -102,7 +103,6 @@
             <input type="hidden" id="agentName" name="agentName">
             <input type="hidden" id="dateTime" name="dateTime">
             <input type="hidden" id="dateTimeClose" name="dateTimeClose">
-
             <input type="hidden" id="parcelNumber" name="parcelNumber">
             <input type="hidden" id="taskID" name="taskID">
             <input type="hidden" id="contactName" name="contactName">
@@ -694,6 +694,14 @@
             }
         }
     </script>
+
+    <script>
+        let ref = new Date()
+        let area = document.getElementById("areaCode").value 
+        //document.getElementById("demo").innerHTML = "Dispatch" + "/GRP" + "/" + area + "/" + ref;
+        document.getElementById("podRef").value = "POD" + "/GRE" + "/" + area + "/" + ref;
+    </script>
+    
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
