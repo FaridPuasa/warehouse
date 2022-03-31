@@ -164,7 +164,7 @@ router.get('/reentry', (req,res) => {
     res.render('reEntry')
 })
 
-router.post('/success', (req,res) =>{
+router.post('/reentryConfirm', (req,res) =>{
     reEntry(req,res)
 })
 
@@ -173,7 +173,7 @@ router.get('/dispatch',(req,res) => {
     res.render('dispatch')
 })
 
-router.post('/success', (req,res) => {
+router.post('/dispatchSuccess', (req,res) => {
     dispatcherRecord(req,res)
 })
 
@@ -188,10 +188,10 @@ router.post('/success', (req,res) => {
 
 //Zalora Self Collect
 router.get('/selfcollect', (req,res) => {
-    res.render('selfcollect')
+    res.render('selfCollect')
 })
 
-router.post('/selfcollect', (req,res) => {
+router.post('/confirmed', (req,res) => {
     selfCollect(req,res)
 })
 
@@ -265,16 +265,18 @@ function dispatcherRecord(req,res){
 
 //reEntry parcels
 function reEntry(req,res){
-    let tracker = req.body.trackingNumber
-    console.log(tracker)
-    zaloraInventory.findOneAndUpdate({trackingNumber: req.body.trackingNumber}, {
-        status: req.body.status,
+    let date = moment().format();
+    let filter = {trackingNumber: req.body.trackingNumber}
+    let update = {
+        status: "IN WAREHOUSE" + "[" + req.body.reason + "]" + "|" + date,
         reason: req.body.reason,
         remark: req.body.remark,
-        reEntry: req.body.reEntry,
-        attemp: req.body.attemp,
+        reEntry: "TRUE",
         reSchedule: req.body.dateSchedule,
-    }, (err,docs) => {
+    }
+    let option = {upsert: true, new: true}
+    console.log(tracker)
+    zaloraInventory.findOneAndUpdate(filter,update,option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -297,14 +299,11 @@ function reEntry(req,res){
 
 //Zalora Starts here
 function itemOut(req,res){
-    let tracker = req.body.trackingNumber
-    zaloraInventory.findOneAndUpdate({trackingNumber:tracker},{$push:{
-        status: {
-            statusDetail:"Out for Delivery",
-            date:req.body.dateCreate,
-            }
-        }
-    })
+    let date = req.body.dateCreate
+    let tracker = {trackingNumber: req.body.trackingNumber}
+    let update = {status: "OUT FOR DELIVERY", history: {statusDetail: "OUT FOR DELIVERY" + "|" + date }}
+    let option = {upsert: true, new: true}
+    zaloraInventory.findOneAndUpdate(tracker,update,option)
     //1st bit is used to update the parcel status
     let body = req.body
     let itemOut = new podDB({
@@ -349,10 +348,8 @@ function itemOut(req,res){
 
 //
 function itemin(req,res){
-    let status = "IN WAREHOUSE"+"/"+req.body.area+"/"+req.body.dateEntry
     let parcelStatus = {
-        statusDetail: "IN WAREHOUSE"+"["+req.body.area+"]"+req.body.dateEntry, 
-        lastEdit: req.body.dateEntry,
+        statusDetail: "IN WAREHOUSE"+"["+req.body.area+"]"+ "|" + req.body.dateEntry, 
     }
     let bin = req.body.area +"/"+req.body.dateEntry
     let inventory = new zaloraInventory({
@@ -368,8 +365,7 @@ function itemin(req,res){
        reEntry: "FALSE",
        reason: req.body.reason,
        remark: req.body.reason,
-       reEntry: req.body.reEntry,
-       attemp: req.body.attemp,
+       attemp: "FALSE",
        reSchedule: req.body.reSchedule,
        dateEntry: req.body.dateEntry,
     })
@@ -393,11 +389,12 @@ function itemin(req,res){
 }
 
 function selfCollect(req,res){
-    let tracker = req.body.trackingNumber
-    zaloraInventory.findOneAndUpdate({trackingNumber:tracker},{
-        dateCollection: req.body.dateCollection,
-        status: "Self Collected",
-    }, (err,docs) => {
+    let date = moment().format();
+    let filter = {trackingNumber: req.body.trackingNumber}
+    let update = {status: "SELF COLLECTED" + "|" + date}
+    let option = {upsert: true, new: true}
+    console.log(req.body.trackingNumber)
+    zaloraInventory.findOneAndUpdate(filter, update, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -407,10 +404,12 @@ function selfCollect(req,res){
                 solution: "Please contact RDI Department ext 877"
             })
         } 
-        else res.redirect('selfCollect')
+        else{
+            console.log(docs)
+            res.render('success')
+        } 
     })
 }
-
 /*************************** ZALORA *********************************/
 
 /*************************** PHARMACY *********************************/

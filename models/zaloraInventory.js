@@ -10,12 +10,8 @@ let later = moment(date).add(21,'d')
 
 let entryDate = {type: Date, default: date}
 let expireDate = {type: Date, default: later}
+//let collectionDate = {type: Date, default: date}
 //let age = expireDate - entryDate
-
-/*const parcelStatus = new mongoose.Schema({
-    statusDetail: reqString,
-    lastEdit: reqString,
-})*/
 
 const inventorySchema  = new mongoose.Schema({
     trackingNumber: {type: String, unique: true},
@@ -34,10 +30,7 @@ const inventorySchema  = new mongoose.Schema({
     entryDate: entryDate,
     expireDate:expireDate,
     status: reqString,
-    history: [{
-        statusDetail: reqString,
-        lastEdit: reqString,
-    }],
+    history: [{statusDetail: reqString}],
     //age: ageing,
 })
 
