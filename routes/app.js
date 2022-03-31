@@ -354,6 +354,7 @@ function itemin(req,res){
     let bin = req.body.area +"/"+req.body.dateEntry
     let inventory = new zaloraInventory({
        trackingNumber: req.body.trackingNumber,
+       parcelNumber: req.body.parcelNumber + "[" + req.body.area + "]",
        name: req.body.name,
        contact: req.body.contact,
        address: req.body.address,

@@ -15,6 +15,7 @@ let expireDate = {type: Date, default: later}
 
 const inventorySchema  = new mongoose.Schema({
     trackingNumber: {type: String, unique: true},
+    parcelNumber: reqString,
     name: reqString,
     contact: reqString,
     address: reqString,
