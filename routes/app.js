@@ -133,6 +133,14 @@ router.get('/itemList', (req,res) => {
     })
 })
 
+router.get('/dispatcher-report', (req,res) => {
+    dispatchDB.find({}, function(err,dispatch) {
+        res.render('dispatchreport', {
+            dispatch: dispatch,
+        })
+    })
+})
+
 //Zalora In
 router.get('/itemin', (req,res) => {
     res.render('itemin')
