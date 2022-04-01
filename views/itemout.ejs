@@ -15,16 +15,17 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
+
 <body style="text-align: center;">
     <h1>Create POD + Assign Task(s)</h1>
 
     <div id="podInfoArea">
 
-        <p>Date of POD Created:</p>
+        <p>Date of POD:</p>
         <input type="text" class="text-field-79 w-input" name="podDateTemp" id="podDateTemp"><br><br>
-        <p>Schedule Delivery Date:</p>
+        <p>Date of Completion:</p>
         <input type="text" class="text-field-79 w-input" name="completionDateTemp" id="completionDateTemp"><br><br>
-        <p>Area:</p>
+        <p>Area</p>
         <select name="areaCodeTemp" id="areaCodeTemp" class="select-field-50 w-select" style="border-radius: 5px;">
             <option value="">Select one...</option>
             <option value="B1">B1</option>
@@ -39,15 +40,18 @@
             <option value="KB">KB</option>
             <option value="SERIA">SERIA</option>
         </select><br><br>
-        <p>POD Created By:</p>
+        <p>POD done by:</p>
         <input type="text" class="text-field-79 w-input" name="podDoneByTemp" id="podDoneByTemp"><br><br>
         <p>Agent To Be Assigned:</p>
         <select name="agentTemp" id="agentTemp" style="border-radius: 5px;" class="select-field-50 w-select">
             <option value="">Select one...</option>
             <option value="994634">FD SOWDEQ</option>
+            <option value="997381">FD RAHIM</option>
+            <option value="1029275">FD AIMI</option>
             <option value="1050947">FD HASBUL</option>
             <option value="1071388">FD FADARUS</option>
             <option value="1079095">FD HAMIDIN</option>
+            <option value="1113078">FD HANAFI</option>
             <option value="1230427">FD FAEZ</option>
             <option value="1254189">FDZUL</option>
             <option value="1130495">EFR HAJID</option>
@@ -78,6 +82,8 @@
         </div>
     </div>
 
+    
+
     <div id="inputTnArea">
         <p id="trackingNumField">Tracking Number:</p>
         <input name="trackingNum" id="trackingNum" onkeyup="checkTrackingNum(this, 'trackingNum')" type="text"
@@ -89,7 +95,7 @@
 
     <div id="excelDbArea">
         <br><br><button onclick="exportTableToExcel('tasklisttable')">Download POD as Excel</button>
-        <form id="itemOut" class="itemOut"  action="/success" method="POST">
+        <form id="itemOut" class="itemOut" action="/success" method="POST">
 
             <input type="hidden" id="podRef" name="podRef">
             <input type="hidden" id="podDate" name="podDate">
@@ -106,7 +112,10 @@
             <input type="hidden" id="address" name="address">
             <input type="hidden" id="phone" name="phone">
             <input type="hidden" id="price" name="price">
-            <input type="hidden" id="content" name="content">
+
+            <div id="trackingNumberDetailsArea">
+
+            </div>
 
             <br><br><button id="submitDbButton">Save To DB</button>
         </form>
@@ -117,8 +126,6 @@
         let createTable = 0;
         let endLoop = 0;
         let countContent = 0;
-
-        var content = [];
 
         var responsetn = '';
         var json_responsetn = '';
@@ -243,12 +250,21 @@
                             row_2_data_8.innerHTML = "$" + json_responsetn.data[0].job_description;
                             var row_2_data_9 = document.createElement('td');
                             var row_2_data_10 = document.createElement('td');
-                            //[p/n,name,address,contact]
-                            //content.push=[content[0],content[1]]
-                            content[countContent] = json_responsetn.data[0].order_id + "," + json_responsetn.data[0].job_id + "," + json_responsetn.data[0].customer_username + "," +
-                                json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description;
 
-                            document.getElementById("content").value = content;
+                            /* content[countContent] = json_responsetn.data[0].order_id + "," + json_responsetn.data[0].job_id + "," + json_responsetn.data[0].customer_username + "," +
+                                json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description; */
+
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'content');
+                            tnInput.setAttribute('id', 'trackingNumberDetails' + (countContent + 1));
+                            tnInput.setAttribute('value', json_responsetn.data[0].job_id + "," + json_responsetn.data[0].order_id + "," + json_responsetn.data[0].customer_username + "," +
+                                json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
+                            /* document.getElementById("trackingNumberDetails" + (countContent + 1) + "").value = json_responsetn.data[0].order_id + "," + json_responsetn.data[0].job_id + "," + json_responsetn.data[0].customer_username + "," +
+                                json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description; */
 
                             row_2.appendChild(row_2_data_1);
                             row_2.appendChild(row_2_data_2);
@@ -365,10 +381,17 @@
                             var row_2_data_9 = document.createElement('td');
                             var row_2_data_10 = document.createElement('td');
 
-                            content[countContent] = json_responsetn.data[0].order_id + "," + json_responsetn.data[0].job_id + "," + json_responsetn.data[0].customer_username + "," +
-                                json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description;
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'content');
+                            tnInput.setAttribute('id', 'trackingNumberDetails' + (countContent + 1));
+                            tnInput.setAttribute('value', json_responsetn.data[0].job_id + "," + json_responsetn.data[0].order_id + "," + json_responsetn.data[0].customer_username + "," +
+                                json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
 
-                            document.getElementById("content").value = content;
+                            /* document.getElementById("trackingNumberDetails" + (countContent + 1)).value = json_responsetn.data[0].order_id + "," + json_responsetn.data[0].job_id + "," + json_responsetn.data[0].customer_username + "," +
+                                json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description; */
 
                             row_2.appendChild(row_2_data_1);
                             row_2.appendChild(row_2_data_2);
@@ -451,6 +474,7 @@
 
         document.addEventListener("DOMContentLoaded", function (event) {
             document.getElementById("podArea").style.display = 'none';
+            document.getElementById("trackingNumberDetailsArea").style.display = 'none';
             document.getElementById("inputTnArea").style.display = 'none';
             document.getElementById("excelDbArea").style.display = 'none';
             document.getElementById("loading").style.display = 'none';
@@ -495,12 +519,28 @@
                         document.getElementById("agentName").value = "FD SOWDEQ";
                     }
 
+                    if (document.getElementById("agentTemp").value == "997381") {
+                        document.getElementById("agentName").value = "FD RAHIM";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1029275") {
+                        document.getElementById("agentName").value = "FD AIMI";
+                    }
+
                     if (document.getElementById("agentTemp").value == "1050947") {
                         document.getElementById("agentName").value = "FD HASBUL";
                     }
 
+                    if (document.getElementById("agentTemp").value == "1071388") {
+                        document.getElementById("agentName").value = "FD FADARUS";
+                    }
+
                     if (document.getElementById("agentTemp").value == "1079095") {
                         document.getElementById("agentName").value = "FD HAMIDIN";
+                    }
+
+                    if (document.getElementById("agentTemp").value == "1113078") {
+                        document.getElementById("agentName").value = "FD HANAFI";
                     }
 
                     if (document.getElementById("agentTemp").value == "1230427") {
@@ -678,11 +718,11 @@
 
     <script>
         let ref = new Date()
-        let area = document.getElementById("areaCode").value 
+        let area = document.getElementById("areaCode").value
         //document.getElementById("demo").innerHTML = "Dispatch" + "/GRP" + "/" + area + "/" + ref;
         document.getElementById("podRef").value = "POD" + "/GRE" + "/" + area + "/" + ref;
     </script>
-    
+
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -690,4 +730,5 @@
     <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 
 </body>
+
 </html>
