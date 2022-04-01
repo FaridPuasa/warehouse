@@ -275,7 +275,6 @@ function reEntry(req,res){
         reSchedule: req.body.dateSchedule,
     }
     let option = {upsert: true, new: true}
-    console.log(tracker)
     zaloraInventory.findOneAndUpdate(filter,update,option, (err,docs) => {
         if(err){
             console.log(err)

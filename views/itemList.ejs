@@ -4,6 +4,7 @@
         <thead>
             <tr>
                 <th scope="col">Tracking Number</th>
+                <th scope="col">P/N</th>
                 <th scope="col">Name</th>
                 <th scope="col">Address</th>
                 <th scope="col">Contact</th>
@@ -23,13 +24,16 @@
                         <%= zaloraInventory.trackingNumber %>
                     </th>
                     <td>
+                        <%= zaloraInventory.parcelNumber %>
+                    </td>
+                    <td>
                         <%= zaloraInventory.name %>
                     </td>
                     <td>
                         <%= zaloraInventory.address %>
                     </td>
                     <td>
-                        <%= zaloraInventory.contact1 %>
+                        <%= zaloraInventory.contact %>
                     </td>
                     <td>
                         <%= zaloraInventory.value %>
