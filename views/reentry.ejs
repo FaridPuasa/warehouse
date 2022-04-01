@@ -30,17 +30,13 @@
     </ul>
 
     <div id="trackingnumberarea" style="text-align: center;">
-        <label>Tracking Number: <br><input id="jobid" type="text" placeholder="2xxxxxxxx or 3xxxxxxxx"
-                style="border-radius: 5px; text-align:center;"></label>
-        <br><br>
 
-        <label>Date Reschedule: <br><input id="dateReschedule" type="text"
-                style="border-radius: 5px; text-align:center;"></label>
-        <br><br>
+        <div id="inputTnArea">
+            <p id="trackingNumField">Tracking Number:</p>
+            <input name="trackingNum" id="trackingNum" onkeyup="checkTrackingNum(this, 'trackingNum')" type="text"
+                maxlength="9" /><br>
+        </div>
 
-        <button id="trackbutton"
-            style="padding-top: 9px; padding-left: 15px; padding-right: 15px; padding-bottom: 9px; border-radius: 5px; background-color: #3898ec; color: white; border: 0px;">Confirm
-            Details</button>
         <br><br>
     </div>
 
@@ -92,50 +88,39 @@
             <input type="text" id="remark" name="remark"><br>
             <!--state reason of above matter-->
 
-           <!--<select id="cars" name="attemp">
+            <!--<select id="cars" name="attemp">
                 <option value="1st Attempt">1st Attempt</option>
                 <option value="2nd Attempt">2nd Attemp</option>
                 <option value="Final Attempt">Final Attempt</option>
                 <option value="Return">Return</option>
-            </select><br> --> 
+            </select><br> -->
 
-            <label>Date Reschedule:</label>
-
-            <input type="text" id="dateSchedule" name="dateSchedule">
-            <!--mandatory field-->
+            <label>Date Reschedule: <br><input id="dateSchedule" type="text"
+                    style="border-radius: 5px; text-align:center;"></label>
+            <br><br>
 
         </div>
 
         <input type="text" id="formMETHOD" name="formMETHOD" value="ZALORA" hidden>
         <!--above is the hidden input as identifier for zalora inventory-->
-        <br><button class="button" id="submitButton" type="submit">Submit</button>
+        <br><button id="submitButton">Submit</button>
 
     </form>
 
+    <!-- 380203954 374517996 -->
+
     <script>
+        function checkTrackingNum(field, autoMove) {
+            endLoop = 0;
+            if (field.value.length >= field.maxLength) {
 
-        document.addEventListener("DOMContentLoaded", function (event) {
-            document.getElementById("trackbutton").addEventListener("click", tracknumber);
-
-            document.getElementById("reEntry").style.display = 'none';
-
-            function tracknumber() {
-
-                document.getElementById("loading").style.display = 'block';
+                document.getElementById("reEntry").style.display = 'none';
                 document.getElementById("trackingnumberarea").style.display = 'none';
-                document.getElementById("trackbutton").style.display = 'none';
+                document.getElementById("loading").style.display = 'block';
 
                 var jobidentitynum = '';
-                jobidentitynum = document.getElementById("jobid").value;
-                document.getElementById('jobid').value = '';
-
-                var responsejd = '';
-                var json_responsejd = '';
-
-                var finaldate = '';
-                var finalday = '';
-
-                document.getElementById("wronginput").style.display = 'none';
+                jobidentitynum = document.getElementById("trackingNum").value;
+                document.getElementById('trackingNum').value = '';
 
                 var request = new XMLHttpRequest();
                 request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
@@ -146,10 +131,12 @@
                         console.log('Status:', this.status);
                         console.log('Headers:', this.getAllResponseHeaders());
                         console.log('Body:', this.responseText);
+
                         responsejd = this.responseText;
                         json_responsejd = JSON.parse(responsejd);
 
                         if (json_responsejd.status != 404) {
+                            document.getElementById(autoMove).focus();
 
                             document.getElementById("trackingNumber").value = json_responsejd.data[0].job_id;
                             document.getElementById("name").value = json_responsejd.data[0].customer_username;
@@ -271,17 +258,18 @@
                             else { area = "N/A"; }
                             document.getElementById("area").value = area;
 
-                            document.getElementById("dateSchedule").value = document.getElementById("dateReschedule").value;
-
                             document.getElementById("loading").style.display = 'none';
                             document.getElementById("reEntry").style.display = 'block';
+                            document.getElementById("trackingnumberarea").style.display = 'block';
+
+
                         }
 
                         if (json_responsejd.status == 404) {
                             document.getElementById("loading").style.display = 'none';
+                            document.getElementById("reEntry").style.display = 'none';
                             document.getElementById("wronginput").style.display = 'block';
                             document.getElementById("trackingnumberarea").style.display = 'block';
-                            document.getElementById("trackbutton").style.display = 'block';
                         }
                     }
                 };
@@ -289,23 +277,71 @@
                 var body = {
                     'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
                     'job_ids': [jobidentitynum],
-                    'include_task_history': 1
+                    'include_task_history': 0
+                };
+                request.send(JSON.stringify(body));
+            }
+        }
+    </script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var jobStatus = "";
+            document.getElementById("reEntry").style.display = 'none';
+
+            document.getElementById("submitButton").addEventListener("click", submitForm);
+
+            function submitForm() {
+
+                if (document.getElementById("reason").value == "Cancelled Delivery") {
+                    jobStatus = 9;
+                }
+
+                if (document.getElementById("reason").value == "Failed Delivery") {
+                    jobStatus = 3;
+                }
+
+                if ((document.getElementById("reason").value == "Reschedule Delivery") || (document.getElementById("reason").value == "Unattempted Delivery") || (document.getElementById("reason").value == "Change to Self Collect")) {
+                    jobStatus = 3;
+                }
+
+                var request = new XMLHttpRequest();
+
+                request.open('POST', 'https://api.tookanapp.com/v2/update_task_status');
+
+                request.setRequestHeader('Content-Type', 'application/json');
+
+                request.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        console.log('Status:', this.status);
+                        console.log('Headers:', this.getAllResponseHeaders());
+                        console.log('Body:', this.responseText);
+                    }
+                };
+
+                var body = {
+                    'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                    'job_id': document.getElementById("trackingNumber").value,
+                    'job_status': jobStatus
                 };
 
                 request.send(JSON.stringify(body));
+
+                document.getElementById("reEntry").submit();
             }
         });
 
     </script>
 
-<script>
-    $(function () {
-        $("#dateReschedule").datepicker({
-            minDate: 0,
-            dateFormat: "yy-mm-dd"
+    <script>
+        $(function () {
+            $("#dateSchedule").datepicker({
+                minDate: 0,
+                dateFormat: "dd-mm-yy"
+            });
         });
-    });
-</script>
+    </script>
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
