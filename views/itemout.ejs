@@ -20,11 +20,11 @@
 
     <div id="podInfoArea">
 
-        <p>Date of POD:</p>
+        <p>Date of POD Created:</p>
         <input type="text" class="text-field-79 w-input" name="podDateTemp" id="podDateTemp"><br><br>
-        <p>Date of Completion:</p>
+        <p>Schedule Delivery Date:</p>
         <input type="text" class="text-field-79 w-input" name="completionDateTemp" id="completionDateTemp"><br><br>
-        <p>Area</p>
+        <p>Area:</p>
         <select name="areaCodeTemp" id="areaCodeTemp" class="select-field-50 w-select" style="border-radius: 5px;">
             <option value="">Select one...</option>
             <option value="B1">B1</option>
@@ -39,18 +39,15 @@
             <option value="KB">KB</option>
             <option value="SERIA">SERIA</option>
         </select><br><br>
-        <p>POD done by:</p>
+        <p>POD Created By:</p>
         <input type="text" class="text-field-79 w-input" name="podDoneByTemp" id="podDoneByTemp"><br><br>
         <p>Agent To Be Assigned:</p>
         <select name="agentTemp" id="agentTemp" style="border-radius: 5px;" class="select-field-50 w-select">
             <option value="">Select one...</option>
             <option value="994634">FD SOWDEQ</option>
-            <option value="997381">FD RAHIM</option>
-            <option value="1029275">FD AIMI</option>
             <option value="1050947">FD HASBUL</option>
             <option value="1071388">FD FADARUS</option>
             <option value="1079095">FD HAMIDIN</option>
-            <option value="1113078">FD HANAFI</option>
             <option value="1230427">FD FAEZ</option>
             <option value="1254189">FDZUL</option>
             <option value="1130495">EFR HAJID</option>
@@ -497,28 +494,12 @@
                         document.getElementById("agentName").value = "FD SOWDEQ";
                     }
 
-                    if (document.getElementById("agentTemp").value == "997381") {
-                        document.getElementById("agentName").value = "FD RAHIM";
-                    }
-
-                    if (document.getElementById("agentTemp").value == "1029275") {
-                        document.getElementById("agentName").value = "FD AIMI";
-                    }
-
                     if (document.getElementById("agentTemp").value == "1050947") {
                         document.getElementById("agentName").value = "FD HASBUL";
                     }
 
-                    if (document.getElementById("agentTemp").value == "1071388") {
-                        document.getElementById("agentName").value = "FD FADARUS";
-                    }
-
                     if (document.getElementById("agentTemp").value == "1079095") {
                         document.getElementById("agentName").value = "FD HAMIDIN";
-                    }
-
-                    if (document.getElementById("agentTemp").value == "1113078") {
-                        document.getElementById("agentName").value = "FD HANAFI";
                     }
 
                     if (document.getElementById("agentTemp").value == "1230427") {
