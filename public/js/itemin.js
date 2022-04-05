@@ -2,7 +2,7 @@ function checkTrackingNum(field, autoMove) {
     endLoop = 0;
     if (field.value.length >= field.maxLength) {
 
-        document.getElementById("reEntry").style.display = 'none';
+        document.getElementById("itemIn").style.display = 'none';
         document.getElementById("trackingnumberarea").style.display = 'none';
         document.getElementById("loading").style.display = 'block';
         document.getElementById("wronginput").style.display = 'none';
