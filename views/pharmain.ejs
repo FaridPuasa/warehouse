@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item In</title>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body style="text-align: center;">
+    <ul>
+        <li><a href="/">Zalora Main</a></li>
+        <li><a href="/itemin">Zalora In</a></li>
+        <li><a href="/itemout">Zalora POD</a></li>
+        <li><a href="/reentry">Re-Entry</a></li>
+        <li><a href="/pharmacyin">Pharmacy Inventory</a></li>
+        <li><a href="/pharmacyout">Pharmacy POD</a></li>
+        <li><a href="/grpmy">GRP Malaysia</a></li>
+        <li><a href="/dispatch">Dispatcher Report</a></li>
+        <li><a href="/central">General Tracker</a></li>
+    </ul>
+
+    <div id="trackingnumberarea" style="text-align: center;">
+        <label>Tracking Number: <br><input id="jobid" type="text" placeholder="2xxxxxxxx or 3xxxxxxxx"
+                style="border-radius: 5px; text-align:center;"></label>
+        <br><br>
+
+        <button id="trackbutton"
+            style="padding-top: 9px; padding-left: 15px; padding-right: 15px; padding-bottom: 9px; border-radius: 5px; background-color: #3898ec; color: white; border: 0px;">Confirm
+            Details</button>
+        <br><br>
+    </div>
+
+    <div id="wronginput" style="display:none">
+        <h4 style="color: #b30000;">Please check your tracking number</h4>
+    </div>
+
+    <div id="loading" style="display:none">
+        <h4>Please wait...</h4>
+    </div>
+
+    <form id="itemIn" class="itemIn" action="/itemin" method="POST">
+        <div class="container">
+            <label>Tracking Number:</label>
+            <input type="text" id="trackingNumber" name="trackingNumber"><br>
+
+            <label>Parcel Number:</label>
+            <input type="text" id="parcelNumber" name="parcelNumber"><br>
+
+            <label>Name:</label>
+            <input type="text" id="name" name="name"><br>
+            <!--Pull detail from tookan-->
+            <label>Address:</label>
+            <input type="text" id="address" name="address"><br>
+            <!--Pull detail from tookan-->
+            <label>Contact:</label>
+            <input type="text" id="contact" name="contact"><br>
+            <!--Pull detail from tookan-->
+            <label>Value:</label>
+            <input type="text" id="value" name="value"><br>
+            <!--Pull detail from tookan usually under description-->
+            <label>Zalora Tag:</label>
+            <input type="text" id="zaloraTag" name="zaloraTag"><br>
+            <!--Pull detail from tookan under tags hidden input-->
+            <label>Area:</label>
+            <input type="text" id="area" name="area"><br>
+            <!--areaCode.js -->
+            <input type="hidden" id="product" name="product" value="ZALORA">
+            <!--Hidden input-->
+            <input type="hidden" id="reEntry" name="reEntry" value="FALSE">
+            <!--Hidden input-->
+            <input type="hidden" id="reason" name="reason" value="N/A">
+            <!--Hidden input-->
+            <input type="hidden" id="remark" name="remark" value="N/A">
+            <!--Hidden input-->
+            <input type="hidden" id="attemp" name="attemp" value="NO ATTEMPT">
+            <!--Hidden input-->
+            <input type="hidden" id="dateEntry" name="dateEntry">
+            <!--mandatory field-->
+        </div>
+
+
+        <input type="text" id="formMETHOD" name="formMETHOD" value="ZALORA" hidden>
+        <!--above is the hidden input as identifier for zalora inventory-->
+        <br><button class="button" id="submitButton" type="submit">Submit</button>
+
+    </form>
+    </script>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            document.getElementById("trackbutton").addEventListener("click", tracknumber);
+
+            document.getElementById("itemIn").style.display = 'none';
+
+            function tracknumber() {
+
+                document.getElementById("loading").style.display = 'block';
+                document.getElementById("trackingnumberarea").style.display = 'none';
+                document.getElementById("trackbutton").style.display = 'none';
+
+                var jobidentitynum = '';
+                jobidentitynum = document.getElementById("jobid").value;
+                document.getElementById('jobid').value = '';
+
+                var responsejd = '';
+                var json_responsejd = '';
+
+                var finaldate = '';
+                var finalday = '';
+
+                document.getElementById("wronginput").style.display = 'none';
+
+                var request = new XMLHttpRequest();
+                request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
+                request.setRequestHeader('Content-Type', 'application/json');
+
+                request.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        console.log('Status:', this.status);
+                        console.log('Headers:', this.getAllResponseHeaders());
+                        console.log('Body:', this.responseText);
+                        responsejd = this.responseText;
+                        json_responsejd = JSON.parse(responsejd);
+
+                        if (json_responsejd.status != 404) {
+
+                            document.getElementById("trackingNumber").value = json_responsejd.data[0].job_id;
+                            document.getElementById("name").value = json_responsejd.data[0].customer_username;
+                            document.getElementById("address").value = json_responsejd.data[0].job_address;
+                            document.getElementById("contact").value = json_responsejd.data[0].customer_phone;
+                            document.getElementById("value").value = json_responsejd.data[0].job_description;
+                            document.getElementById("zaloraTag").value = json_responsejd.data[0].tags;
+
+                            let address = document.getElementById("address").value.toUpperCase();
+
+                            if (address.includes("MANGGIS") == true) { area = "B1"; }
+                            else if (address.includes("DELIMA") == true) { area = "B1"; }
+                            else if (address.includes("ANGGREK DESA") == true) { area = "B1"; }
+                            else if (address.includes("PULAIE") == true) { area = "B1"; }
+                            else if (address.includes("LAMBAK") == true) { area = "B1"; }
+                            else if (address.includes("TERUNJING") == true) { area = "B1"; }
+                            else if (address.includes("MADANG") == true) { area = "B1"; }
+                            else if (address.includes("AIRPORT") == true) { area = "B1"; }
+                            else if (address.includes("ORANG KAYA BESAR IMAS") == true) { area = "B1"; }
+                            else if (address.includes("OKBI") == true) { area = "B1"; }
+                            else if (address.includes("SERUSOP") == true) { area = "B1"; }
+                            else if (address.includes("BURONG PINGAI") == true) { area = "B1"; }
+                            else if (address.includes("SETIA NEGARA") == true) { area = "B1"; }
+                            else if (address.includes("PASIR BERAKAS") == true) { area = "B1"; }
+                            else if (address.includes("MENTERI BESAR") == true) { area = "B1"; }
+                            else if (address.includes("KEBANGSAAN LAMA") == true) { area = "B1"; }
+                            else if (address.includes("BATU MARANG") == true) { area = "B2"; }
+                            else if (address.includes("DATO GANDI") == true) { area = "B2"; }
+                            else if (address.includes("KAPOK") == true) { area = "B2"; }
+                            else if (address.includes("KOTA BATU") == true) { area = "B2"; }
+                            else if (address.includes("MENTIRI") == true) { area = "B2"; }
+                            else if (address.includes("MERAGANG") == true) { area = "B2"; }
+                            else if (address.includes("PELAMBAIAN") == true) { area = "B2"; }
+                            else if (address.includes("PINTU MALIM") == true) { area = "B2"; }
+                            else if (address.includes("SALAMBIGAR") == true) { area = "B2"; }
+                            else if (address.includes("SALAR") == true) { area = "B2"; }
+                            else if (address.includes("SERASA") == true) { area = "B2"; }
+                            //else if (address.includes("MUARA") == true) { area = "B2"; }
+                            else if (address.includes("SERDANG") == true) { area = "B2"; }
+                            else if (address.includes("SUNGAI BASAR") == true) { area = "B2"; }
+                            else if (address.includes("SG BASAR") == true) { area = "B2"; }
+                            else if (address.includes("SUNGAI BELUKUT") == true) { area = "B2"; }
+                            else if (address.includes("SG BELUKUT") == true) { area = "B2"; }
+                            else if (address.includes("SUNGAI HANCHING") == true) { area = "B2"; }
+                            else if (address.includes("SG HANCHING") == true) { area = "B2"; }
+                            else if (address.includes("SUNGAI TILONG") == true) { area = "B2"; }
+                            else if (address.includes("SG TILONG") == true) { area = "B2"; }
+                            else if (address.includes("SUBOK") == true) { area = "B2"; }
+                            else if (address.includes("SUNGAI AKAR") == true) { area = "B2"; }
+                            else if (address.includes("SG AKAR") == true) { area = "B2"; }
+                            else if (address.includes("SUNGAI BULOH") == true) { area = "B2"; }
+                            else if (address.includes("SG BULOH") == true) { area = "B2"; }
+                            else if (address.includes("TANAH JAMBU") == true) { area = "B2"; }
+                            else if (address.includes("SUNGAI OROK") == true) { area = "B2"; }
+                            else if (address.includes("SG OROK") == true) { area = "B2"; }
+                            else if (address.includes("KATOK") == true) { area = "G1"; }
+                            else if (address.includes("MATA-MATA") == true) { area = "G1"; }
+                            else if (address.includes("RIMBA") == true) { area = "G1"; }
+                            else if (address.includes("TUNGKU") == true) { area = "G1"; }
+                            else if (address.includes("UBD") == true) { area = "G1"; }
+                            else if (address.includes("JIS") == true) { area = "G1"; }
+                            else if (address.includes("BERANGAN") == true) { area = "G2"; }
+                            else if (address.includes("BERIBI") == true) { area = "G2"; }
+                            else if (address.includes("KIULAP") == true) { area = "G2"; }
+                            else if (address.includes("RIPAS") == true) { area = "G2"; }
+                            else if (address.includes("RAJA ISTERI PENGIRAN ANAK SALLEHA") == true) { area = "G2"; }
+                            else if (address.includes("KIARONG") == true) { area = "G2"; }
+                            else if (address.includes("PUSAR ULAK") == true) { area = "G2"; }
+                            else if (address.includes("KUMBANG PASANG") == true) { area = "G2"; }
+                            else if (address.includes("MENGLAIT") == true) { area = "G2"; }
+                            else if (address.includes("MABOHAI") == true) { area = "G2"; }
+                            else if (address.includes("ONG SUM PING") == true) { area = "G2"; }
+                            else if (address.includes("GADONG") == true) { area = "G2"; }
+                            else if (address.includes("TASEK LAMA") == true) { area = "G2"; }
+                            else if (address.includes("BANDAR TOWN") == true) { area = "G2"; }
+                            else if (address.includes("BATU SATU") == true) { area = "JT1"; }
+                            else if (address.includes("BENGKURONG") == true) { area = "JT1"; }
+                            else if (address.includes("BUNUT") == true) { area = "JT1"; }
+                            else if (address.includes("JALAN BABU RAJA") == true) { area = "JT1"; }
+                            else if (address.includes("JALAN ISTANA") == true) { area = "JT1"; }
+                            else if (address.includes("JUNJONGAN") == true) { area = "JT1"; }
+                            else if (address.includes("KASAT") == true) { area = "JT1"; }
+                            else if (address.includes("LUMAPAS") == true) { area = "JT1"; }
+                            else if (address.includes("JALAN HALUS") == true) { area = "JT1"; }
+                            else if (address.includes("MADEWA") == true) { area = "JT1"; }
+                            else if (address.includes("PUTAT") == true) { area = "JT1"; }
+                            else if (address.includes("SINARUBAI") == true) { area = "JT1"; }
+                            else if (address.includes("TASEK MERADUN") == true) { area = "JT1"; }
+                            else if (address.includes("TELANAI") == true) { area = "JT1"; }
+                            else if (address.includes("BAN") == true) { area = "JT2"; }
+                            else if (address.includes("BATONG") == true) { area = "JT2"; }
+                            else if (address.includes("BATU AMPAR") == true) { area = "JT2"; }
+                            else if (address.includes("BEBATIK") == true) { area = "JT2"; }
+                            else if (address.includes("BEBULOH") == true) { area = "JT2"; }
+                            else if (address.includes("BEBATIK KILANAS") == true) { area = "JT2"; }
+                            else if (address.includes("KILANAS") == true) { area = "JT2"; }
+                            else if (address.includes("DADAP") == true) { area = "JT2"; }
+                            else if (address.includes("KUALA LURAH") == true) { area = "JT2"; }
+                            else if (address.includes("KULAPIS") == true) { area = "JT2"; }
+                            else if (address.includes("LIMAU MANIS") == true) { area = "JT2"; }
+                            else if (address.includes("MASIN") == true) { area = "JT2"; }
+                            else if (address.includes("MULAUT") == true) { area = "JT2" }
+                            else if (address.includes("PANCHOR MURAI") == true) { area = "JT2"; }
+                            else if (address.includes("PANCHUR MURAI") == true) { area = "JT2"; }
+                            else if (address.includes("PANGKALAN BATU") == true) { area = "JT2"; }
+                            else if (address.includes("PASAI") == true) { area = "JT2"; }
+                            else if (address.includes("WASAN") == true) { area = "JT2"; }
+                            else if (address.includes("PARIT") == true) { area = "JT2"; }
+                            else if (address.includes("EMPIRE") == true) { area = "JT3"; }
+                            else if (address.includes("JANGSAK") == true) { area = "JT3"; }
+                            else if (address.includes("JERUDONG") == true) { area = "JT3"; }
+                            else if (address.includes("KATIMAHAR") == true) { area = "JT3"; }
+                            else if (address.includes("LUGU") == true) { area = "JT3"; }
+                            else if (address.includes("SENGKURONG") == true) { area = "JT3"; }
+                            else if (address.includes("TANJONG NANGKA") == true) { area = "JT3"; }
+                            else if (address.includes("TANJONG BUNUT") == true) { area = "JT3"; }
+                            else if (address.includes("TANJUNG BUNUT") == true) { area = "JT3"; }
+                            else if (address.includes("SUNGAI TAMPOI") == true) { area = "JT3"; }
+                            else if (address.includes("SG TAMPOI") == true) { area = "JT3"; }
+                            else { area = "N/A"; }
+
+                            document.getElementById("area").value = area;
+
+                            //getSubmittedDate
+                            var today = new Date();
+                            var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+
+                            var ampmhour = '';
+                            var ampmmin = '';
+                            var ampmNum = '';
+
+                            if (today.getHours() < 12) {
+                                ampmNum = 0;
+                                ampmhour = (today.getHours());
+                            }
+
+                            if (today.getHours() >= 12) {
+                                ampmNum = 1;
+                                ampmhour = (today.getHours());
+                            }
+
+                            if (today.getMinutes() < 10) {
+                                ampmmin = "0" + (today.getMinutes());
+                            }
+
+                            if (today.getMinutes() >= 10) {
+                                ampmmin = (today.getMinutes());
+                            }
+
+                            var time = ampmhour + ":" + ampmmin;
+
+                            let dateSubmitted = date + ' ' + time;
+
+                            document.getElementById("dateEntry").value = dateSubmitted;
+
+                            document.getElementById("loading").style.display = 'none';
+                            document.getElementById("itemIn").style.display = 'block';
+                        }
+
+                        if (json_responsejd.status == 404) {
+                            document.getElementById("loading").style.display = 'none';
+                            document.getElementById("wronginput").style.display = 'block';
+                            document.getElementById("trackingnumberarea").style.display = 'block';
+                            document.getElementById("trackbutton").style.display = 'block';
+                        }
+                    }
+                };
+
+                var body = {
+                    'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                    'job_ids': [jobidentitynum],
+                    'include_task_history': 1
+                };
+
+                request.send(JSON.stringify(body));
+            }
+        });
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+</body>
+
+</html>

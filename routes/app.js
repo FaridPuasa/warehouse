@@ -24,7 +24,7 @@ router.get('/register', (req,res) => {
     res.render('register')
 })
 
-router.post('/success', (req,res) => {
+router.post('/registerSuccess', (req,res) => {
     user(req,res)
 })
 
@@ -46,6 +46,8 @@ router.post('/changesuccess', (req,res) => {
 
 function user(req,res) {
     let body = req.body
+    let name = body.name
+    let ic = body.icNumber
     let user = new userDB ({
         name: body.name,
         password: body.password, //auto generated
@@ -61,13 +63,13 @@ function user(req,res) {
                 res.render('error', {
                     error_code: '11000',
                     head:'Invalid Entry',
-                    message:'Tracking Number already exist within the database'
+                    message:'User IC-Number / Social Security Number already in Database'
                 })
             }
         }else {
             res.render ('success', {
                 head: "Account Created",
-                message: "Account successfully created",
+                message: `Account for user ${name} successfuly created. Login ID ${ic}.`,
             })
         }
     })
@@ -79,35 +81,45 @@ function login(req,res){
     userDB.authenticate(icNumber, password, (error, user) =>{
         let status = user.firstTime
         if(status === "TRUE"){
-            res.render('changepassword')
+            res.render('changepassword', {icNumber: icNumber})
         }
         else if (status === "FALSE"){
             req.session.userId = user._id;
             res.render('success')
         }
         else{
-            res.render('error')
+            res.render('error', {
+                error_code: 'error',
+                head:'Invalid Entry',
+                message:'test'
+            })
         }
     })
 }
 
 function firstTimeLogin(req,res){
-    let icNumber = req.body.icNumber
-    let password = req.body.password
-    userDB.findOneAndUpdate({icNumber:icNumber},{password:password, firstTime:"FALSE"}, (err,docs) => {
-        if(err){
-            console.log(err)
-            res.render('error',{
-                head: "Error",
-                error_code: "10",
-                message: "Failed to Update Password",
-                solution: "Please contact RDI Department ext 877"
-            })
-        } 
-        else{
-            res.redirect('login')
-        }
-    })
+    let filter = {icNumber: req.body.icNumber}
+    console.log(filter)
+
+    bcrypt.hash(password, 10, (hash) => {
+        req.body.password = hash
+        let update = {hash, firstTime:"FALSE"}
+        console.log(update)
+        userDB.findOneAndUpdate(filter, update, (err,user) => {
+            if(err){
+                console.log(err)
+                res.render('error',{
+                    head: "Error",
+                    error_code: "10",
+                    message: "Failed to Update Password",
+                    solution: "Please contact RDI Department ext 877"
+                })
+            } 
+            else{
+                res.render('login')
+            }
+        })
+    })   
 }
 
 /*************************** USER *********************************/
@@ -178,8 +190,17 @@ router.post('/dispatchSuccess', (req,res) => {
 })
 
 //Zalora Export Return
-router.get('/return', (res,req) => {
-    res.render('return')
+router.get('/return', (req,res) => {
+    let zaloraList = []
+    zaloraInventory.find({} , (err,zaloraInventory) => {
+        zaloraInventory.forEach(function(zaloraInventory){
+            zaloraList.push(zaloraInventory)
+        })
+        res.render('return',{
+            zalora: zaloraList,
+        })
+    })
+   
 })
 
 router.post('/success', (req,res) => {
@@ -194,6 +215,7 @@ router.get('/selfcollect', (req,res) => {
 router.post('/confirmed', (req,res) => {
     selfCollect(req,res)
 })
+
 
 //This is used for return details
 function exportReturn(req,res){
@@ -323,6 +345,11 @@ function itemOut(req,res){
     let update = {status: "OUT FOR DELIVERY" + "|" + date}
     let history = {history: {statusDetail: "OUT FOR DELIVERY" + "|" + date }}
     let option = {upsert: true, new: true}
+    zaloraInventory.find({}, function(err,zaloraInventory){
+        res.render('itemList', {
+            itemList: zaloraInventory,
+        })
+    })
     zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option)
     zaloraInventory.findOneAndUpdate(tracker,update,option)
     //1st bit is used to update the parcel status
@@ -444,12 +471,110 @@ function selfCollect(req,res){
 
 /*************************** PHARMACY *********************************/
 
+router.get('/pharmacyin',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
+})
+
+router.post("/pharmacyin",(req,res) => {
+    pharmacyIn(req,res)
+})
+
+router.get('/pharmacyout',(req,res) => {
+    res.render('comingsoon', {
+        head: "Page in development",
+        message: "Coming Soon"
+    })
+})
+
+router.get('pharmacySelf',(req,res) => {
+    res.render('pharmacyself')
+})
+
+router.get('pharmacySelf',(req,res) => {
+    pharmaSelfCollect(req,res)
+})
+
+//Pharmacy In
+function pharmacyIn (req,res){
+    let parcelStatus = {statusDetail: "IN MED ROOM"+"["+req.body.area+"]"+ "|" + req.body.dateEntry}
+    let bin = req.body.area +"/"+req.body.dateEntry
+    let inventory = new pharmacyInventory({
+       trackingNumber: req.body.trackingNumber,
+       parcelNumber: req.body.parcelNumber + "[" + req.body.area + "]",
+       name: req.body.name,
+       contact: req.body.contact,
+       address: req.body.address,
+       area: req.body.area,
+       product: req.body.formMETHOD,
+       value: req.body.value,
+       status: "IN MED ROOM" + "[" + req.body.area + "]",
+       bin: bin,
+       reEntry: "FALSE",
+       reason: req.body.reason,
+       remark: req.body.reason,
+       attemp: "FALSE",
+       reSchedule: req.body.reSchedule,
+       dateEntry: req.body.dateEntry,
+    })
+    inventory.history.push(parcelStatus)
+    inventory.save((err) => {
+        if (err) {
+            if (err.name === 'MongoError' && err.code === 11000){
+                res.render('error', {
+                    error_code: '11000',
+                    head:'Invalid Entry',
+                    message:'Tracking Number already exist within the database'
+                })
+            }
+        }else {
+            res.redirect ('pharmain')
+        }
+    })
+}
+
+//Self Collect Pharmacy
+function pharmaSelfCollect(req,res){
+    let date = moment().format();
+    let filter = {trackingNumber: req.body.trackingNumber}
+    let update = {status: "SELF COLLECTED" + "|" + date}
+    let history = {history: {statusDetail: "SELF COLLECTED" + "|" + date}}
+    let option = {upsert: true, new: true}
+    console.log(req.body.trackingNumber)
+    pharmacyInventory.findOneAndUpdate(filter,{$push: history}, option)
+    pharmacyInventory.findOneAndUpdate(filter, update, option, (err,docs) => {
+        if(err){
+            console.log(err)
+            res.render('error',{
+                head: "Error",
+                code: "10",
+                message: "Failed to update database",
+                solution: "Please contact RDI Department ext 877"
+            })
+        } 
+        else{
+            console.log(docs)
+            res.render('success', {
+                head: `successfully update the warehouse management system`,
+                message: `Item collected at ${date}`
+            })
+        } 
+    })
+}
+
+/*************************** PHARMACY *********************************/
+
+/*************************** GO RUSH PLUS *********************************/
 router.get('/grpmy',(req,res) => {
     res.render('comingsoon', {
         head: "Page in development",
         message: "Coming Soon"
     })
 })
+
+/*************************** GO RUSH PLUS *********************************/
 
 router.get('/tracking',(req,res) => {
     res.render('comingsoon', {
@@ -459,20 +584,6 @@ router.get('/tracking',(req,res) => {
 })
 
 router.get('/central',(req,res) => {
-    res.render('comingsoon', {
-        head: "Page in development",
-        message: "Coming Soon"
-    })
-})
-
-router.get('/pharmacyin',(req,res) => {
-    res.render('comingsoon', {
-        head: "Page in development",
-        message: "Coming Soon"
-    })
-})
-
-router.get('/pharmacyout',(req,res) => {
     res.render('comingsoon', {
         head: "Page in development",
         message: "Coming Soon"

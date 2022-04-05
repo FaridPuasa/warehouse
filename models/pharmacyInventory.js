@@ -1,22 +1,38 @@
 const mongoose = require("mongoose");
+const moment = require('moment')
 
 const reqString = {
     type: String,
-    require: true,
 }
+
+let date = moment().format();
+let later = moment(date).add(21,'d')
+
+let entryDate = {type: Date, default: date}
+let expireDate = {type: Date, default: later}
+//let collectionDate = {type: Date, default: date}
+//let age = expireDate - entryDate
 
 const inventorySchema  = new mongoose.Schema({
     trackingNumber: {type: String, unique: true},
-    fridge: reqString,
+    parcelNumber: reqString,
     name: reqString,
-    contact1: reqString,
+    contact: reqString,
     address: reqString,
     area: reqString,
-    status: reqString,
     product: reqString,
     value: reqString,
+    reason: reqString,
+    remark: reqString,
+    reEntry: reqString,
+    attemp: reqString,
+    reSchedule: reqString,
     dateEntry: reqString,
-    entryDate: {type: Date, default: Date.now}
+    entryDate: entryDate,
+    expireDate:expireDate,
+    status: reqString,
+    history: [{statusDetail: reqString}],
+    //age: ageing,
 })
 
 module.exports = mongoose.model('pharmacyInventories', inventorySchema)
