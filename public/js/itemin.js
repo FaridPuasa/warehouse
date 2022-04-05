@@ -5,6 +5,7 @@ function checkTrackingNum(field, autoMove) {
         document.getElementById("reEntry").style.display = 'none';
         document.getElementById("trackingnumberarea").style.display = 'none';
         document.getElementById("loading").style.display = 'block';
+        document.getElementById("wronginput").style.display = 'none';
 
         var jobidentitynum = '';
         jobidentitynum = document.getElementById("trackingNum").value;
