@@ -525,9 +525,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
             var time = "01:00:00";
             var timeClose = "23:00:00";
             document.getElementById("dateTime").value = date + ' ' + time;
-            document.getElementById("dateTimeClose").value = document.getElementById("completionDate").value + ' ' + timeClose;
+            document.getElementById("dateTimeClose").value = document.getElementById("dateAssign").value + ' ' + timeClose;
 
             //getSubmittedDate
+            var podDay = "";
+            var podMonth = "";
             var podToday = new Date();
 
             if (podToday.getDate() < 10) {
