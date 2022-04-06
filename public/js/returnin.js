@@ -12,7 +12,7 @@ function checkTrackingNum(field, autoMove) {
         document.getElementById('trackingNum').value = '';
 
         var request = new XMLHttpRequest();
-        request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
+        request.open('POST', 'https://api.tookanapp.com/v2/get_job_details_by_order_id');
         request.setRequestHeader('Content-Type', 'application/json');
 
         request.onreadystatechange = function () {
@@ -49,7 +49,7 @@ function checkTrackingNum(field, autoMove) {
 
         var body = {
             'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-            'job_ids': [jobidentitynum],
+            'order_ids': [jobidentitynum],
             'include_task_history': 0
         };
         request.send(JSON.stringify(body));
