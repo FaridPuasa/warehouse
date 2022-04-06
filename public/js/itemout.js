@@ -129,15 +129,6 @@ function checkTrackingNum(field, autoMove) {
                         var row_2_data_9 = document.createElement('td');
                         var row_2_data_10 = document.createElement('td');
 
-                        var tnInput = document.createElement('input');
-                        tnInput.setAttribute('type', 'text');
-                        tnInput.setAttribute('class', 'text-field w-input');
-                        tnInput.setAttribute('name', 'content');
-                        tnInput.setAttribute('id', 'trackingNumberDetails' + (countContent + 1));
-                        tnInput.setAttribute('value', json_responsetn.data[0].job_id + "," + json_responsetn.data[0].order_id + "," + json_responsetn.data[0].customer_username + "," +
-                            json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description);
-                        document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
                         row_2.appendChild(row_2_data_1);
                         row_2.appendChild(row_2_data_2);
                         row_2.appendChild(row_2_data_3);
@@ -149,6 +140,10 @@ function checkTrackingNum(field, autoMove) {
                         row_2.appendChild(row_2_data_9);
                         row_2.appendChild(row_2_data_10);
                         tbody.appendChild(row_2);
+
+                        document.getElementById("value").value = "$" + json_responsetn.data[0].job_description;
+
+                        document.getElementById("itemOut").submit();
 
                         countTN = countTN + 1;
                         createTable = 1;
@@ -261,15 +256,6 @@ function checkTrackingNum(field, autoMove) {
                         var row_2_data_9 = document.createElement('td');
                         var row_2_data_10 = document.createElement('td');
 
-                        var tnInput = document.createElement('input');
-                        tnInput.setAttribute('type', 'text');
-                        tnInput.setAttribute('class', 'text-field w-input');
-                        tnInput.setAttribute('name', 'content');
-                        tnInput.setAttribute('id', 'trackingNumberDetails' + (countContent + 1));
-                        tnInput.setAttribute('value', json_responsetn.data[0].job_id + "," + json_responsetn.data[0].order_id + "," + json_responsetn.data[0].customer_username + "," +
-                            json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description);
-                        document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
                         row_2.appendChild(row_2_data_1);
                         row_2.appendChild(row_2_data_2);
                         row_2.appendChild(row_2_data_3);
@@ -281,6 +267,10 @@ function checkTrackingNum(field, autoMove) {
                         row_2.appendChild(row_2_data_9);
                         row_2.appendChild(row_2_data_10);
                         tbody.appendChild(row_2);
+
+                        document.getElementById("value").value = "$" + json_responsetn.data[0].job_description;
+
+                        document.getElementById("itemOut").submit();
 
                         endLoop = endLoop + 1;
                         countTN = countTN + 1;
@@ -393,11 +383,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
             && ($("#areaCodeTemp").val().length != 0) && ($("#podDoneByTemp").val().length != 0)
             && ($("#agentTemp").val().length != 0)) {
 
-            document.getElementById("podDate").value = document.getElementById("podDateTemp").value;
-            document.getElementById("completionDate").value = document.getElementById("completionDateTemp").value;
+            document.getElementById("podCreate").value = document.getElementById("podDateTemp").value;
+            document.getElementById("dateAssign").value = document.getElementById("completionDateTemp").value;
             document.getElementById("areaCode").value = document.getElementById("areaCodeTemp").value;
             document.getElementById("podDoneBy").value = document.getElementById("podDoneByTemp").value;
             document.getElementById("agent").value = document.getElementById("agentTemp").value;
+            document.getElementById("parcel").value = "Temporary Parcel Number";
+            document.getElementById("type").value = "Temporary Agent Class";
+            document.getElementById("product").value = document.getElementById("formMETHOD").value;
 
             if (document.getElementById("agentTemp").value == "994634") {
                 document.getElementById("agentName").value = "FD SOWDEQ";
@@ -460,7 +453,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
 
             if (document.getElementById("agentTemp").value == "996642") {
-                document.getElementById("agenagentNamet").value = "IFR ZIZAH";
+                document.getElementById("agentName").value = "IFR ZIZAH";
             }
 
             if (document.getElementById("agentTemp").value == "977110") {
@@ -534,6 +527,50 @@ document.addEventListener("DOMContentLoaded", function (event) {
             var timeClose = "23:00:00";
             document.getElementById("dateTime").value = date + ' ' + time;
             document.getElementById("dateTimeClose").value = document.getElementById("completionDate").value + ' ' + timeClose;
+
+            //getSubmittedDate
+            var podToday = new Date();
+
+            if (podToday.getDate() < 10) {
+                podDay = "0" + podToday.getDate();
+            }
+
+            if (podToday.getDate() >= 10) {
+                podDay = podToday.getDate();
+            }
+
+            if (podToday.getMonth() < 9) {
+                podMonth = "0" + (podToday.getMonth() + 1);
+            }
+
+            if (podToday.getMonth() >= 9) {
+                podMonth = (podToday.getMonth() + 1);
+            }
+
+            var podDate = podDay + podMonth + podToday.getFullYear();
+
+            var ampmhour = '';
+            var ampmmin = '';
+
+            if (podToday.getHours() < 10) {
+                ampmhour = "0" + (podToday.getHours());
+            }
+
+            if (podToday.getHours() >= 10) {
+                ampmhour = (podToday.getHours());
+            }
+
+            if (podToday.getMinutes() < 10) {
+                ampmmin = "0" + (podToday.getMinutes());
+            }
+
+            if (podToday.getMinutes() >= 10) {
+                ampmmin = (podToday.getMinutes());
+            }
+
+            var podTime = ampmhour + ampmmin;
+
+            document.getElementById("podRef").value = "ZAL/GR/POD/" + document.getElementById("areaCode").value + "/" + podDate + podTime;
 
             document.getElementById("podInfoArea").style.display = 'none';
             document.getElementById("podArea").style.display = 'block';
