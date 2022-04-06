@@ -50,7 +50,7 @@ function checkTrackingNum(field, autoMove) {
                         let row_h_data_1 = document.createElement('th');
                         row_h_data_1.innerHTML = "DATE: ";
                         let row_h_data_2 = document.createElement('td');
-                        row_h_data_2.innerHTML = document.getElementById("podDate").value;
+                        row_h_data_2.innerHTML = document.getElementById("podCreate").value;
                         let row_h_data_3 = document.createElement('th');
                         row_h_data_3.innerHTML = "AREA: ";
                         let row_h_data_4 = document.createElement('td');
