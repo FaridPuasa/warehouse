@@ -347,7 +347,6 @@ function checkTrackingNum(field, autoMove) {
 
 document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("podArea").style.display = 'none';
-    document.getElementById("trackingNumberDetailsArea").style.display = 'none';
     document.getElementById("inputTnArea").style.display = 'none';
     document.getElementById("excelDbArea").style.display = 'none';
     document.getElementById("loading").style.display = 'none';
