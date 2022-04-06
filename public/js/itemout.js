@@ -141,6 +141,15 @@ function checkTrackingNum(field, autoMove) {
                         row_2.appendChild(row_2_data_10);
                         tbody.appendChild(row_2);
 
+                        var tnInput = document.createElement('input');
+                        tnInput.setAttribute('type', 'text');
+                        tnInput.setAttribute('class', 'text-field w-input');
+                        tnInput.setAttribute('name', 'content');
+                        tnInput.setAttribute('id', 'trackingNumberDetails' + (countContent + 1));
+                        tnInput.setAttribute('value', json_responsetn.data[0].job_id + "," + json_responsetn.data[0].order_id + "," + json_responsetn.data[0].customer_username + "," +
+                            json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description);
+                        document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
                         document.getElementById("value").value = "$" + json_responsetn.data[0].job_description;
 
                         document.getElementById("itemOut").submit();
@@ -267,6 +276,15 @@ function checkTrackingNum(field, autoMove) {
                         row_2.appendChild(row_2_data_9);
                         row_2.appendChild(row_2_data_10);
                         tbody.appendChild(row_2);
+
+                        var tnInput = document.createElement('input');
+                        tnInput.setAttribute('type', 'text');
+                        tnInput.setAttribute('class', 'text-field w-input');
+                        tnInput.setAttribute('name', 'content');
+                        tnInput.setAttribute('id', 'trackingNumberDetails' + (countContent + 1));
+                        tnInput.setAttribute('value', json_responsetn.data[0].job_id + "," + json_responsetn.data[0].order_id + "," + json_responsetn.data[0].customer_username + "," +
+                            json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description);
+                        document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
 
                         document.getElementById("value").value = "$" + json_responsetn.data[0].job_description;
 
