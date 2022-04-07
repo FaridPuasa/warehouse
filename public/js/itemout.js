@@ -141,16 +141,8 @@ function checkTrackingNum(field, autoMove) {
                         row_2.appendChild(row_2_data_10);
                         tbody.appendChild(row_2);
 
-                        var tnInput = document.createElement('input');
-                        tnInput.setAttribute('type', 'text');
-                        tnInput.setAttribute('class', 'text-field w-input');
-                        tnInput.setAttribute('name', 'content');
-                        tnInput.setAttribute('id', 'trackingNumberDetails' + (countContent + 1));
-                        tnInput.setAttribute('value', json_responsetn.data[0].job_id + "," + json_responsetn.data[0].order_id + "," + json_responsetn.data[0].customer_username + "," +
-                            json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description);
-                        document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                        document.getElementById("value").value = "$" + json_responsetn.data[0].job_description;
+                        document.getElementById("content").value = "No."+ countTN + " P/N: N/A, Task ID: " + json_responsetn.data[0].job_id + ", Contact Name: " + json_responsetn.data[0].customer_username + ", Address: " +
+                        json_responsetn.data[0].job_address + ", Phone: " + json_responsetn.data[0].customer_phone + ", Price: $" + json_responsetn.data[0].job_description;  
 
                         document.getElementById("itemOut").submit();
 
@@ -277,16 +269,8 @@ function checkTrackingNum(field, autoMove) {
                         row_2.appendChild(row_2_data_10);
                         tbody.appendChild(row_2);
 
-                        var tnInput = document.createElement('input');
-                        tnInput.setAttribute('type', 'text');
-                        tnInput.setAttribute('class', 'text-field w-input');
-                        tnInput.setAttribute('name', 'content');
-                        tnInput.setAttribute('id', 'trackingNumberDetails' + (countContent + 1));
-                        tnInput.setAttribute('value', json_responsetn.data[0].job_id + "," + json_responsetn.data[0].order_id + "," + json_responsetn.data[0].customer_username + "," +
-                            json_responsetn.data[0].job_address + "," + json_responsetn.data[0].customer_phone + "," + "$" + json_responsetn.data[0].job_description);
-                        document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                        document.getElementById("value").value = "$" + json_responsetn.data[0].job_description;
+                        document.getElementById("content").value = "No."+ countTN + " P/N: N/A, Task ID: " + json_responsetn.data[0].job_id + ", Contact Name: " + json_responsetn.data[0].customer_username + ", Address: " +
+                        json_responsetn.data[0].job_address + ", Phone: " + json_responsetn.data[0].customer_phone + ", Price: $" + json_responsetn.data[0].job_description;  
 
                         document.getElementById("itemOut").submit();
 
@@ -402,6 +386,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
             document.getElementById("podCreate").value = document.getElementById("podDateTemp").value;
             document.getElementById("dateAssign").value = document.getElementById("completionDateTemp").value;
+            document.getElementById("value").value = "$ N/A";
             document.getElementById("areaCode").value = document.getElementById("areaCodeTemp").value;
             document.getElementById("podDoneBy").value = document.getElementById("podDoneByTemp").value;
             document.getElementById("agent").value = document.getElementById("agentTemp").value;
