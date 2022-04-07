@@ -1,6 +1,6 @@
 
 <!DOCTYPE html><!-- This site was created in Webflow. http://www.webflow.com -->
-<!-- Last Published: Tue Apr 05 2022 07:01:03 GMT+0000 (Coordinated Universal Time) -->
+<!-- Last Published: Thu Apr 07 2022 01:33:05 GMT+0000 (Coordinated Universal Time) -->
 <html data-wf-domain="gorushwms.webflow.io" data-wf-page="624b9933537f554081fcc248" data-wf-site="61fb4a164eca130338cafeaa" data-wf-status="1">
   <head>
     <meta charset="utf-8" />
@@ -9,7 +9,7 @@
     <meta content="Item Out" property="twitter:title" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Webflow" name="generator" />
-    <link href="https://uploads-ssl.webflow.com/61fb4a164eca130338cafeaa/css/gorushwms.webflow.c3466fd47.css" rel="stylesheet" type="text/css" />
+    <link href="https://uploads-ssl.webflow.com/61fb4a164eca130338cafeaa/css/gorushwms.webflow.55fcdb894.css" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
     <script type="text/javascript">
       WebFont.load({
@@ -81,6 +81,13 @@
     <div class="container w-container">
       <div class="wf-section">
         <div class="div-block">
+          <div class="w-embed w-iframe"><iframe name="pushToDB" style="display:none;"></iframe>
+
+            <input type="hidden" id="agent" name="agent">
+            <input type="hidden" id="dateTime" name="dateTime">
+            <input type="hidden" id="dateTimeClose" name="dateTimeClose">
+            <input type="hidden" id="formMETHOD" name="formMETHOD" value="ZALORA">
+          </div>
           <h1 id="w-node-_5c40cdcd-743f-e2a9-4ca2-eec7aae7df1c-81fcc248" class="heading-2">Create POD + Assign Task(s)</h1>
           <div id="podInfoArea">
             <div class="w-layout-grid pod-info-grid">
@@ -162,25 +169,18 @@
           <div id="excelDbArea">
             <div class="w-layout-grid grid-5"><a whenClicked="exportTableToExcel(&#x27;tasklisttable&#x27;)" id="w-node-_8a8ae228-782f-a4e1-9c26-1a11fdbe337f-81fcc248" href="#" class="button-3 w-button">Download POD as Excel</a>
               <div id="w-node-_442f2a5e-8613-d8a6-4025-ce34025fc67a-81fcc248" class="form-block w-form">
-                <form id="itemOut" name="wf-form-itemOut" data-name="itemOut" redirect="/success" data-redirect="/success" action="/success" method="post" class="form">
-                  <div class="w-layout-grid grid-item-out-display">
-                    <div id="w-node-_765653f6-76d3-7b22-9e39-9ab7e0d540e6-81fcc248" class="w-embed"><input type="hidden" id="podRef" name="podRef">
-                      <input type="hidden" id="podDate" name="podDate">
-                      <input type="hidden" id="completionDate" name="completionDate">
-                      <input type="hidden" id="areaCode" name="areaCode">
-                      <input type="hidden" id="podDoneBy" name="podDoneBy">
-                      <input type="hidden" id="agent" name="agent">
-                      <input type="hidden" id="agentName" name="agentName">
-                      <input type="hidden" id="dateTime" name="dateTime">
-                      <input type="hidden" id="dateTimeClose" name="dateTimeClose">
-                      <input type="hidden" id="parcelNumber" name="parcelNumber">
-                      <input type="hidden" id="taskID" name="taskID">
-                      <input type="hidden" id="contactName" name="contactName">
-                      <input type="hidden" id="address" name="address">
-                      <input type="hidden" id="phone" name="phone">
-                      <input type="hidden" id="price" name="price">
-                    </div>
-                    <div id="trackingNumberDetailsArea" class="w-node-_2e52c3dc-2833-6563-35f8-c656cd266f70-81fcc248"></div>
+                <form method="post" class="form" name="wf-form-itemOut" data-name="itemOut" target="pushToDB" action="/success" id="itemOut" redirect="/success" data-redirect="/success">
+                  <div id="w-node-_765653f6-76d3-7b22-9e39-9ab7e0d540e6-81fcc248" class="w-embed"><input type="hidden" id="content" name="content">
+                    <input type="hidden" id="podRef" name="podRef">
+                    <input type="hidden" id="agentName" name="agentName">
+                    <input type="hidden" id="dateAssign" name="dateAssign">
+                    <input type="hidden" id="value" name="value">
+                    <input type="hidden" id="parcel" name="parcel">
+                    <input type="hidden" id="type" name="type">
+                    <input type="hidden" id="product" name="product">
+                    <input type="hidden" id="areaCode" name="areaCode">
+                    <input type="hidden" id="podCreate" name="podCreate">
+                    <input type="hidden" id="podDoneBy" name="podDoneBy">
                   </div><input type="submit" value="Save to DB" data-wait="Please wait..." id="submitDbButton" class="submit-button w-node-_442f2a5e-8613-d8a6-4025-ce34025fc682-81fcc248 w-button" />
                 </form>
                 <div class="w-form-done">
@@ -204,7 +204,7 @@
     <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=61fb4a164eca130338cafeaa" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://uploads-ssl.webflow.com/61fb4a164eca130338cafeaa/js/webflow.22615f19c.js" type="text/javascript"></script>
     <!--[if lte IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/FaridPuasa/warehouse@dc4fdc19545dcb366f43fd6faa2a06ae1b9816b6/public/js/itemout.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/FaridPuasa/warehouse@e66ee1dcb4f5b1ef614f581a5e8b144af9c7b233/public/js/itemout.js"></script>
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -255,13 +255,6 @@
           downloadLink.click();
         }
       }
-    </script>
-
-    <script>
-      let ref = new Date()
-      let area = document.getElementById("areaCode").value
-      //document.getElementById("demo").innerHTML = "Dispatch" + "/GRP" + "/" + area + "/" + ref;
-      document.getElementById("podRef").value = "POD" + "/GRE" + "/" + area + "/" + ref;
     </script>
   </body>
 </html>
