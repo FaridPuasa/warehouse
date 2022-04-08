@@ -388,11 +388,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
             && ($("#areaCodeTemp").val().length != 0) && ($("#podDoneByTemp").val().length != 0)
             && ($("#agentTemp").val().length != 0)) {
 
-            document.getElementById("podCreate").value = document.getElementById("podDateTemp").value;
+            document.getElementById("dateCreate").value = document.getElementById("podDateTemp").value;
             document.getElementById("dateAssign").value = document.getElementById("completionDateTemp").value;
             document.getElementById("value").value = "$ N/A";
             document.getElementById("areaCode").value = document.getElementById("areaCodeTemp").value;
-            document.getElementById("podDoneBy").value = document.getElementById("podDoneByTemp").value;
+            document.getElementById("madeBy").value = document.getElementById("podDoneByTemp").value;
             document.getElementById("agent").value = document.getElementById("agentTemp").value;
             document.getElementById("parcel").value = "Temporary Parcel Number";
             document.getElementById("type").value = "Temporary Agent Class";
