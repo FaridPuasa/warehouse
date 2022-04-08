@@ -408,7 +408,7 @@ function itemin(req,res){
     let bin = req.body.area +"/"+req.body.dateEntry
     let inventory = new zaloraInventory({
        trackingNumber: req.body.trackingNumber,
-       parcelNumber: req.body.parcelNumber + "[" + req.body.area + "]",
+       parcelNumber: req.body.parcelNumber,
        name: req.body.name,
        contact: req.body.contact,
        address: req.body.address,
@@ -539,8 +539,8 @@ function pharmacyIn (req,res){
 function pharmaSelfCollect(req,res){
     let date = moment().format();
     let filter = {trackingNumber: req.body.trackingNumber}
-    let update = {status: "SELF COLLECTED" + "|" + date}
-    let history = {history: {statusDetail: "SELF COLLECTED" + "|" + date}}
+    let update = {status: "SELF COLLECTED" + " | " + date}
+    let history = {history: {statusDetail: "SELF COLLECTED" + " | " + date}}
     let option = {upsert: true, new: true}
     console.log(req.body.trackingNumber)
     pharmacyInventory.findOneAndUpdate(filter,{$push: history}, option)
@@ -566,7 +566,7 @@ function pharmaSelfCollect(req,res){
 
 /*************************** PHARMACY *********************************/
 
-/*************************** GO RUSH PLUS *********************************/
+/*************************** GO RUSH MALAYSIA *********************************/
 router.get('/grpmy',(req,res) => {
     res.render('comingsoon', {
         head: "Page in development",
@@ -574,7 +574,63 @@ router.get('/grpmy',(req,res) => {
     })
 })
 
-/*************************** GO RUSH PLUS *********************************/
+
+//Chances of Tookan to push accurately....?
+//Does Tookan able to push to Mongo???
+//Does DHL Require to Download???
+
+//After DHL Pickup
+function iteminMy(req,res){
+    let date = moment().format()
+    let parcelStatus = "IN WAREHOUSE[MY]" + " | " + date
+    let body = req.body
+    let myInventory = new myInventoryDB ({
+        trackingNumber: body.trackingNumber,
+        name: body.name,
+        address: body.address,
+        contact: body.contact,
+        value: body.value,
+        stasus: "IN WAREHOUSE[MY]",
+        product: body.formMETHOD,
+        tag: body.tag,
+        dateArrive: body.dateArrive,
+    }) 
+    myInventory.history.push(parcelStatus)
+    myInventory.save((err) => {
+        if (err) {
+            if (err.name === 'MongoError' && err.code === 11000){
+                res.render('error', {
+                    error_code: '11000',
+                    head:'Invalid Entry',
+                    message:'Tracking Number already exist within the database'
+                })
+            }
+        }else {
+            res.redirect ('myin')
+        }
+    })
+}
+
+//Item Out for Transit to BN
+function manifest(req,res){
+    //let date = moment().format()
+    //let parcelStatus = "IN TRANSIT TO BN" + " | " + date
+    //let history = {history: {statusDetail: "SELF COLLECTED" + " | " + date}}
+    let manifest = []
+    let filter = {trackingNumber: req.body.trackingNumber}
+    myInventoryDB.findOne(filter, function(err,myInventory){
+        res.render('itemList', {
+            manifestList: myInventory,
+        })
+    }) 
+}
+
+
+function maniAdd(req,res){
+
+}
+
+/*************************** GO RUSH MALAYSIA *********************************/
 
 router.get('/tracking',(req,res) => {
     res.render('comingsoon', {

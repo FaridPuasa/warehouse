@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const reqString = {
     type: String,
-    require: true,
 }
 
 const content = new mongoose.Schema({
