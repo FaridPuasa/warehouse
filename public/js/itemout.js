@@ -50,7 +50,7 @@ function checkTrackingNum(field, autoMove) {
                         let row_h_data_1 = document.createElement('th');
                         row_h_data_1.innerHTML = "DATE: ";
                         let row_h_data_2 = document.createElement('td');
-                        row_h_data_2.innerHTML = document.getElementById("podCreate").value;
+                        row_h_data_2.innerHTML = document.getElementById("dateCreate").value;
                         let row_h_data_3 = document.createElement('th');
                         row_h_data_3.innerHTML = "AREA: ";
                         let row_h_data_4 = document.createElement('td');
@@ -59,7 +59,7 @@ function checkTrackingNum(field, autoMove) {
                         let row_h_data_5 = document.createElement('th');
                         row_h_data_5.innerHTML = "MADE BY: ";
                         let row_h_data_6 = document.createElement('td');
-                        row_h_data_6.innerHTML = document.getElementById("podDoneBy").value;
+                        row_h_data_6.innerHTML = document.getElementById("madeBy").value;
                         let row_h_data_7 = document.createElement('th');
                         row_h_data_7.innerHTML = "DISPATCHER NAME: ";
                         let row_h_data_8 = document.createElement('td');
@@ -146,7 +146,7 @@ function checkTrackingNum(field, autoMove) {
                         document.getElementById("content").value = "No."+ countTN + " P/N: N/A, Task ID: " + json_responsetn.data[0].job_id + ", Contact Name: " + json_responsetn.data[0].customer_username + ", Address: " +
                         json_responsetn.data[0].job_address + ", Phone: " + json_responsetn.data[0].customer_phone + ", Price: $" + json_responsetn.data[0].job_description;  
 
-                        document.getElementById("itemOut").submit();
+                        /* document.getElementById("itemOut").submit(); */
 
                         countTN = countTN + 1;
                         createTable = 1;
@@ -276,7 +276,7 @@ function checkTrackingNum(field, autoMove) {
                         document.getElementById("content").value = "No."+ countTN + " P/N: N/A, Task ID: " + json_responsetn.data[0].job_id + ", Contact Name: " + json_responsetn.data[0].customer_username + ", Address: " +
                         json_responsetn.data[0].job_address + ", Phone: " + json_responsetn.data[0].customer_phone + ", Price: $" + json_responsetn.data[0].job_description;  
 
-                        document.getElementById("itemOut").submit();
+                        /* document.getElementById("itemOut").submit(); */
 
                         endLoop = endLoop + 1;
                         countTN = countTN + 1;
