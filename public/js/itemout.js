@@ -146,7 +146,7 @@ function checkTrackingNum(field, autoMove) {
                         document.getElementById("content").value = "No."+ countTN + " P/N: N/A, Task ID: " + json_responsetn.data[0].job_id + ", Contact Name: " + json_responsetn.data[0].customer_username + ", Address: " +
                         json_responsetn.data[0].job_address + ", Phone: " + json_responsetn.data[0].customer_phone + ", Price: $" + json_responsetn.data[0].job_description;  
 
-                        /* document.getElementById("itemOut").submit(); */
+                        document.getElementById("itemOut").submit();
 
                         countTN = countTN + 1;
                         createTable = 1;
@@ -276,7 +276,7 @@ function checkTrackingNum(field, autoMove) {
                         document.getElementById("content").value = "No."+ countTN + " P/N: N/A, Task ID: " + json_responsetn.data[0].job_id + ", Contact Name: " + json_responsetn.data[0].customer_username + ", Address: " +
                         json_responsetn.data[0].job_address + ", Phone: " + json_responsetn.data[0].customer_phone + ", Price: $" + json_responsetn.data[0].job_description;  
 
-                        /* document.getElementById("itemOut").submit(); */
+                        document.getElementById("itemOut").submit();
 
                         endLoop = endLoop + 1;
                         countTN = countTN + 1;
@@ -360,7 +360,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     document.getElementById("submitPodInfoButton").addEventListener("click", createPODTemplate);
     document.getElementById("donePodButton").addEventListener("click", donePod);
-    document.getElementById("submitDbButton").addEventListener("click", saveDb);
 
     function createPODTemplate() {
 
@@ -576,9 +575,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 ampmmin = (podToday.getMinutes());
             }
 
-            var podTime = ampmhour + ampmmin;
-
-            document.getElementById("podRef").value = "ZAL/GR/POD/" + document.getElementById("areaCode").value + "/" + podDate + podTime;
+            document.getElementById("podRef").value = "ZAL/GR/POD/" + document.getElementById("areaCode").value + "/" + podDate + ampmhour + ampmmin;
 
             document.getElementById("podInfoArea").style.display = 'none';
             document.getElementById("podArea").style.display = 'block';
@@ -589,11 +586,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
     function donePod() {
         document.getElementById("excelDbArea").style.display = 'block';
         document.getElementById("inputTnArea").style.display = 'none';
-    }
-
-    function saveDb() {
-        document.getElementById("loading").style.display = 'block';
-        document.getElementById("excelDbArea").style.display = 'none';
-        document.getElementById("itemOut").submit();
     }
 });
