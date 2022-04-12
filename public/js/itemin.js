@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("submitButton").addEventListener("click", submitForm);
 
     function submitForm() {
-        arrivedTN = document.getElementById("trackingNumber").value
+        var arrivedTN = document.getElementById("trackingNumber").value;
         var request = new XMLHttpRequest();
         request.open('POST', 'https://api.tookanapp.com/v2/update_task_status');
         request.setRequestHeader('Content-Type', 'application/json');
