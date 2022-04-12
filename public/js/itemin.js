@@ -209,7 +209,27 @@ document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("submitButton").addEventListener("click", submitForm);
 
     function submitForm() {
-        document.getElementById("itemIn").submit();
+        arrivedTN = document.getElementById("trackingNumber").value
+        var request = new XMLHttpRequest();
+        request.open('POST', 'https://api.tookanapp.com/v2/update_task_status');
+        request.setRequestHeader('Content-Type', 'application/json');
+
+        request.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                console.log('Status:', this.status);
+                console.log('Headers:', this.getAllResponseHeaders());
+                console.log('Body:', this.responseText);
+
+                document.getElementById("itemIn").submit();
+            }
+        };
+
+        var body = {
+            'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+            'job_id': arrivedTN,
+            'job_status': '4'
+        };
+
+        request.send(JSON.stringify(body));
     }
 });
-
