@@ -81,16 +81,30 @@ function login(req,res){
     let password = req.body.password
     userDB.authenticate(icNumber, password, (err, user) =>{
         let firstTime = user.firstTime
+        let position = user.position
         console.log(firstTime)
         if(firstTime === "TRUE"){
             res.render('changepassword', {icNumber: icNumber})
         }
         else if (firstTime === "FALSE"){
-            res.render('success')
+            if (position == "AD"){res.render('dashboard')}
+            else if (position == "TC"){res.render('dashboardfin')}
+            else if (position == "CS"){res.render('')}
+            else if (position == "WS"){res.render('')}
+            else if (position == "MW"){res.render('')}
+            else if (position == "TW"){res.render('')}
+            else if (position == "DIS"){res.render('')}
+            else if (position == "FIN"){res.render('')}
+            else {res.render('error',{
+                error_code: '1', //access control error
+                head:'Invalid Access',
+                message:'Failed to detect access for user',
+                solution: "Please inform RDI, EXT 877"
+            })}
         }
         else{
             res.render('error', {
-                error_code: 'error',
+                error_code: '2',
                 head:'Invalid Entry',
                 message:'test',
                 solution: "none"
@@ -177,7 +191,7 @@ router.get('/pod', (req,res) => {
 })
 
 router.post('/pod', (req,res) => {
-    res.render('pod')
+    pod(req,res)
 })
 
 //Zalora Re-Entry
@@ -396,8 +410,8 @@ function itemOut(req,res){
     let date = moment().format()
     let count = req.body.count + 1
     let tracker = {trackingNumber: req.body.trackingNum}
-    let update = {status: "OUT FOR DELIVERY" + "|" + date, count: count}
-    let history = {history: {statusDetail: "OUT FOR DELIVERY" + "|" + date }}
+    let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agent + "]" + "|" + date, count: count}
+    let history = {history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agent + "]"  + "|" + date }}
     let option = {upsert: true, new: true}
     zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option)
     zaloraInventory.findOneAndUpdate(tracker,update,option)
@@ -411,20 +425,6 @@ function itemOut(req,res){
 
 //Zalora Starts here
 function pod(req,res){
-    let date = req.body.dateCreate
-    let count = req.body.count + 1
-    let tracker = {trackingNumber: req.body.trackingNum}
-    let update = {status: "OUT FOR DELIVERY" + "|" + date, count: count}
-    let history = {history: {statusDetail: "OUT FOR DELIVERY" + "|" + date }}
-    let option = {upsert: true, new: true}
-    zaloraInventory.find({}, function(err,zaloraInventory){
-        res.render('itemList', {
-            itemList: zaloraInventory,
-        })
-    })
-    zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option)
-    zaloraInventory.findOneAndUpdate(tracker,update,option)
-    //1st bit is used to update the parcel status
     let body = req.body
     let ref = "GR/POD/" + body.agent + body.areaCode
     let content = req.body.content
