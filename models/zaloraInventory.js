@@ -26,6 +26,7 @@ const inventorySchema  = new mongoose.Schema({
     remark: reqString,
     reEntry: reqString,
     attemp: reqString,
+    count: {type: Number},
     reSchedule: reqString,
     dateEntry: reqString,
     entryDate: entryDate,

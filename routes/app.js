@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const moment = require('moment')
+const bcrypt = require('bcrypt')
 //Models listing
 //const statusDB = require('../models/zaloraInventory')
 const zaloraInventory = require('../models/zaloraInventory');
@@ -78,20 +79,21 @@ function user(req,res) {
 function login(req,res){
     let icNumber = req.body.icNumber
     let password = req.body.password
-    userDB.authenticate(icNumber, password, (error, user) =>{
-        let status = user.firstTime
-        if(status === "TRUE"){
+    userDB.authenticate(icNumber, password, (err, user) =>{
+        let firstTime = user.firstTime
+        console.log(firstTime)
+        if(firstTime === "TRUE"){
             res.render('changepassword', {icNumber: icNumber})
         }
-        else if (status === "FALSE"){
-            req.session.userId = user._id;
+        else if (firstTime === "FALSE"){
             res.render('success')
         }
         else{
             res.render('error', {
                 error_code: 'error',
                 head:'Invalid Entry',
-                message:'test'
+                message:'test',
+                solution: "none"
             })
         }
     })
@@ -100,10 +102,11 @@ function login(req,res){
 function firstTimeLogin(req,res){
     let filter = {icNumber: req.body.icNumber}
     console.log(filter)
-
-    bcrypt.hash(password, 10, (hash) => {
-        req.body.password = hash
-        let update = {hash, firstTime:"FALSE"}
+    let password = req.body.password
+    bcrypt.hash(password, 10, (err,hash) => {
+        if(err) console.log(err)
+        password = hash
+        let update = {password: password, firstTime:"FALSE"}
         console.log(update)
         userDB.findOneAndUpdate(filter, update, (err,user) => {
             if(err){
@@ -127,13 +130,11 @@ function firstTimeLogin(req,res){
 /*************************** ZALORA *********************************/
 /*
 Add on:
-1. add incremental on parcel numbers + based on area
 2. recheck on zalora pod
 3. add status array to required functions
 4. ageing need to be check
 5. export function need testing
 6. create simple reports (end of day report)
-7. filter / search function
 */
 
 //use to get all zalora inventory list
@@ -169,6 +170,14 @@ router.get('/itemout',(req,res) => {
 
 router.post('/confirm',(req,res) => {
     itemOut(req,res)
+})
+
+router.get('/pod', (req,res) => {
+    res.render('pod')
+})
+
+router.post('/pod', (req,res) => {
+    res.render('pod')
 })
 
 //Zalora Re-Entry
@@ -219,6 +228,49 @@ router.post('/confirmed', (req,res) => {
 
 //This is used for return details
 function exportReturn(req,res){
+    let date = moment().format()
+    let filter = {trackingNumber: req.body.trackingNumber}
+    let update = {status: "RETURN TO MY" + "|" + date}
+    let option = {upsert: true, new: true}
+    let history = {history: {statusDetail: "RETURN TO MY" + "|" + date}}
+    zaloraInventory.findOneAndUpdate(filter,{$push: history}, option, (err,docs) => {
+        if(err){
+            console.log(err)
+            res.render('error',{
+                head: "Error",
+                code: "10",
+                message: "Failed to update database",
+                solution: "Please contact RDI Department ext 877"
+            })
+        } 
+        else {
+            console.log('update success')
+            let date = req.body.dateSchedule
+            res.render('success',{
+                head: "Tracking Number has been updated",
+                message: `The tracking number has been reSchedule for delivery on ${date}`
+            })
+        }
+    })
+    zaloraInventory.findOneAndUpdate(filter,update, option, (err,docs) => {
+        if(err){
+            console.log(err)
+            res.render('error',{
+                head: "Error",
+                code: "10",
+                message: "Failed to update database",
+                solution: "Please contact RDI Department ext 877"
+            })
+        } 
+        else {
+            console.log('update success')
+            let date = req.body.dateSchedule
+            res.render('success',{
+                head: "Tracking Number has been updated",
+                message: `The tracking number has been reSchedule for delivery on ${date}`
+            })
+        }
+    })
     let exports = req.body
     let exportReturn = new exportDB({
         trackingNumber: exports.trackingNumber,
@@ -248,8 +300,10 @@ function exportReturn(req,res){
 //This is used for end of day report
 function dispatcherRecord(req,res){
     let dispatch = req.body
+    let date = moment().format()
+    let ref = "GR/Dispatch/" + dispatch.name + date
     let dispatcher = new dispatchDB({
-        ref: dispatch.ref,//Auto generate
+        ref: ref,//Auto generate
         name: dispatch.name,
         carNumber: dispatch.car,
         given: dispatch.parcel, //Total Number of parcel given
@@ -338,21 +392,45 @@ function reEntry(req,res){
     })
 }
 
-//Zalora Starts here
 function itemOut(req,res){
-    let date = req.body.dateCreate
-    let content = {details: req.body.content}
+    let date = moment().format()
+    let count = req.body.count + 1
     let tracker = {trackingNumber: req.body.trackingNum}
-    let update = {status: "OUT FOR DELIVERY" + "|" + date}
+    let update = {status: "OUT FOR DELIVERY" + "|" + date, count: count}
     let history = {history: {statusDetail: "OUT FOR DELIVERY" + "|" + date }}
     let option = {upsert: true, new: true}
     zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option)
     zaloraInventory.findOneAndUpdate(tracker,update,option)
+    zaloraInventory.find({}, (err, zaloraInventory) =>{
+        res.redirect('itemout', {
+            itemList: zaloraInventory,
+        })
+    })
+}
+
+
+//Zalora Starts here
+function pod(req,res){
+    let date = req.body.dateCreate
+    let count = req.body.count + 1
+    let tracker = {trackingNumber: req.body.trackingNum}
+    let update = {status: "OUT FOR DELIVERY" + "|" + date, count: count}
+    let history = {history: {statusDetail: "OUT FOR DELIVERY" + "|" + date }}
+    let option = {upsert: true, new: true}
+    zaloraInventory.find({}, function(err,zaloraInventory){
+        res.render('itemList', {
+            itemList: zaloraInventory,
+        })
+    })
+    zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option)
+    zaloraInventory.findOneAndUpdate(tracker,update,option)
     //1st bit is used to update the parcel status
     let body = req.body
+    let ref = "GR/POD/" + body.agent + body.areaCode
+    let content = req.body.content
     let itemOut = new podDB({
-        podRef: body.podRef, //ref is auto generated by the system. To differentiate the products delivered
-        podAssign: body.agentName,
+        podRef: ref, //ref is auto generated by the system. To differentiate the products delivered
+        podAssign: body.agent,
         podDate: body.dateAssign,
         podTotal: body.value, //Total amount of cash to be collected.
         podTotalParcel: body.parcel, //Total amount of parcel to be delivered.
@@ -364,7 +442,7 @@ function itemOut(req,res){
     })
     itemOut.podContent.push(content)
     itemOut.save((err) => {
-        if (err) {
+        if (err){
             if (err.name === 'MongoError' && err.code === 11000){
                 res.render('error', {
                     error_code: '11000',
@@ -373,7 +451,10 @@ function itemOut(req,res){
                 })
             }
         }else {
-            res.render ('success')
+            res.render ('success', {
+                head: "Task Assigned",
+                message: "Task successfully assigned to <%=  body.assignTo %>.",
+            })
         }
     })
 }
@@ -400,7 +481,7 @@ function itemin(req,res){
     let bin = req.body.area +"/"+req.body.dateEntry
     let inventory = new zaloraInventory({
        trackingNumber: req.body.trackingNumber,
-       parcelNumber: req.body.parcelNumber + "[" + req.body.area + "]",
+       parcelNumber: req.body.parcelNumber,
        name: req.body.name,
        contact: req.body.contact,
        address: req.body.address,
@@ -415,6 +496,7 @@ function itemin(req,res){
        attemp: "FALSE",
        reSchedule: req.body.reSchedule,
        dateEntry: req.body.dateEntry,
+       count: 0,
     })
     //console.log("IN WAREHOUSE"+"["+req.body.area+"]"+req.body.dateEntry)
     //console.log(parcelStatus)
@@ -531,8 +613,8 @@ function pharmacyIn (req,res){
 function pharmaSelfCollect(req,res){
     let date = moment().format();
     let filter = {trackingNumber: req.body.trackingNumber}
-    let update = {status: "SELF COLLECTED" + "|" + date}
-    let history = {history: {statusDetail: "SELF COLLECTED" + "|" + date}}
+    let update = {status: "SELF COLLECTED" + " | " + date}
+    let history = {history: {statusDetail: "SELF COLLECTED" + " | " + date}}
     let option = {upsert: true, new: true}
     console.log(req.body.trackingNumber)
     pharmacyInventory.findOneAndUpdate(filter,{$push: history}, option)
@@ -558,7 +640,7 @@ function pharmaSelfCollect(req,res){
 
 /*************************** PHARMACY *********************************/
 
-/*************************** GO RUSH PLUS *********************************/
+/*************************** GO RUSH MALAYSIA *********************************/
 router.get('/grpmy',(req,res) => {
     res.render('comingsoon', {
         head: "Page in development",
@@ -566,7 +648,60 @@ router.get('/grpmy',(req,res) => {
     })
 })
 
-/*************************** GO RUSH PLUS *********************************/
+
+//Chances of Tookan to push accurately....?
+//Does Tookan able to push to Mongo???
+//Does DHL Require to Download???
+
+//After DHL Pickup
+function iteminMy(req,res){
+    let date = moment().format()
+    let parcelStatus = "IN WAREHOUSE[MY]" + " | " + date
+    let body = req.body
+    let myInventory = new myInventoryDB ({
+        trackingNumber: body.trackingNumber,
+        name: body.name,
+        address: body.address,
+        contact: body.contact,
+        value: body.value,
+        stasus: "IN WAREHOUSE[MY]",
+        product: body.formMETHOD,
+        tag: body.tag,
+        dateArrive: body.dateArrive,
+    }) 
+    myInventory.history.push(parcelStatus)
+    myInventory.save((err) => {
+        if (err) {
+            if (err.name === 'MongoError' && err.code === 11000){
+                res.render('error', {
+                    error_code: '11000',
+                    head:'Invalid Entry',
+                    message:'Tracking Number already exist within the database'
+                })
+            }
+        }else {
+            res.redirect ('myin')
+        }
+    })
+}
+
+//Item Out for Transit to BN
+function manifest(req,res){
+    //let date = moment().format()
+    //let parcelStatus = "IN TRANSIT TO BN" + " | " + date
+    //let history = {history: {statusDetail: "SELF COLLECTED" + " | " + date}}
+    let manifestList = []
+    myInventoryDB.find({}, (err,results) => {
+        results.forEach((result) => {
+            if(result.something == "something"){
+                myInventoryDB.push(result)
+            }
+        })
+    })
+}
+
+
+/*************************** GO RUSH MALAYSIA *********************************/
 
 router.get('/tracking',(req,res) => {
     res.render('comingsoon', {
