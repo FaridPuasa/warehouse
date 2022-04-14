@@ -28,11 +28,6 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById(autoMove).focus();
 
                     document.getElementById("trackingNumber").value = json_responsejd.data[0].job_id;
-                    document.getElementById("name").value = json_responsejd.data[0].customer_username;
-                    document.getElementById("address").value = json_responsejd.data[0].job_address;
-                    document.getElementById("contact").value = json_responsejd.data[0].customer_phone;
-                    document.getElementById("value").value = json_responsejd.data[0].job_description;
-                    document.getElementById("zaloraTag").value = json_responsejd.data[0].tags;
 
                     document.getElementById("loading").style.display = 'none';
                     document.getElementById("selfCollect").style.display = 'block';
