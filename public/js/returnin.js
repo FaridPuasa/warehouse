@@ -1,5 +1,4 @@
 function checkTrackingNum(field, autoMove) {
-    endLoop = 0;
     if (field.value.length >= field.maxLength) {
 
         document.getElementById("returnIn").style.display = 'none';
@@ -25,7 +24,7 @@ function checkTrackingNum(field, autoMove) {
                 json_responsejd = JSON.parse(responsejd);
 
                 if (json_responsejd.status != 404) {
-                    document.getElementById(autoMove).focus();
+                    document.getElementById("item").focus();
 
                     document.getElementById("trackingNumber").value = json_responsejd.data[0].order_id;
                     document.getElementById("newTrackingNumber").value = json_responsejd.data[0].job_id;
@@ -57,6 +56,7 @@ function checkTrackingNum(field, autoMove) {
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
+    document.getElementById("trackingNum").focus();
     document.getElementById("returnIn").style.display = 'none';
     document.getElementById("submitButton").addEventListener("click", submitForm);
 
