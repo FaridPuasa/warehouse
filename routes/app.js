@@ -56,6 +56,7 @@ function user(req,res) {
         icNumber: body.icNumber,
         email: body.email,
         contact: body.contact,
+        office: body.office,
         firstTime: "TRUE"
     })
     user.save((err) => {
@@ -93,10 +94,21 @@ function login(req,res){
             else if (position == "WS"){res.render('')}
             else if (position == "MW"){res.render('')}
             else if (position == "TW"){res.render('')}
-            else if (position == "DIS"){res.render('')}
+            else if (position == "DIS"){
+                dispatchDB.find({}, function(err,dispatch) {
+                    res.render('dashboardDIS', {
+                        dispatch: dispatch,
+                        name: user.name,
+                        icNumber: user.icNumber,
+                        position: user.position,
+                        contact: user.contact,
+                        office: user.office,
+                    })
+                })  
+            }
             else if (position == "FIN"){res.render('')}
             else {res.render('error',{
-                error_code: '1', //access control error
+                error_code: 'Error Code: 01', //access control error
                 head:'Invalid Access',
                 message:'Failed to detect access for user',
                 solution: "Please inform RDI, EXT 877"
@@ -104,7 +116,7 @@ function login(req,res){
         }
         else{
             res.render('error', {
-                error_code: '2',
+                error_code: 'Error Code: 02',
                 head:'Invalid Entry',
                 message:'test',
                 solution: "none"
@@ -162,7 +174,7 @@ router.get('/itemList', (req,res) => {
 
 router.get('/itemListHistory', (req,res) => {
     zaloraInventory.find({}, function(err,zaloraInventory){
-        res.render('itemListHistory', {
+        res.render('test', {
             itemList: zaloraInventory,
         })
     })

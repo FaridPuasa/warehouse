@@ -48,6 +48,12 @@
             <input type="text" class="form-control" name="contact" id="contact">
         </div>
 
+        <div class="mb-3">
+            <label for="contact" class="form-label">Office Number</label>
+            <input type="text" class="form-control" name="office" id="office">
+            <small>Required for Dispatchers.</small>
+        </div>
+
         <div class="my-3">
             <label for="position" class="form-label">Access Control</label>
             <select class="form-select form-select-lg" aria-label=".form-select-lg example" name="position">
@@ -55,12 +61,13 @@
                 <option value="Admin">Admin</option>
                 <option value="Finance">Finance</option>
                 <option value="Customer Service">Customer Service</option>
+                <option value="Main Warehouse">Transport Controller</option>
+                <option value="Main Warehouse">Warehouse Supervisor</option>
                 <option value="Main Warehouse">Main Warehouse</option>
                 <option value="Transit Warehouse">Transit Warehouse</option>
                 <option value="Dispatcher">Dispatcher</option>
             </select>
         </div>
-
         <input type="text" id="formMETHOD" name="formMETHOD" value="USER" hidden>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

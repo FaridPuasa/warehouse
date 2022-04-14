@@ -14,6 +14,7 @@ const userSchema  = new mongoose.Schema({
     icNumber: {type:String, required:true, unique:true},
     email: reqString,
     contact: reqString,
+    office: {type: String},
     firstTime: reqString,
     date: {type:Date, default: Date.now()}
 })

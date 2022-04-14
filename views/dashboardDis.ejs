@@ -21,7 +21,7 @@
         <table id="myTable" class="table table-striped table-hover table-bordered table-responsive">
           <thead>
             <tr>
-              <th scope="col">Name</th>
+              <th scope="col">Car Rregistration</th>
               <th scope="col">Date</th>
               <th scope="col">Amount Collected</th>
               <th scope="col">Parcel Given</th>
@@ -30,7 +30,9 @@
               <th scope="col">Cancelled Delivery</th>
               <th scope="col">Change to Self Collect</th>
               <th scope="col">Re-Schedule</th>
+              <th scope="col">Pickup</th>
               <th scope="col">Parcel Pickup</th>
+              <th scope="col">Return</th>
               <th scope="col">Return Parcel</th>
             </tr>
           </thead>
@@ -39,7 +41,7 @@
           <% dispatch.forEach(dispatch => {%>
           <tbody>
             <tr class="content">
-              <th scope="row"><%= dispatch.name %></th>
+              <th scope="row"><%= dispatch.carNumber %></th>
               <td><%= dispatch.dateSubmit %></td>
               <td><%= dispatch.totalCollection %></td>
               <td><%= dispatch.given %></td>

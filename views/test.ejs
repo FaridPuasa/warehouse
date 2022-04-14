@@ -1,4 +1,3 @@
-
 <!DOCTYPE html><!-- This site was created in Webflow. http://www.webflow.com -->
 <!-- Last Published: Tue Apr 05 2022 07:01:03 GMT+0000 (Coordinated Universal Time) -->
 <html data-wf-domain="gorushwms.webflow.io" data-wf-page="624542e8ac27f128e0507387" data-wf-site="61fb4a164eca130338cafeaa" data-wf-status="1">
@@ -185,7 +184,9 @@
                   <%= zaloraInventory.value %>
                 </td>
                 <td>
-                  <%= zaloraInventory.status %>
+                <% for(var i = 0 ; i < zaloraInventory.history.length; i++) {%>
+                    <li><%= zaloraInventory.history[i].statusDetail %></li>
+                <% } %>
                 </td>
                 <td>
                   <%= zaloraInventory.entryDate %>
