@@ -14,7 +14,8 @@ const podSchema  = new mongoose.Schema({
     podProduct: reqString, //Product is used to identify the delivered product.
     podCreate: reqString,
     podMade: reqString,
-    podContent: [{details: reqString}],
+    trackingNum: {type: [String]},
+    name: {type: [String]}
 })
 
 //module.exports = mongoose.model('contents', content)

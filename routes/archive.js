@@ -1,3 +1,64 @@
+function itemOut(req,res){
+    let date = moment().format()
+    let tracker = {trackingNumber: req.body.trackingNum}
+    let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" + "|" + date}
+    let history = {history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]"  + "|" + date }}
+    let option = {upsert: true, new: true}
+    zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option, (err,docs) => {
+        if(err){
+            console.log(err)
+            res.render('error',{
+                head: "Error",
+                code: "10-A",
+                message: "Failed to push update todatabase",
+                solution: "Please contact RDI Department ext 877"
+            })
+        } 
+        else {
+            console.log('update success (push history)')
+            //let date = req.body.dateSchedule
+            res.render('itemout')
+        } 
+    })
+    zaloraInventory.findOneAndUpdate(tracker,update,option,(err,docs) => {
+        if(err){
+            console.log(err)
+            res.render('error',{
+                head: "Error",
+                code: "10-B",
+                message: "Failed to update database",
+                solution: "Please contact RDI Department ext 877"
+            })
+        } 
+        else {
+            console.log('update success')
+           //let date = req.body.dateSchedule
+            res.render('itemout')
+        } 
+    })
+    zaloraInventory.findOne(tracker, (err,result) => {
+        let count = result.count
+        console.log(count)
+        if (result) {
+            if(count = 0 || count <= 3) {
+                let newcount = count + 1
+                result.count = newcount
+                result.save()
+                console.log(newcount)
+                console.log(result.count)
+            }
+            else if (count >= 4){
+                res.render('limit', {
+                    head: "Max limit reached",
+                    message: "Parcel reach maximum number of attempts",
+                    solution: "Please inform warehouse supervisor to schedule for return.",
+                })
+            }
+        }
+        else console.log(err)
+    })
+}
+
 result = data
         console.log(result)
         console.log(data.count)
@@ -7,6 +68,39 @@ result = data
         }else if (data.count > 3){
             console.log("RETURN")
         } 
+
+        zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option, (err,docs) => {
+            if(err){
+                console.log(err)
+                res.render('error',{
+                    head: "Error",
+                    code: "10-A",
+                    message: "Failed to push update to database",
+                    solution: "Please contact RDI Department ext 877"
+                })
+            } 
+            else {
+                console.log('update success (push history)')
+                //let date = req.body.dateSchedule
+                res.render('itemout')
+            } 
+        })
+        zaloraInventory.findOneAndUpdate(tracker,update,option,(err,docs) => {
+            if(err){
+                console.log(err)
+                res.render('error',{
+                    head: "Error",
+                    code: "10-B",
+                    message: "Failed to update database",
+                    solution: "Please contact RDI Department ext 877"
+                })
+            } 
+            else {
+                console.log('update success')
+               //let date = req.body.dateSchedule
+                res.render('itemout')
+            } 
+        })
 
 
 function berakas_1(req,res){
