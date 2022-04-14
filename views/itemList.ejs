@@ -1,6 +1,6 @@
 
 <!DOCTYPE html><!-- This site was created in Webflow. http://www.webflow.com -->
-<!-- Last Published: Thu Apr 14 2022 00:14:08 GMT+0000 (Coordinated Universal Time) -->
+<!-- Last Published: Thu Apr 14 2022 03:33:49 GMT+0000 (Coordinated Universal Time) -->
 <html data-wf-domain="gorushwms.webflow.io" data-wf-page="624542e8ac27f128e0507387" data-wf-site="61fb4a164eca130338cafeaa" data-wf-status="1">
   <head>
     <meta charset="utf-8" />
@@ -9,7 +9,7 @@
     <meta content="Item List" property="twitter:title" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Webflow" name="generator" />
-    <link href="https://uploads-ssl.webflow.com/61fb4a164eca130338cafeaa/css/gorushwms.webflow.af032f47a.css" rel="stylesheet" type="text/css" />
+    <link href="https://uploads-ssl.webflow.com/61fb4a164eca130338cafeaa/css/gorushwms.webflow.84a440c15.css" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
     <script type="text/javascript">
       WebFont.load({
@@ -46,39 +46,7 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
   </head>
   <body class="body">
-    <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-3 w-nav">
-      <div class="w-container"><a href="/itemList" class="brand w-nav-brand">
-          <div class="text-block-49">WMS</div>
-        </a>
-        <nav role="navigation" class="nav-menu-3 w-nav-menu">
-          <div data-hover="false" data-delay="0" class="dropdown-3 w-dropdown">
-            <div class="navbar-dropdown w-dropdown-toggle">
-              <div class="icon-6 w-icon-dropdown-toggle"></div>
-              <div class="text-block-48">Pharmacy</div>
-            </div>
-            <nav class="dropdown-list-4 w-dropdown-list"><a href="#" class="dropdown-link-9 w-dropdown-link">Order</a><a href="#" class="dropdown-link-9 w-dropdown-link">Tracker</a><a href="#" class="dropdown-link-9 w-dropdown-link">Register</a><a href="#" class="dropdown-link-9 w-dropdown-link">Login</a></nav>
-          </div>
-          <div data-hover="false" data-delay="0" class="dropdown-3 w-dropdown">
-            <div class="navbar-dropdown w-dropdown-toggle">
-              <div class="icon-6 w-icon-dropdown-toggle"></div>
-              <div class="text-block-48">General Order</div>
-            </div>
-            <nav class="dropdown-list-4 w-dropdown-list"><a href="#" class="dropdown-link-9 w-dropdown-link">Order</a><a href="#" class="dropdown-link-9 w-dropdown-link">Tracker</a></nav>
-          </div>
-          <div data-hover="false" data-delay="0" class="dropdown-3 w-dropdown">
-            <div class="navbar-dropdown w-dropdown-toggle">
-              <div class="icon-6 w-icon-dropdown-toggle"></div>
-              <div class="text-block-48">Zalora</div>
-            </div>
-            <nav class="dropdown-list-4 w-dropdown-list"><a href="/itemList" class="dropdown-link-9 w-dropdown-link">Item List</a><a href="/itemin" class="dropdown-link-9 w-dropdown-link">Item In</a><a href="/itemout" class="dropdown-link-9 w-dropdown-link">Item Out</a><a href="/reentry" class="dropdown-link-9 w-dropdown-link">Re-Entry</a><a href="/return" class="dropdown-link-9 w-dropdown-link">Return</a><a href="/selfcollect" class="dropdown-link-9 w-dropdown-link">Self Collect</a><a href="/dispatch" class="dropdown-link-9 w-dropdown-link">Dispatcher</a><a href="/dispatcher-report" class="dropdown-link-9 w-dropdown-link">Dispatcher Report</a></nav>
-          </div>
-        </nav>
-        <div class="menu-button-4 w-nav-button">
-          <div class="icon-7 w-icon-nav-menu"></div>
-        </div>
-      </div>
-    </div>
-    <div class="section wf-section">
+    <div class="section wf-section"><a whenClicked="history.back()" href="#" class="button-8 w-button">&lt; Go Back</a>
       <h1 id="w-node-_5c40cdcd-743f-e2a9-4ca2-eec7aae7df1c-e0507387" class="heading-2">Item List</h1>
       <div class="w-layout-grid grid-2">
         <div id="w-node-_272ec9be-4834-08c9-f626-ffd52c5f4bc0-e0507387" class="html-embed-2 w-embed"><input type="text" id="myInput" class="text-field-2 w-input" onkeyup="myFunction()" maxlength="256" name="myInput" placeholder="Search here"></div>
@@ -106,7 +74,7 @@
             <%itemList.forEach(zaloraInventory=> {%>
             <tbody>
               <tr class="content">
-                <th scope="row">
+                <th scope="row" class="trackingNum">
                   <%= zaloraInventory.trackingNumber %>
                 </th>
                 <td><%= zaloraInventory.parcelNumber %></td>
@@ -158,29 +126,80 @@
       let countItem = document.getElementsByClassName("expire").length;
 
       for (let i = 0; i < countItem; i++) {
-        var itemAge = Math.round((Date.parse(document.getElementsByClassName("expire")[i].innerText) - Date.parse(new Date())) / (60 * 60 * 24 * 1000));
-        document.getElementsByClassName("days")[i].innerText = itemAge + " Days";
+        var itemStatusCheck = 0;
+        var tookanCheck = 0;
+        var itemTN = document.getElementsByClassName("trackingNum")[i].innerText;
 
-        if (document.getElementsByClassName("itemStatus")[i].innerText.includes("WAREHOUSE") == true) {
-          if ((itemAge <= 14) && (itemAge >= 10)) {
-            document.getElementsByClassName("content")[i].style.backgroundColor = "#FFFF00"
-          }
+        if (tookanCheck == 0) {
+          var request = new XMLHttpRequest();
+          request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
+          request.setRequestHeader('Content-Type', 'application/json');
 
-          if ((itemAge <= 9) && (itemAge >= 5)) {
-            document.getElementsByClassName("content")[i].style.backgroundColor = "#FF8C00"
-          }
+          request.onreadystatechange = function() {
+            if (this.readyState === 4) {
+              console.log('Status:', this.status);
+              console.log('Headers:', this.getAllResponseHeaders());
+              console.log('Body:', this.responseText);
 
-          if ((itemAge <= 4) && (itemAge >= 3)) {
-            document.getElementsByClassName("content")[i].style.backgroundColor = "##FF0000"
-          }
+              responsejd = this.responseText;
+              json_responsejd = JSON.parse(responsejd);
 
-          if (itemAge < 2) {
-            document.getElementsByClassName("content")[i].style.backgroundColor = "#BA55D3"
-          }
+              if (json_responsejd.data[0].job_status == 2) {
+                document.getElementsByClassName("days")[i].innerText = "Task Completed";
+                document.getElementsByClassName("content")[i].style.backgroundColor = "#008000"
+
+                itemStatusCheck = 1;
+              }
+              tookanCheck = 1;
+            }
+          };
+
+          var body = {
+            'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+            'job_ids': [
+              itemTN
+            ],
+            'include_task_history': 0
+          };
+
+          request.send(JSON.stringify(body));
         }
 
-        if (document.getElementsByClassName("itemStatus")[i].innerText.includes("SELF") == true) {
-          document.getElementsByClassName("content")[i].style.backgroundColor = "#87CEFA"
+        if ((tookanCheck) == 1 && (itemStatusCheck == 0)) {
+          var itemAge = Math.round((Date.parse(document.getElementsByClassName("expire")[i].innerText) - Date.parse(new Date())) / (60 * 60 * 24 * 1000));
+
+          if (itemAge <= 0) {
+            document.getElementsByClassName("days")[i].innerText = itemAge + " Days";
+            document.getElementsByClassName("content")[i].style.color = "#9932CC"
+
+          }
+
+          if (itemAge > 0) {
+            document.getElementsByClassName("days")[i].innerText = itemAge + " Days";
+
+            if (document.getElementsByClassName("itemStatus")[i].innerText.includes("WAREHOUSE") == true) {
+              if ((itemAge <= 14) && (itemAge >= 10)) {
+                document.getElementsByClassName("content")[i].style.backgroundColor = "#FFFF00"
+              }
+
+              if ((itemAge <= 9) && (itemAge >= 5)) {
+                document.getElementsByClassName("content")[i].style.backgroundColor = "#FF8C00"
+              }
+
+              if ((itemAge <= 4) && (itemAge >= 3)) {
+                document.getElementsByClassName("content")[i].style.backgroundColor = "#FF0000"
+              }
+
+              if ((itemAge <= 2) && (itemAge >= 1)) {
+                document.getElementsByClassName("days")[i].innerText = itemAge + " Day";
+                document.getElementsByClassName("content")[i].style.backgroundColor = "#9932CC"
+              }
+            }
+
+            if (document.getElementsByClassName("itemStatus")[i].innerText.includes("SELF") == true) {
+              document.getElementsByClassName("content")[i].style.backgroundColor = "#87CEFA"
+            }
+          }
         }
       }
     </script>
