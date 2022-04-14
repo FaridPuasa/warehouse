@@ -1,6 +1,6 @@
 
 <!DOCTYPE html><!-- This site was created in Webflow. http://www.webflow.com -->
-<!-- Last Published: Tue Apr 12 2022 03:01:53 GMT+0000 (Coordinated Universal Time) -->
+<!-- Last Published: Thu Apr 14 2022 02:52:48 GMT+0000 (Coordinated Universal Time) -->
 <html data-wf-domain="gorushwms.webflow.io" data-wf-page="62440457d3feb10fcb1e3b4d" data-wf-site="61fb4a164eca130338cafeaa" data-wf-status="1">
   <head>
     <meta charset="utf-8" />
@@ -9,7 +9,7 @@
     <meta content="Dispatch" property="twitter:title" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Webflow" name="generator" />
-    <link href="https://uploads-ssl.webflow.com/61fb4a164eca130338cafeaa/css/gorushwms.webflow.81d3feb4f.css" rel="stylesheet" type="text/css" />
+    <link href="https://uploads-ssl.webflow.com/61fb4a164eca130338cafeaa/css/gorushwms.webflow.876e5f6ca.css" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
     <script type="text/javascript">
       WebFont.load({
@@ -88,10 +88,17 @@
                 <div id="w-node-ebc9bdd1-a13c-eda5-c4af-d54baf8303c0-cb1e3b4d"><label for="failed">Failed:</label><input type="number" class="text-field w-input" maxlength="256" name="failed" data-name="failed" placeholder="" id="failed" /></div>
                 <div id="w-node-_1f769b03-b66e-23b1-baa3-e66f64bd8f79-cb1e3b4d"><label for="cancel">Cancel:</label><input type="number" class="text-field w-input" maxlength="256" name="cancel" data-name="cancel" placeholder="" id="cancel" /></div>
                 <div id="w-node-b44db07a-3b4d-110b-be7e-711aa70f2eac-cb1e3b4d"><label for="selfCollect">Self Collect:</label><input type="number" class="text-field w-input" maxlength="256" name="selfCollect" data-name="selfCollect" placeholder="" id="selfCollect" /></div>
-                <div id="w-node-_18800cda-c304-739a-578e-9497d00c548d-cb1e3b4d"><label for="selfCollect-2" title="This is the pickup for POD, TTG/KB and JPMC">Pickup:</label><label class="radio-button-field w-radio"><input type="radio" name="pickup" id="Yes" value="Yes" data-name="pickup" class="w-form-formradioinput w-radio-input" /><span class="w-form-label" for="Yes">Yes</span></label><label class="radio-button-field-2 w-radio"><input type="radio" name="pickup" id="No" value="No" data-name="pickup" class="w-form-formradioinput w-radio-input" /><span class="w-form-label" for="No">No</span></label></div>
+                <div id="w-node-_18800cda-c304-739a-578e-9497d00c548d-cb1e3b4d"><label for="pickup" title="This is the pickup for POD, TTG/KB and JPMC">Pickup:</label><select id="pickup" name="pickup" data-name="pickup" class="select-field-2 w-select">
+                    <option value="">Select one...</option>
+                    <option value="No">No</option>
+                    <option value="POD">POD</option>
+                    <option value="JPMC">JPMC</option>
+                    <option value="MOH TUTONG">MOH TUTONG</option>
+                    <option value="MOH KB">MOH KB</option>
+                  </select></div>
                 <div id="w-node-ccedaadb-e040-37c9-aac0-6a3a1fd5ae69-cb1e3b4d"><label for="pickupValue">Pickup Value:</label><input type="number" class="text-field w-input" maxlength="256" name="pickupValue" data-name="pickupValue" placeholder="" id="pickupValue" /></div>
                 <div id="w-node-db8a3989-1033-2b1b-5ead-50f9c0e6df01-cb1e3b4d"><label for="pickupTN">Pickup Tracking Number:</label><textarea class="textarea w-input" maxlength="5000" name="pickupTN" data-name="field" placeholder="Input the return parcel tracking number here" row="10" id="pickupTN"></textarea></div>
-                <div id="w-node-_9d9ebd5c-7247-a16c-eb51-b04140ea9391-cb1e3b4d"><label for="selfCollect-2">Return:</label><label class="radio-button-field w-radio"><input type="radio" name="return" id="Yes" value="Yes" data-name="return" class="w-form-formradioinput w-radio-input" /><span class="w-form-label" for="Yes">Yes</span></label><label class="radio-button-field-2 w-radio"><input type="radio" name="return" id="No" value="No" data-name="return" class="w-form-formradioinput w-radio-input" /><span class="w-form-label" for="No">No</span></label></div>
+                <div id="w-node-_9d9ebd5c-7247-a16c-eb51-b04140ea9391-cb1e3b4d"><label for="selfCollect-2">Pickup for Return:</label><label class="radio-button-field w-radio"><input type="radio" name="return" id="Yes" value="Yes" data-name="return" class="w-form-formradioinput w-radio-input" /><span class="w-form-label" for="Yes">Yes</span></label><label class="radio-button-field-2 w-radio"><input type="radio" name="return" id="No" value="No" data-name="return" class="w-form-formradioinput w-radio-input" /><span class="w-form-label" for="No">No</span></label></div>
                 <div id="w-node-c6d208bc-0ab6-7ab8-7bba-1b33aa285e11-cb1e3b4d"><label for="returnValue">Return Value:</label><input type="number" class="text-field w-input" maxlength="256" name="returnValue" data-name="returnValue" placeholder="" id="returnValue" /></div>
                 <div id="w-node-_45639c10-4167-9ea4-ce33-5b4a35963552-cb1e3b4d"><label for="returnTN">Return Tracking Number:</label><textarea class="textarea w-input" maxlength="5000" name="returnTN" data-name="field" placeholder="Input the return parcel tracking number here" row="10" id="returnTN"></textarea></div>
                 <div id="w-node-_908fe4f5-94fc-53ac-d1d2-aa8c23f62b0a-cb1e3b4d"><label for="collection">Collection:</label><input type="number" class="text-field w-input" maxlength="256" name="collection" step=".01" data-name="collection" placeholder="" id="collection" /></div>
