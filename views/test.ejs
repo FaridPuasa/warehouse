@@ -101,6 +101,7 @@
                 <th scope="col">Contact</th>
                 <th scope="col">Value</th>
                 <th scope="col">Status</th>
+                <th scope="col">History</th>
                 <th scope="col">Entry Date</th>
                 <th scope="col">Expire Date</th>
                 <th scope="col">Ageing</th>
@@ -108,12 +109,12 @@
             </thead>
 
 
-            <%itemList.forEach(zaloraInventory=> {%>
-            <tbody id="mytable">
-              <tr class="content">
+            
+            <tbody>
+              <%itemList.forEach(zaloraInventory=> {%>
+              <tr>
                 <th scope="row">
-                    <div class="popup" onclick="displayPlan('<%= zaloraInventory.trackingNumber %>')"><%= zaloraInventory.trackingNumber %>
-                    </div>
+                  <%= zaloraInventory.trackingNumber %>
                 </th>
                 <td><%= zaloraInventory.parcelNumber %></td>
                 <td><%= zaloraInventory.area %></td>
@@ -130,22 +131,28 @@
                   <%= zaloraInventory.value %>
                 </td>
                 <td>
+                  <%= zaloraInventory.status %>
+                </td>
+                <td>
                 <% for(var i = 0 ; i < zaloraInventory.history.length; i++) {%>
-                    <li><%= zaloraInventory.history[i].statusDetail %></li>
+                    <ul>
+                      <li><%= zaloraInventory.history[i].statusDetail %> | <%= zaloraInventory.history[i].dateUpdated %></li>
+                      
+                    </ul>
                 <% } %>
                 </td>
                 <td>
-                  <%= zaloraInventory.entryDate %>
+                  <%= moment(zaloraInventory.entryDate).format('DD-MM-YYYY') %>
                 </td>
                 <td class="expire">
-                  <%= zaloraInventory.expireDate %>
+                  <%= moment(zaloraInventory.expireDate).format('DD-MM-YYYY') %>
                 </td>
                 <td class="days">
                   <%= zaloraInventory.age %>
                 </td>
               </tr>
+              <%})%>
             </tbody>
-            <%})%>
           </table>
         </div>
       </div>
@@ -219,39 +226,47 @@
 
     <script>
       function sortTable(table, col, reverse) {
-          var tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
-              tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
-              i;
-          reverse = -((+reverse) || -1);
-          tr = tr.sort(function (a, b) { // sort rows
-              return reverse // `-1 *` if want opposite order
-                  * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
-                      .localeCompare(b.cells[col].textContent.trim())
-                    );
-          });
-          for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
-      }
+  var tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
+    tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+    i;
+  reverse = -((+reverse) || -1);
+  tr = tr.sort(function(a, b) { // sort rows
+    return reverse // `-1 *` if want opposite order
+      *
+      (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+        .localeCompare(b.cells[col].textContent.trim())
+      );
+  });
+  for (i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+}
 
-      function makeSortable(table) {
-          var th = table.tHead, i;
-          th && (th = th.rows[0]) && (th = th.cells);
-          if (th) i = th.length;
-          else return; // if no `<thead>` then do nothing
-          while (--i >= 0) (function (i) {
-              var dir = 1;
-              th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
-          }(i));
-      }
+function makeSortable(table) {
+  var th = table.tHead,
+    i;
+  th && (th = th.rows[0]) && (th = th.cells);
+  if (th) i = th.length;
+  else return; // if no `<thead>` then do nothing
+  while (--i >= 0)(function(i) {
+    var dir = 1;
+    th[i].addEventListener('click', function() {
+      sortTable(table, i, (dir = 1 - dir))
+    });
+  }(i));
+}
 
-      function makeAllSortable(parent) {
-          parent = parent || document.body;
-          var t = parent.getElementsByTagName('table'), i = t.length;
-          while (--i >= 0) makeSortable(t[i]);
-      }
+function makeAllSortable(parent) {
+  parent = parent || document.body;
+  var t = parent.getElementsByTagName('table'),
+    i = t.length;
+  while (--i >= 0) makeSortable(t[i]);
+}
 
-      window.onload = function () {makeAllSortable();};
+window.onload = function() {
+  makeAllSortable();
+};
     </script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js" integrity="sha512-Wkxbeuy81yHqZNrMurMURCOCMzkJqaFYnvToublHiOGoVXQ2DS1lOUjKwstbe0GwELrRb9sicdV2y6GiAnVxuw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 

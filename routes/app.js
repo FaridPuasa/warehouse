@@ -168,6 +168,7 @@ router.get('/itemList', (req,res) => {
     zaloraInventory.find({}, function(err,zaloraInventory){
         res.render('itemList', {
             itemList: zaloraInventory,
+           
         })
     })
 })
@@ -176,6 +177,7 @@ router.get('/itemListHistory', (req,res) => {
     zaloraInventory.find({}, function(err,zaloraInventory){
         res.render('test', {
             itemList: zaloraInventory,
+            moment: moment
         })
     })
 })
@@ -201,6 +203,9 @@ router.post('/itemin',(req,res) => {
 router.get('/itemout',(req,res) => {
     res.render('itemout')
 })
+
+//if(zaloraInventory.trackingNumber == document.getElementById(trackingNum).value){document.getElementById('count').value = <%= zaloraInventory.count %>}
+//else{document.getElementById('count').value = error}
 
 router.post('/confirm',(req,res) => {
     itemOut(req,res)
@@ -262,11 +267,11 @@ router.post('/confirmed', (req,res) => {
 
 //This is used for return details
 function exportReturn(req,res){
-    let date = moment().format()
+    //let date = moment().format()
     let filter = {trackingNumber: req.body.trackingNumber}
-    let update = {status: "RETURN TO MY" + "|" + date}
+    let update = {status: "RETURN TO MY"}
     let option = {upsert: true, new: true}
-    let history = {history: {statusDetail: "RETURN TO MY" + "|" + date}}
+    let history = {history: {statusDetail: "RETURN TO MY"}}
     zaloraInventory.findOneAndUpdate(filter,{$push: history}, option, (err,docs) => {
         if(err){
             console.log(err)
@@ -375,11 +380,11 @@ function dispatcherRecord(req,res){
 
 //reEntry parcels
 function reEntry(req,res){
-    let date = moment().format();
+    //let date = moment().format();
     let filter = {trackingNumber: req.body.trackingNumber}
-    let history = {history: {statusDetail: "IN WAREHOUSE" + "[" + req.body.reason + "]" + "|" + date}}
+    let history = {history: {statusDetail: "IN WAREHOUSE" + "[" + req.body.reason + "]"}}
     let update = {
-        status: "IN WAREHOUSE" + "[" + req.body.reason + "]" + "|" + date,
+        status: "IN WAREHOUSE" + "[" + req.body.reason + "]",
         reason: req.body.reason,
         remark: req.body.remark,
         reEntry: "TRUE",
@@ -428,14 +433,13 @@ function reEntry(req,res){
 
 function itemOut(req,res){
     let date = moment().format()
-    let count = count + 1
     let tracker = {trackingNumber: req.body.trackingNum}
-    let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" + "|" + date, count: count}
+    let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" + "|" + date, count: count + 1}
     let history = {history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]"  + "|" + date }}
     let option = {upsert: true, new: true}
     zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option)
     zaloraInventory.findOneAndUpdate(tracker,update,option)
-    zaloraInventory.findOneAndUpdate(tracker, (err, zaloraInventory) =>{
+    zaloraInventory.find({}, (err, zaloraInventory) =>{
         res.redirect('itemout', {
             itemList: zaloraInventory,
         })

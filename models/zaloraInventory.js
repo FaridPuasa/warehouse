@@ -10,8 +10,6 @@ let later = moment(date).add(21,'d')
 
 let entryDate = {type: Date, default: date}
 let expireDate = {type: Date, default: later}
-//let collectionDate = {type: Date, default: date}
-//let age = expireDate - entryDate
 
 const inventorySchema  = new mongoose.Schema({
     trackingNumber: {type: String, unique: true},
@@ -32,10 +30,15 @@ const inventorySchema  = new mongoose.Schema({
     entryDate: entryDate,
     expireDate:expireDate,
     status: reqString,
-    history: [{statusDetail: reqString}],
-    //age: ageing,
-})
+    history: [{statusDetail: reqString, dateUpdated: entryDate}],
+    expireAt: {
+        type: Date,
+        default: Date.now,
+        index: { expires: '60s' }
+    }
+}, {timestamps: true})
 
+//inventorySchema.index({createdAt: 1},{expireAfterSeconds: 60});//180 days
 module.exports = mongoose.model('inventories', inventorySchema)
 
 
