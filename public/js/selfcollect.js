@@ -1,15 +1,16 @@
 function checkTrackingNum(field, autoMove) {
-    endLoop = 0;
     if (field.value.length >= field.maxLength) {
-
-        document.getElementById("selfCollect").style.display = 'none';
-        document.getElementById("trackingnumberarea").style.display = 'none';
-        document.getElementById("wronginput").style.display = 'none';
+        document.getElementById("inputCSArea").style.display = 'none';
+        document.getElementById("inputTnArea").style.display = 'none';
         document.getElementById("loading").style.display = 'block';
+        document.getElementById("wronginput").style.display = 'none';
 
         var jobidentitynum = '';
-        jobidentitynum = document.getElementById("trackingNum").value;
-        document.getElementById('trackingNum').value = '';
+        jobidentitynum = document.getElementById("trackingNumber").value;
+        document.getElementById("trackingNum").value = jobidentitynum;
+        document.getElementById('trackingNumber').value = '';
+        
+        document.getElementById("csName").value = document.getElementById("csNameTemp").value;
 
         var request = new XMLHttpRequest();
         request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
@@ -27,11 +28,15 @@ function checkTrackingNum(field, autoMove) {
                 if (json_responsejd.status != 404) {
                     document.getElementById(autoMove).focus();
 
-                    document.getElementById("trackingNumber").value = json_responsejd.data[0].job_id;
-
                     document.getElementById("loading").style.display = 'none';
-                    document.getElementById("selfCollect").style.display = 'block';
-                    document.getElementById("trackingnumberarea").style.display = 'block';
+                    document.getElementById("inputCSArea").style.display = 'block';
+                    document.getElementById("inputTnArea").style.display = 'block';
+                    document.getElementById("completeTimeNotice").style.display = 'block';
+                    
+                    // Set Item
+                    localStorage.setItem("lastCS", document.getElementById("csName").value);
+
+                    document.getElementById("selfCollect").submit();
                 }
 
                 if (json_responsejd.status == 404) {
@@ -53,10 +58,9 @@ function checkTrackingNum(field, autoMove) {
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    document.getElementById("selfCollect").style.display = 'none';
-    document.getElementById("submitButton").addEventListener("click", submitForm);
+     // Retrieve
+    document.getElementById("csNameTemp").value = localStorage.getItem("lastCS");
 
-    function submitForm() {
-        document.getElementById("selfCollect").submit();
-    }
+    document.getElementById("loading").style.display = 'none';
+    document.getElementById("wronginput").style.display = 'none';
 });
