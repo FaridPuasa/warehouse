@@ -160,6 +160,14 @@ router.get('/itemList', (req,res) => {
     })
 })
 
+router.get('/itemListHistory', (req,res) => {
+    zaloraInventory.find({}, function(err,zaloraInventory){
+        res.render('itemListHistory', {
+            itemList: zaloraInventory,
+        })
+    })
+})
+
 router.get('/dispatcher-report', (req,res) => {
     dispatchDB.find({}, function(err,dispatch) {
         res.render('dispatchreport', {
