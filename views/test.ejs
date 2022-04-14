@@ -3,63 +3,10 @@
 <html data-wf-domain="gorushwms.webflow.io" data-wf-page="624542e8ac27f128e0507387" data-wf-site="61fb4a164eca130338cafeaa" data-wf-status="1">
   <head>
     <style>
-        /* Popup container - can be anything you want */
-        .popup {
-          position: relative;
-          display: inline-block;
-          cursor: pointer;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-        }
-        
-        /* The actual popup */
-        .popup .popuptext {
-          visibility: hidden;
-          width: 160px;
-          background-color: #555;
-          color: #fff;
-          text-align: center;
-          border-radius: 6px;
-          padding: 8px 0;
-          position: absolute;
-          z-index: 1;
-          bottom: 125%;
-          left: 50%;
-          margin-left: -80px;
-        }
-        
-        /* Popup arrow */
-        .popup .popuptext::after {
-          content: "";
-          position: absolute;
-          top: 100%;
-          left: 50%;
-          margin-left: -5px;
-          border-width: 5px;
-          border-style: solid;
-          border-color: #555 transparent transparent transparent;
-        }
-        
-        /* Toggle this class - hide and show the popup */
-        .popup .show {
-          visibility: visible;
-          -webkit-animation: fadeIn 1s;
-          animation: fadeIn 1s;
-        }
-        
-        /* Add animation (fade in the popup) */
-        @-webkit-keyframes fadeIn {
-          from {opacity: 0;} 
-          to {opacity: 1;}
-        }
-        
-        @keyframes fadeIn {
-          from {opacity: 0;}
-          to {opacity:1 ;}
-        }
-        </style>
+      table {width: 100%;font: 12px arial;}
+      th, td {min-width: 40px;text-align: center;}
+      th {font-weight: bold; cursor:pointer}
+    </style>
 
     <meta charset="utf-8" />
     <title>Item List</title>
@@ -162,11 +109,10 @@
 
 
             <%itemList.forEach(zaloraInventory=> {%>
-            <tbody>
+            <tbody id="mytable">
               <tr class="content">
                 <th scope="row">
                     <div class="popup" onclick="displayPlan('<%= zaloraInventory.trackingNumber %>')"><%= zaloraInventory.trackingNumber %>
-                        <span class="popuptext" id="<%= zaloraInventory.trackingNumber %>"><%= zaloraInventory.trackingNumber %></span>
                     </div>
                 </th>
                 <td><%= zaloraInventory.parcelNumber %></td>
@@ -212,12 +158,6 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
     <script>
-      let table = new DataTable('#itemList', {
-        // options
-      });
-    </script>
-
-    <script>
     // When the user clicks on div, open the popup
     function displayPlan(id) {
         console.log(`${id}`)
@@ -258,7 +198,7 @@
     </script>
 
     <script>
-      const myFunction = () => {
+        const myFunction = () => {
         const trs = document.querySelectorAll('#myTable tr:not(.header)')
         const filter = document.querySelector('#myInput').value
         const regex = new RegExp(filter, 'i')
@@ -275,6 +215,41 @@
 
         trs.forEach(setTrStyleDisplay)
       }
+    </script>
+
+    <script>
+      function sortTable(table, col, reverse) {
+          var tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
+              tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+              i;
+          reverse = -((+reverse) || -1);
+          tr = tr.sort(function (a, b) { // sort rows
+              return reverse // `-1 *` if want opposite order
+                  * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+                      .localeCompare(b.cells[col].textContent.trim())
+                    );
+          });
+          for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+      }
+
+      function makeSortable(table) {
+          var th = table.tHead, i;
+          th && (th = th.rows[0]) && (th = th.cells);
+          if (th) i = th.length;
+          else return; // if no `<thead>` then do nothing
+          while (--i >= 0) (function (i) {
+              var dir = 1;
+              th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
+          }(i));
+      }
+
+      function makeAllSortable(parent) {
+          parent = parent || document.body;
+          var t = parent.getElementsByTagName('table'), i = t.length;
+          while (--i >= 0) makeSortable(t[i]);
+      }
+
+      window.onload = function () {makeAllSortable();};
     </script>
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

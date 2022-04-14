@@ -428,14 +428,14 @@ function reEntry(req,res){
 
 function itemOut(req,res){
     let date = moment().format()
-    let count = req.body.count + 1
+    let count = count + 1
     let tracker = {trackingNumber: req.body.trackingNum}
     let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" + "|" + date, count: count}
     let history = {history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]"  + "|" + date }}
     let option = {upsert: true, new: true}
     zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option)
     zaloraInventory.findOneAndUpdate(tracker,update,option)
-    zaloraInventory.find({}, (err, zaloraInventory) =>{
+    zaloraInventory.findOneAndUpdate(tracker, (err, zaloraInventory) =>{
         res.redirect('itemout', {
             itemList: zaloraInventory,
         })
@@ -540,8 +540,8 @@ function itemin(req,res){
 function selfCollect(req,res){
     let date = moment().format();
     let filter = {trackingNumber: req.body.trackingNumber}
-    let update = {status: "SELF COLLECTED" + "|" + date}
-    let history = {history: {statusDetail: "SELF COLLECTED" + "|" + date}}
+    let update = {status: "SELF COLLECTED" + "["+ req.body.csName +"]" + "|" + date}
+    let history = {history: {statusDetail: "SELF COLLECTED" + "["+ req.body.csName +"]"  + "|" + date}}
     let option = {upsert: true, new: true}
     console.log(req.body.trackingNumber)
     zaloraInventory.findOneAndUpdate(filter,{$push: history}, option)
