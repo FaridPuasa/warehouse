@@ -434,15 +434,46 @@ function reEntry(req,res){
 function itemOut(req,res){
     let date = moment().format()
     let tracker = {trackingNumber: req.body.trackingNum}
-    let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" + "|" + date, count: count + 1}
+    let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" + "|" + date}
     let history = {history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]"  + "|" + date }}
     let option = {upsert: true, new: true}
-    zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option)
-    zaloraInventory.findOneAndUpdate(tracker,update,option)
-    zaloraInventory.find({}, (err, zaloraInventory) =>{
-        res.redirect('itemout', {
-            itemList: zaloraInventory,
-        })
+    zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option, (err,docs) => {
+        if(err){
+            console.log(err)
+            res.render('error',{
+                head: "Error",
+                code: "10",
+                message: "Failed to update database",
+                solution: "Please contact RDI Department ext 877"
+            })
+        } 
+        else {
+            console.log('update success')
+            let date = req.body.dateSchedule
+            res.render('itemout',{
+                head: "Tracking Number has been updated",
+                message: `The tracking number has been reSchedule for delivery on ${date}`
+            })
+        } 
+    })
+    zaloraInventory.findOneAndUpdate(tracker,update,option,(err,docs) => {
+        if(err){
+            console.log(err)
+            res.render('error',{
+                head: "Error",
+                code: "10",
+                message: "Failed to update database",
+                solution: "Please contact RDI Department ext 877"
+            })
+        } 
+        else {
+            console.log('update success')
+            let date = req.body.dateSchedule
+            res.render('itemout',{
+                head: "Tracking Number has been updated",
+                message: `The tracking number has been reSchedule for delivery on ${date}`
+            })
+        } 
     })
 }
 
