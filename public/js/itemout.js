@@ -230,6 +230,8 @@ function checkTrackingNum(field, autoMove) {
 document.addEventListener("DOMContentLoaded", function (event) {
     // Retrieve
     document.getElementById("agentTemp").value = localStorage.getItem("lastAgent");
+    
+    document.getElementById("trackingNumber").focus();
 
     document.getElementById("loading").style.display = 'none';
     document.getElementById("wronginput").style.display = 'none';
