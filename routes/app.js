@@ -168,7 +168,7 @@ router.get('/itemList', (req,res) => {
     zaloraInventory.find({}, function(err,zaloraInventory){
         res.render('itemList', {
             itemList: zaloraInventory,
-           
+            moment: moment
         })
     })
 })
