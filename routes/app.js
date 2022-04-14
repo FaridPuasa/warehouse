@@ -539,11 +539,11 @@ function itemin(req,res){
 
 function selfCollect(req,res){
     let date = moment().format();
-    let filter = {trackingNumber: req.body.trackingNumber}
+    let filter = {trackingNumber: req.body.trackingNum}
     let update = {status: "SELF COLLECTED" + "["+ req.body.csName +"]" + "|" + date}
     let history = {history: {statusDetail: "SELF COLLECTED" + "["+ req.body.csName +"]"  + "|" + date}}
     let option = {upsert: true, new: true}
-    console.log(req.body.trackingNumber)
+    console.log(req.body.trackingNum)
     zaloraInventory.findOneAndUpdate(filter,{$push: history}, option)
     zaloraInventory.findOneAndUpdate(filter, update, option, (err,docs) => {
         if(err){
