@@ -180,6 +180,10 @@ function checkTrackingNum(field, autoMove) {
                     let dateSubmitted = date + ' ' + time;
 
                     document.getElementById("dateEntry").value = dateSubmitted;
+                    
+                    localStorage.setItem("lastCount", document.getElementById("parcelNumber").value);
+                    
+                    document.getElementById("submitButton").focus();
 
                     document.getElementById("loading").style.display = 'none';
                     document.getElementById("itemIn").style.display = 'block';
@@ -207,6 +211,10 @@ function checkTrackingNum(field, autoMove) {
 document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("itemIn").style.display = 'none';
     document.getElementById("submitButton").addEventListener("click", submitForm);
+    
+    document.getElementById("parcelNumber").value = localStorage.getItem("lastCount") + 1;
+    
+    document.getElementById("trackingNum").focus();
 
     function submitForm() {
         var arrivedTN = document.getElementById("trackingNumber").value;
