@@ -14,7 +14,7 @@ table.setAttribute('contenteditable', true);
 table.className = "table table-striped table-hover table-bordered table-responsive";
 let thead = document.createElement('thead');
 let tbody = document.createElement('tbody');
-
+tbody.setAttribute('name','contents')
 table.appendChild(thead);
 table.appendChild(tbody);
 
