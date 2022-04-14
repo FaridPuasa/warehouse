@@ -111,6 +111,56 @@ else if (address.includes("TANJUNG BUNUT") == true) {area = "JT3"}
 else if (address.includes("SUNGAI TAMPOI") == true) {area = "JT3"}
 else if (address.includes("SG TAMPOI") == true) {area = "JT3"}
 else if (address.includes("TUTONG") == true) {area = "TUTONG"} //CHANGE ADDRESS TO ....
+else if (address.includes("SENGKARAI") == true) {area = "TUTONG"}
+else if (address.includes("PANCHOR") == true) {area = "TUTONG"}
+else if (address.includes("PENABAI") == true) {area = "TUTONG"}
+else if (address.includes("KUALA TUTONG") == true) {area = "TUTONG"}
+else if (address.includes("PENANJONG") == true) {area = "TUTONG"}
+else if (address.includes("KERIAM") == true) {area = "TUTONG"}
+else if (address.includes("BUKIT PANGGAL") == true) {area = "TUTONG"}
+else if (address.includes("PANGGAL") == true) {area = "TUTONG"}
+else if (address.includes("LUAGAN") == true) {area = "TUTONG"}
+else if (address.includes("DUDOK") == true) {area = "TUTONG"}
+else if (address.includes("LUAGAN DUDOK") == true) {area = "TUTONG"}
+else if (address.includes("SINAUT") == true) {area = "TUTONG"}
+else if (address.includes("SUNGAI KELUGOS") == true) {area = "TUTONG"}
+else if (address.includes("KELUGOS") == true) {area = "TUTONG"}
+else if (address.includes("SG KELUGOS") == true) {area = "TUTONG"}
+else if (address.includes("KUPANG") == true) {area = "TUTONG"}
+else if (address.includes("KIUDANG") == true) {area = "TUTONG"}
+else if (address.includes("PAD") == true) {area = "TUTONG"}
+else if (address.includes("NUNOK") == true) {area = "TUTONG"}
+else if (address.includes("PAD NUNOK") == true) {area = "TUTONG"}
+else if (address.includes("BEKIAU") == true) {area = "TUTONG"}
+else if (address.includes("MAU") == true) {area = "TUTONG"}
+else if (address.includes("PENGKALAN MAU") == true) {area = "TUTONG"}
+else if (address.includes("BATANG MITUS") == true) {area = "TUTONG"}
+else if (address.includes("MITUS") == true) {area = "TUTONG"}
+else if (address.includes("KEBIA") == true) {area = "TUTONG"}
+else if (address.includes("BIRAU") == true) {area = "TUTONG"}
+else if (address.includes("LAMUNIN") == true) {area = "TUTONG"}
+else if (address.includes("LAYONG") == true) {area = "TUTONG"}
+else if (address.includes("MENENGAH") == true) {area = "TUTONG"}
+else if (address.includes("PANCHONG") == true) {area = "TUTONG"}
+else if (address.includes("PENAPAR") == true) {area = "TUTONG"}
+else if (address.includes("TANJONG MAYA") == true) {area = "TUTONG"}
+else if (address.includes("MAYA") == true) {area = "TUTONG"}
+else if (address.includes("LUBOK") == true) {area = "TUTONG"}
+else if (address.includes("PULAU") == true) {area = "TUTONG"}
+else if (address.includes("LUBOK PULAU") == true) {area = "TUTONG"}
+else if (address.includes("BUKIT UDAL") == true) {area = "TUTONG"}
+else if (address.includes("UDAL") == true) {area = "TUTONG"}
+else if (address.includes("RAMBAI") == true) {area = "TUTONG"}
+else if (address.includes("BENUTAN") == true) {area = "TUTONG"}
+else if (address.includes("MERIMBUN") == true) {area = "TUTONG"}
+else if (address.includes("UKONG") == true) {area = "TUTONG"}
+else if (address.includes("LONG") == true) {area = "TUTONG"}
+else if (address.includes("MAYAN") == true) {area = "TUTONG"}
+else if (address.includes("LONG MAYAN") == true) {area = "TUTONG"}
+else if (address.includes("TELISAI") == true) {area = "TUTONG"}
+else if (address.includes("DANAU") == true) {area = "TUTONG"}
+else if (address.includes("BUKIT BERUANG") == true) {area = "TUTONG"}
+else if (address.includes("BERUANG") == true) {area = "TUTONG"}
 else if (address.includes("BELAIT") == true) {area = "KB / SERIA"} //CHANGE ADDRESS TO ....
 else if (address.includes("TEMBURONG") == true) {area = "TEMBURONG"} //CHANGE ADDRESS TO ....
 else {area = "N/A"}

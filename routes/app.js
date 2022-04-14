@@ -437,6 +437,27 @@ function itemOut(req,res){
     let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" + "|" + date}
     let history = {history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]"  + "|" + date }}
     let option = {upsert: true, new: true}
+    zaloraInventory.findOne(tracker, (err,result) => {
+        let count = result.count
+        console.log(count)
+        if (result) {
+            if(count = 0 || count <= 3) {
+                let newcount = count + 1
+                result.count = newcount
+                result.save()
+                console.log(newcount)
+                console.log(result.count)
+            }
+            else if (count >= 4){
+                res.render('limit', {
+                    head: "Max limit reached",
+                    message: "Parcel reach maximum number of attempts",
+                    solution: "Please inform warehouse supervisor to schedule for return.",
+                })
+            }
+        }
+        else console.log(err)
+    })
     zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option, (err,docs) => {
         if(err){
             console.log(err)
@@ -448,12 +469,9 @@ function itemOut(req,res){
             })
         } 
         else {
-            console.log('update success')
-            let date = req.body.dateSchedule
-            res.render('itemout',{
-                head: "Tracking Number has been updated",
-                message: `The tracking number has been reSchedule for delivery on ${date}`
-            })
+            console.log('update success (push history)')
+            //let date = req.body.dateSchedule
+            res.render('itemout')
         } 
     })
     zaloraInventory.findOneAndUpdate(tracker,update,option,(err,docs) => {
@@ -468,11 +486,8 @@ function itemOut(req,res){
         } 
         else {
             console.log('update success')
-            let date = req.body.dateSchedule
-            res.render('itemout',{
-                head: "Tracking Number has been updated",
-                message: `The tracking number has been reSchedule for delivery on ${date}`
-            })
+           //let date = req.body.dateSchedule
+            res.render('itemout')
         } 
     })
 }

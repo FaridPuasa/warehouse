@@ -1,3 +1,14 @@
+result = data
+        console.log(result)
+        console.log(data.count)
+        if (data.count = 0 || data.count <= 3) {
+            data.count = data.count + 1
+            console.log(data.count)
+        }else if (data.count > 3){
+            console.log("RETURN")
+        } 
+
+
 function berakas_1(req,res){
     let inventory = new inventoryDB({
        trackingNumber: req.body.trackingNumber,
