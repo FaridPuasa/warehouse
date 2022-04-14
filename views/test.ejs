@@ -101,6 +101,7 @@
                 <th scope="col">Contact</th>
                 <th scope="col">Value</th>
                 <th scope="col">Status</th>
+                <th scope="col">No of Attempt</th>
                 <th scope="col">History</th>
                 <th scope="col">Entry Date</th>
                 <th scope="col">Expire Date</th>
@@ -116,7 +117,9 @@
                 <th scope="row">
                   <%= zaloraInventory.trackingNumber %>
                 </th>
-                <td><%= zaloraInventory.count %></td>
+                <td>
+                  <%= zaloraInventory.parcelNumber %>
+                </td>
                 <td><%= zaloraInventory.area %></td>
                 <td>
                   <%= zaloraInventory.name %>
@@ -132,6 +135,9 @@
                 </td>
                 <td>
                   <%= zaloraInventory.status %>
+                </td>
+                <td class="counts">
+                  <%= zaloraInventory.count %>
                 </td>
                 <td>
                 <% for(var i = 0 ; i < zaloraInventory.history.length; i++) {%>
@@ -221,6 +227,28 @@
         }
 
         trs.forEach(setTrStyleDisplay)
+      }
+    </script>
+    <script>
+      let length = document.getElementsByClassName("counts").length
+      let counts = document.getElementsByClassName("counts")
+      
+      for(k = 0; k < length; k++){
+        if(counts[k].innerText == 0){
+          counts[k].innerText = "No Attempt"
+        }
+        else if(counts[k].innerText == 1){
+          counts[k].innerText = "1st Attempt"
+        }
+        else if(counts[k].innerText == 2){
+          counts[k].innerText = "2n Attempt"
+        }
+        else if(counts[k].innerText == 3){
+          counts[k].innerText = "3rd Attempt"
+        }
+        else if(counts[k].innerText >= 4){
+          counts[k].innerText = "Max Attempt - RETURN"
+        }
       }
     </script>
 
