@@ -1,5 +1,4 @@
 function checkTrackingNum(field, autoMove) {
-    endLoop = 0;
     if (field.value.length >= field.maxLength) {
 
         document.getElementById("reEntry").style.display = 'none';
@@ -25,7 +24,7 @@ function checkTrackingNum(field, autoMove) {
                 json_responsejd = JSON.parse(responsejd);
 
                 if (json_responsejd.status != 404) {
-                    document.getElementById(autoMove).focus();
+                    document.getElementById("reason").focus();
 
                     document.getElementById("trackingNumber").value = json_responsejd.data[0].job_id;
                     document.getElementById("name").value = json_responsejd.data[0].customer_username;
@@ -175,6 +174,7 @@ function checkTrackingNum(field, autoMove) {
 document.addEventListener("DOMContentLoaded", function (event) {
   var jobStatus = "";
   document.getElementById("reEntry").style.display = 'none';
+    document.getElementById("trackingNum").focus();
 
   document.getElementById("submitButton").addEventListener("click", submitForm);
 
