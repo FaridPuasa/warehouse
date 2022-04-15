@@ -184,7 +184,7 @@ router.get('/itemList', (req,res) => {
 })
 
 router.get('/itemListHistory', (req,res) => {
-    inventory.find({}, function(err,inventory){
+    inventories.find({}, function(err,inventory){
         res.render('test', {
             itemList: inventory,
             moment: moment
@@ -250,7 +250,7 @@ router.post('/dispatchSuccess', (req,res) => {
 //Zalora Export Return
 router.get('/return', (req,res) => {
     let zaloraList = []
-    inventory.find({} , (err,inventory) => {
+    inventories.find({} , (err,inventory) => {
         inventory.forEach(function(inventory){
             zaloraList.push(inventory)
         })
@@ -282,7 +282,7 @@ function exportReturn(req,res){
     let update = {status: "RETURN TO MY"}
     let option = {upsert: true, new: true}
     let history = {history: {statusDetail: "RETURN TO MY"}}
-    inventory.findOneAndUpdate(filter,{$push: history}, option, (err,docs) => {
+    inventories.findOneAndUpdate(filter,{$push: history}, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -301,7 +301,7 @@ function exportReturn(req,res){
             })
         }
     })
-    inventory.findOneAndUpdate(filter,update, option, (err,docs) => {
+    inventories.findOneAndUpdate(filter,update, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -401,7 +401,7 @@ function reEntry(req,res){
         reSchedule: req.body.dateSchedule,
     }
     let option = {upsert: true, new: true}
-    inventory.findOneAndUpdate(filter, {$push: history}, option, (err,docs) => {
+    inventories.findOneAndUpdate(filter, {$push: history}, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -420,7 +420,7 @@ function reEntry(req,res){
             })
         } 
     })
-    inventory.findOneAndUpdate(filter,update,option, (err,docs) => {
+    inventories.findOneAndUpdate(filter,update,option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -447,7 +447,7 @@ function itemOut(req,res){
     let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" + "|" + date}
     let history = {history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]"  + "|" + date }}
     let option = {upsert: true, new: true}
-    inventory.findOneAndUpdate(tracker,{$push: history}, option, (err,docs) => {
+    inventories.findOneAndUpdate(tracker,{$push: history}, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -463,7 +463,7 @@ function itemOut(req,res){
             res.render('itemout')
         } 
     })
-    inventory.findOneAndUpdate(tracker,update,option,(err,docs) => {
+    inventories.findOneAndUpdate(tracker,update,option,(err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -479,7 +479,7 @@ function itemOut(req,res){
             res.render('itemout')
         } 
     })
-    inventory.findOne(tracker, (err,result) => {
+    inventories.findOne(tracker, (err,result) => {
         let count = result.count
         console.log(count)
         
@@ -504,7 +504,7 @@ function itemOut(req,res){
 }
 
 router.get("/test", (req,res) => {
-    inventory.find({}, function(err,inventory){
+    inventories.find({}, function(err,inventory){
         res.render('testpod', {
             itemList: inventory,
         })
@@ -606,8 +606,8 @@ function selfCollect(req,res){
     let history = {history: {statusDetail: "SELF COLLECTED" + "["+ req.body.csName +"]"  + "|" + date}}
     let option = {upsert: true, new: true}
     console.log(req.body.trackingNum)
-    inventory.findOneAndUpdate(filter,{$push: history}, option)
-    inventory.findOneAndUpdate(filter, update, option, (err,docs) => {
+    inventories.findOneAndUpdate(filter,{$push: history}, option)
+    inventories.findOneAndUpdate(filter, update, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -699,8 +699,8 @@ function pharmaSelfCollect(req,res){
     let history = {history: {statusDetail: "SELF COLLECTED" + " | " + date}}
     let option = {upsert: true, new: true}
     console.log(req.body.trackingNumber)
-    inventory.findOneAndUpdate(filter,{$push: history}, option)
-    inventory.findOneAndUpdate(filter, update, option, (err,docs) => {
+    inventories.findOneAndUpdate(filter,{$push: history}, option)
+    inventories.findOneAndUpdate(filter, update, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
