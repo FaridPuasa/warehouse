@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("itemIn").style.display = 'none';
     document.getElementById("submitButton").addEventListener("click", submitForm);
     
-    document.getElementById("parcelNumber").value = localStorage.getItem("lastCount") + 1;
+    document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCount")) + 1;
     
     document.getElementById("trackingNum").focus();
 
