@@ -1,11 +1,16 @@
+//const user = require("../models/user")
+
+
+
+
 //Pharmacy Out
 function pharmacyOut (req,res){
 let date = moment().format()
     let tracker = {trackingNumber: req.body.trackingNum}
     let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" + "|" + date}
-    let history = {history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]"  + "|" + date }}
+    let history = {history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]"  , updateDate: date, username: user.name}}
     let option = {upsert: true, new: true}
-    zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option, (err,docs) => {
+    inventory.findOneAndUpdate(tracker,{$push: history}, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -21,7 +26,7 @@ let date = moment().format()
             res.render('itemout')
         } 
     })
-    zaloraInventory.findOneAndUpdate(tracker,update,option,(err,docs) => {
+    inventory.findOneAndUpdate(tracker,update,option,(err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -37,7 +42,7 @@ let date = moment().format()
             res.render('itemout')
         } 
     })
-    zaloraInventory.findOne(tracker, (err,result) => {
+    inventory.findOne(tracker, (err,result) => {
         let count = result.count
         console.log(count)
         
@@ -63,9 +68,9 @@ let date = moment().format()
 
 //Pharmacy In
 function pharmacyIn (req,res){
-    let parcelStatus = {statusDetail: "IN MED ROOM"+"["+req.body.area+"]"+ "|" + req.body.dateEntry}
+    let parcelStatus = {statusDetail: "IN MED ROOM"+"["+req.body.area+"]"+ "|" + req.body.dateEntry, updateDate: date, username: user.name}
     let bin = req.body.area +"/"+req.body.dateEntry
-    let inventory = new pharmacyInventory({
+    let inventory = new inventories({
        trackingNumber: req.body.trackingNumber,
        parcelNumber: req.body.parcelNumber + "[" + req.body.area + "]",
        name: req.body.name,
@@ -104,11 +109,11 @@ function pharmaSelfCollect(req,res){
     let date = moment().format();
     let filter = {trackingNumber: req.body.trackingNumber}
     let update = {status: "SELF COLLECTED" + " | " + date}
-    let history = {history: {statusDetail: "SELF COLLECTED" + " | " + date}}
+    let history = {history: {statusDetail: "SELF COLLECTED", updateDate: date, username: user.name}}
     let option = {upsert: true, new: true}
     console.log(req.body.trackingNumber)
-    pharmacyInventory.findOneAndUpdate(filter,{$push: history}, option)
-    pharmacyInventory.findOneAndUpdate(filter, update, option, (err,docs) => {
+    inventory.findOneAndUpdate(filter,{$push: history}, option)
+    inventory.findOneAndUpdate(filter, update, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{

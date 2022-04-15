@@ -4,10 +4,8 @@ const moment = require('moment')
 const bcrypt = require('bcrypt')
 //Models listing
 //const statusDB = require('../models/inventory')
-const inventory = require('../models/invetories');
+const inventories = require('../models/invetories');
 const userDB = require('../models/user')
-const pharmacyInventory = require('../models/pharmacyInventory');
-const podDB = require('../models/pod');
 const content = require('../models/pod');
 const dispatchDB = require('../models/dispatch');
 const exportDB = require('../models/exportReturn');
@@ -18,6 +16,15 @@ const { findOne, findOneAndUpdate } = require('../models/invetories');
 const { render } = require('ejs');
 const { request } = require('express');
 const res = require('express/lib/response');
+
+router.get('/zalora', (req,res)=> {
+    inventories.find({}, function(err,inventory){
+        res.render('zalora', {
+            itemList: inventory,
+            moment: moment
+        })
+    })
+})
 
 /*************************** USER *********************************/
 
@@ -554,7 +561,7 @@ function pod(req,res){
 function itemin(req,res){
     let parcelStatus = {statusDetail: "IN WAREHOUSE"+"["+req.body.area+"]"+ "|" + req.body.dateEntry}
     let bin = req.body.area +"/"+req.body.dateEntry
-    let inventory = new inventory({
+    let inventory = new inventories({
        trackingNumber: req.body.trackingNumber,
        parcelNumber: req.body.parcelNumber,
        name: req.body.name,
@@ -650,7 +657,7 @@ router.get('pharmacySelf',(req,res) => {
 function pharmacyIn (req,res){
     let parcelStatus = {statusDetail: "IN MED ROOM"+"["+req.body.area+"]"+ "|" + req.body.dateEntry}
     let bin = req.body.area +"/"+req.body.dateEntry
-    let inventory = new pharmacyInventory({
+    let inventory = new inventories({
        trackingNumber: req.body.trackingNumber,
        parcelNumber: req.body.parcelNumber + "[" + req.body.area + "]",
        name: req.body.name,
@@ -692,8 +699,8 @@ function pharmaSelfCollect(req,res){
     let history = {history: {statusDetail: "SELF COLLECTED" + " | " + date}}
     let option = {upsert: true, new: true}
     console.log(req.body.trackingNumber)
-    pharmacyInventory.findOneAndUpdate(filter,{$push: history}, option)
-    pharmacyInventory.findOneAndUpdate(filter, update, option, (err,docs) => {
+    inventory.findOneAndUpdate(filter,{$push: history}, option)
+    inventory.findOneAndUpdate(filter, update, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
