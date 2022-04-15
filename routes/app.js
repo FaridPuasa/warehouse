@@ -175,7 +175,7 @@ function firstTimeLogin(req,res){
 /*************************** ZALORA *********************************/
 //use to get all zalora inventory list
 router.get('/itemList', (req,res) => {
-    inventory.find({}, function(err,inventory){
+    inventories.find({}, function(err,inventory){
         res.render('itemList', {
             itemList: inventory,
             moment: moment
@@ -534,8 +534,8 @@ function pod(req,res){
         podArea: body.areaCode,
         podCreate: body.dateCreate,
         podMade: body.madeBy,
-        trackingNum: ["386765298", "386765298", "386765298"],
-        name: ["test1","test2","test3"],
+        //trackingNum: ["386765298", "386765298", "386765298"],
+        //name: ["test1","test2","test3"],
     })
     //itemOut.podContent.push(content)
     console.log(itemOut)
