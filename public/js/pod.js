@@ -574,6 +574,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
 
             document.getElementById("podRef").value = "ZAL/GR/POD/" + document.getElementById("areaCode").value + "/" + podDate + ampmhour + ampmmin;
+            
+            document.getElementById("trackingNumber").focus();
 
             document.getElementById("podInfoArea").style.display = 'none';
             document.getElementById("podArea").style.display = 'block';
