@@ -36,6 +36,8 @@ function checkTrackingNum(field, autoMove) {
                     let address = document.getElementById("address").value.toUpperCase();
 
                     if (address.includes("MANGGIS") == true) { area = "B1" }
+                    else if (address.includes("LANDASAN LAMA") == true) { area = "B1" }
+                    else if (address.includes("LANDASAN") == true) { area = "B1" }
                     else if (address.includes("DELIMA") == true) { area = "B1" }
                     else if (address.includes("ANGGREK DESA") == true) { area = "B1" }
                     else if (address.includes("PULAIE") == true) { area = "B1" }
