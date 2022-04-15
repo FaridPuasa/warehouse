@@ -264,22 +264,6 @@
         trs.forEach(setTrStyleDisplay)
       }
     </script>
-
-    <script>
-        let totalCount = document.getElementById("tc")
-        let totalOut = document.getElementById('out')
-
-        let itemCount = document.getElementsByTagName('td').includes("OUT FOR DELIVERY").length
-        let itemOut = document.getElementsByClassName('itemStatus').includes("OUT FOR DELIVERY").length
-        totalOut.innerText = itemOut
-
-        var matches = document.getElementById("tc").innerHTML.match(/myFunc\('here'\)/g);
-        var count = matches ? matches.length : 0;
-        totalCount.innerText = count + " In Warehouse"
-        console.log(count)
-        console.log(("str1,str2,str3,str4".match(new RegExp("str", "g")) || []).length);
-    </script>
-
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
