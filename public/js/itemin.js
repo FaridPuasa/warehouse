@@ -197,6 +197,118 @@ function checkTrackingNum(field, autoMove) {
                     else if (address.includes("BUKIT BERUANG") == true) { area = "TUTONG" }
                     else if (address.includes("BERUANG") == true) { area = "TUTONG" }
                     else if (address.includes("BELAIT") == true) { area = "KB / SERIA" } //CHANGE ADDRESS TO ....
+                    else if (address.includes("AGIS") == true) { area = "KB / SERIA" }
+                    else if (address.includes("ANDALAU") == true) { area = "KB / SERIA" }
+                    else if (address.includes("ANDUKI") == true) { area = "KB / SERIA" }
+                    else if (address.includes("APAK") == true) { area = "KB / SERIA" }
+                    else if (address.includes("BADAS") == true) { area = "KB / SERIA" }
+                    else if (address.includes("BANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("GARANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PUKUL") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TAJUK") == true) { area = "KB / SERIA" }
+                    else if (address.includes("BENGERANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("BIADONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("ULU") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TENGAH") == true) { area = "KB / SERIA" }
+                    else if (address.includes("BISUT") == true) { area = "KB / SERIA" }
+                    else if (address.includes("BUAU") == true) { area = "KB / SERIA" }
+                    else if (address.includes("KANDOL") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PUAN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TUDING") == true) { area = "KB / SERIA" }
+                    else if (address.includes("SAWAT") == true) { area = "KB / SERIA" }
+                    else if (address.includes("SERAWONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("CHINA") == true) { area = "KB / SERIA" }
+                    else if (address.includes("DUGUN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("GATAS") == true) { area = "KB / SERIA" }
+                    else if (address.includes("JABANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("KAGU") == true) { area = "KB / SERIA" }
+                    else if (address.includes("KAJITAN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("KELUYOH") == true) { area = "KB / SERIA" }
+                    else if (address.includes("KENAPOL") == true) { area = "KB / SERIA" }
+                    else if (address.includes("KUALA BALAI") == true) { area = "KB / SERIA" }
+                    else if (address.includes("BALAI") == true) { area = "KB / SERIA" }
+                    else if (address.includes("KUALA BELAIT") == true) { area = "KB / SERIA" }
+                    else if (address.includes("KUKUB") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LABI") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LAKANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LAONG ARUT") == true) { area = "KB / SERIA" }
+                    else if (address.includes("ARUT") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LAONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LIANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("SUNGAI LIANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("SG LIANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LUMUT") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LORONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LORONG TENGAH") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LORONG TIGA SELATAN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LILAS") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LUBUK LANYAP") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LANYAP") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LUBUK TAPANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TAPANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MALAAS") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MALAYAN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MELAYU") == true) { area = "KB / SERIA" }
+                    else if (address.includes("ASLI") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MELAYU ASLI") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MELILAS") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MENDARAM") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MENDARAM BESAR") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MENDARAM KECIL") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MERANGKING") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MERANGKING ULU") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MERANGKING HILIR") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MUMONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PANDAN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PADANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PANAGA") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PENGKALAN SIONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("SIONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PENGALAYAN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PENYRAP") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PERANGKONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PERUMPONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PESILIN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PULAU APIL") == true) { area = "KB / SERIA" }
+                    else if (address.includes("APIL") == true) { area = "KB / SERIA" }
+                    else if (address.includes("RAMPAYOH") == true) { area = "KB / SERIA" }
+                    else if (address.includes("RATAN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("SAUD") == true) { area = "KB / SERIA" }
+                    else if (address.includes("SIMPANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("SIMPANG TIGA") == true) { area = "KB / SERIA" }
+                    else if (address.includes("SINGAP") == true) { area = "KB / SERIA" }
+                    else if (address.includes("SUKANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("BAKONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("DAMIT") == true) { area = "KB / SERIA" }
+                    else if (address.includes("BERA") == true) { area = "KB / SERIA" }
+                    else if (address.includes("DUHON") == true) { area = "KB / SERIA" }
+                    else if (address.includes("GANA") == true) { area = "KB / SERIA" }
+                    else if (address.includes("HILIR") == true) { area = "KB / SERIA" }
+                    else if (address.includes("KANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("KURU") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LALIT") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LIANG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("LUTONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MAU") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MELILIT") == true) { area = "KB / SERIA" }
+                    else if (address.includes("MENDARAM") == true) { area = "KB / SERIA" }
+                    else if (address.includes("PETAI") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TALI") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TARING") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TERABAN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("UBAR") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TANAJOR") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TANJONG RANGGAS") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TANJONG SUDAI") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TAPANG LUPAK") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TARAP") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TEMPINAK") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TERAJA") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TERAWAN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TERUNAN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TUGONG") == true) { area = "KB / SERIA" }
+                    else if (address.includes("TUNGULLIAN") == true) { area = "KB / SERIA" }
+                    else if (address.includes("UBOK") == true) { area = "KB / SERIA" }
                     else if (address.includes("TEMBURONG") == true) { area = "TEMBURONG" } //CHANGE ADDRESS TO ....
                     else { area = "N/A" }
 
