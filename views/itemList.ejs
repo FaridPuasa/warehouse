@@ -71,37 +71,37 @@
             </thead>
 
 
-            <%itemList.forEach(zaloraInventory=> {%>
+            <%itemList.forEach(inventory=> {%>
             <tbody>
               <tr class="content">
                 <th scope="row" class="trackingNum">
-                  <%= zaloraInventory.trackingNumber %>
+                  <%= inventory.trackingNumber %>
                 </th>
-                <td><%= zaloraInventory.parcelNumber %></td>
-                <td><%= zaloraInventory.area %></td>
+                <td><%= inventory.parcelNumber %></td>
+                <td><%= inventory.area %></td>
                 <td>
-                  <%= zaloraInventory.name %>
+                  <%= inventory.name %>
                 </td>
                 <td>
-                  <%= zaloraInventory.address %>
+                  <%= inventory.address %>
                 </td>
                 <td>
-                  <%= zaloraInventory.contact %>
+                  <%= inventory.contact %>
                 </td>
                 <td>
-                  <%= zaloraInventory.value %>
+                  <%= inventory.value %>
                 </td>
                 <td class="itemStatus">
-                  <%= zaloraInventory.status %>
+                  <%= inventory.status %>
                 </td>
                 <td>
-                  <%= zaloraInventory.entryDate %>
+                  <%= inventory.entryDate %>
                 </td>
                 <td class="expire">
-                  <%= zaloraInventory.expireDate %>
+                  <%= inventory.expireDate %>
                 </td>
                 <td class="days">
-                  <%= zaloraInventory.age %>
+                  <%= inventory.age %>
                 </td>
               </tr>
             </tbody>

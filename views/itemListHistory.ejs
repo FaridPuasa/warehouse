@@ -162,39 +162,39 @@
             </thead>
 
 
-            <%itemList.forEach(zaloraInventory=> {%>
+            <%itemList.forEach(inventory=> {%>
             <tbody>
               <tr class="content">
                 <th scope="row">
-                    <div class="popup" onclick="displayPlan('<%= zaloraInventory.trackingNumber %>')"><%= zaloraInventory.trackingNumber %>
-                        <span class="popuptext" id="<%= zaloraInventory.trackingNumber %>"><%= zaloraInventory.trackingNumber %></span>
+                    <div class="popup" onclick="displayPlan('<%= inventory.trackingNumber %>')"><%= inventory.trackingNumber %>
+                        <span class="popuptext" id="<%= inventory.trackingNumber %>"><%= inventory.trackingNumber %></span>
                     </div>
                 </th>
-                <td><%= zaloraInventory.parcelNumber %></td>
-                <td><%= zaloraInventory.area %></td>
+                <td><%= inventory.parcelNumber %></td>
+                <td><%= inventory.area %></td>
                 <td>
-                  <%= zaloraInventory.name %>
+                  <%= inventory.name %>
                 </td>
                 <td>
-                  <%= zaloraInventory.address %>
+                  <%= inventory.address %>
                 </td>
                 <td>
-                  <%= zaloraInventory.contact %>
+                  <%= inventory.contact %>
                 </td>
                 <td>
-                  <%= zaloraInventory.value %>
+                  <%= inventory.value %>
                 </td>
                 <td>
-                  <%= zaloraInventory.status %>
+                  <%= inventory.status %>
                 </td>
                 <td>
-                  <%= zaloraInventory.entryDate %>
+                  <%= inventory.entryDate %>
                 </td>
                 <td class="expire">
-                  <%= zaloraInventory.expireDate %>
+                  <%= inventory.expireDate %>
                 </td>
                 <td class="days">
-                  <%= zaloraInventory.age %>
+                  <%= inventory.age %>
                 </td>
               </tr>
             </tbody>

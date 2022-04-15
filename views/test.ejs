@@ -112,49 +112,49 @@
 
             
             <tbody>
-              <%itemList.forEach(zaloraInventory=> {%>
+              <%itemList.forEach(inventory=> {%>
               <tr>
                 <th scope="row">
-                  <%= zaloraInventory.trackingNumber %>
+                  <%= inventory.trackingNumber %>
                 </th>
                 <td>
-                  <%= zaloraInventory.parcelNumber %>
+                  <%= inventory.parcelNumber %>
                 </td>
-                <td><%= zaloraInventory.area %></td>
+                <td><%= inventory.area %></td>
                 <td>
-                  <%= zaloraInventory.name %>
-                </td>
-                <td>
-                  <%= zaloraInventory.address %>
+                  <%= inventory.name %>
                 </td>
                 <td>
-                  <%= zaloraInventory.contact %>
+                  <%= inventory.address %>
                 </td>
                 <td>
-                  <%= zaloraInventory.value %>
+                  <%= inventory.contact %>
                 </td>
                 <td>
-                  <%= zaloraInventory.status %>
+                  <%= inventory.value %>
+                </td>
+                <td>
+                  <%= inventory.status %>
                 </td>
                 <td class="counts">
-                  <%= zaloraInventory.count %>
+                  <%= inventory.count %>
                 </td>
                 <td>
-                <% for(var i = 0 ; i < zaloraInventory.history.length; i++) {%>
+                <% for(var i = 0 ; i < inventory.history.length; i++) {%>
                     <ul>
-                      <li><%= zaloraInventory.history[i].statusDetail %> | <%= zaloraInventory.history[i].dateUpdated %></li>
+                      <li><%= inventory.history[i].statusDetail %> | <%= inventory.history[i].dateUpdated %></li>
                       
                     </ul>
                 <% } %>
                 </td>
                 <td>
-                  <%= moment(zaloraInventory.entryDate).format('DD-MM-YYYY') %>
+                  <%= moment(inventory.entryDate).format('DD-MM-YYYY') %>
                 </td>
                 <td class="expire">
-                  <%= moment(zaloraInventory.expireDate).format('DD-MM-YYYY') %>
+                  <%= moment(inventory.expireDate).format('DD-MM-YYYY') %>
                 </td>
                 <td class="days">
-                  <%= zaloraInventory.age %>
+                  <%= inventory.age %>
                 </td>
               </tr>
               <%})%>

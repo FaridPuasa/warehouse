@@ -3,8 +3,8 @@ const router = express.Router();
 const moment = require('moment')
 const bcrypt = require('bcrypt')
 //Models listing
-//const statusDB = require('../models/zaloraInventory')
-const zaloraInventory = require('../models/zaloraInventory');
+//const statusDB = require('../models/inventory')
+const inventory = require('../models/invetories');
 const userDB = require('../models/user')
 const pharmacyInventory = require('../models/pharmacyInventory');
 const podDB = require('../models/pod');
@@ -14,7 +14,7 @@ const exportDB = require('../models/exportReturn');
 const grpMalaysiaDB = require('../models/grpMalaysia');
 
 //middlewares
-const { findOne, findOneAndUpdate } = require('../models/zaloraInventory');
+const { findOne, findOneAndUpdate } = require('../models/invetories');
 const { render } = require('ejs');
 const { request } = require('express');
 const res = require('express/lib/response');
@@ -106,6 +106,18 @@ function login(req,res){
                     })
                 })  
             }
+            else if (position == "DIS-EFR"){
+                dispatchDB.find({}, function(err,dispatch) {
+                    res.render('dashboardDIS', {
+                        dispatch: dispatch,
+                        name: user.name,
+                        icNumber: user.icNumber,
+                        position: user.position,
+                        contact: user.contact,
+                        office: user.office,
+                    })
+                })  
+            }
             else if (position == "FIN"){res.render('')}
             else {res.render('error',{
                 error_code: 'Error Code: 01', //access control error
@@ -154,29 +166,20 @@ function firstTimeLogin(req,res){
 /*************************** USER *********************************/
 
 /*************************** ZALORA *********************************/
-/*
-Add on:
-2. recheck on zalora pod
-3. add status array to required functions
-4. ageing need to be check
-5. export function need testing
-6. create simple reports (end of day report)
-*/
-
 //use to get all zalora inventory list
 router.get('/itemList', (req,res) => {
-    zaloraInventory.find({}, function(err,zaloraInventory){
+    inventory.find({}, function(err,inventory){
         res.render('itemList', {
-            itemList: zaloraInventory,
+            itemList: inventory,
             moment: moment
         })
     })
 })
 
 router.get('/itemListHistory', (req,res) => {
-    zaloraInventory.find({}, function(err,zaloraInventory){
+    inventory.find({}, function(err,inventory){
         res.render('test', {
-            itemList: zaloraInventory,
+            itemList: inventory,
             moment: moment
         })
     })
@@ -204,7 +207,7 @@ router.get('/itemout',(req,res) => {
     res.render('itemout')
 })
 
-//if(zaloraInventory.trackingNumber == document.getElementById(trackingNum).value){document.getElementById('count').value = <%= zaloraInventory.count %>}
+//if(inventory.trackingNumber == document.getElementById(trackingNum).value){document.getElementById('count').value = <%= inventory.count %>}
 //else{document.getElementById('count').value = error}
 
 router.post('/confirm',(req,res) => {
@@ -240,9 +243,9 @@ router.post('/dispatchSuccess', (req,res) => {
 //Zalora Export Return
 router.get('/return', (req,res) => {
     let zaloraList = []
-    zaloraInventory.find({} , (err,zaloraInventory) => {
-        zaloraInventory.forEach(function(zaloraInventory){
-            zaloraList.push(zaloraInventory)
+    inventory.find({} , (err,inventory) => {
+        inventory.forEach(function(inventory){
+            zaloraList.push(inventory)
         })
         res.render('return',{
             zalora: zaloraList,
@@ -272,7 +275,7 @@ function exportReturn(req,res){
     let update = {status: "RETURN TO MY"}
     let option = {upsert: true, new: true}
     let history = {history: {statusDetail: "RETURN TO MY"}}
-    zaloraInventory.findOneAndUpdate(filter,{$push: history}, option, (err,docs) => {
+    inventory.findOneAndUpdate(filter,{$push: history}, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -291,7 +294,7 @@ function exportReturn(req,res){
             })
         }
     })
-    zaloraInventory.findOneAndUpdate(filter,update, option, (err,docs) => {
+    inventory.findOneAndUpdate(filter,update, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -391,7 +394,7 @@ function reEntry(req,res){
         reSchedule: req.body.dateSchedule,
     }
     let option = {upsert: true, new: true}
-    zaloraInventory.findOneAndUpdate(filter, {$push: history}, option, (err,docs) => {
+    inventory.findOneAndUpdate(filter, {$push: history}, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -410,7 +413,7 @@ function reEntry(req,res){
             })
         } 
     })
-    zaloraInventory.findOneAndUpdate(filter,update,option, (err,docs) => {
+    inventory.findOneAndUpdate(filter,update,option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -437,7 +440,7 @@ function itemOut(req,res){
     let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" + "|" + date}
     let history = {history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]"  + "|" + date }}
     let option = {upsert: true, new: true}
-    zaloraInventory.findOneAndUpdate(tracker,{$push: history}, option, (err,docs) => {
+    inventory.findOneAndUpdate(tracker,{$push: history}, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -453,7 +456,7 @@ function itemOut(req,res){
             res.render('itemout')
         } 
     })
-    zaloraInventory.findOneAndUpdate(tracker,update,option,(err,docs) => {
+    inventory.findOneAndUpdate(tracker,update,option,(err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
@@ -469,7 +472,7 @@ function itemOut(req,res){
             res.render('itemout')
         } 
     })
-    zaloraInventory.findOne(tracker, (err,result) => {
+    inventory.findOne(tracker, (err,result) => {
         let count = result.count
         console.log(count)
         
@@ -494,9 +497,9 @@ function itemOut(req,res){
 }
 
 router.get("/test", (req,res) => {
-    zaloraInventory.find({}, function(err,zaloraInventory){
+    inventory.find({}, function(err,inventory){
         res.render('testpod', {
-            itemList: zaloraInventory,
+            itemList: inventory,
         })
     })
 })
@@ -547,27 +550,11 @@ function pod(req,res){
     })
 }
 
-/*
-let itemOut = new podDB({
-        podRef: body.ref, //ref is auto generated by the system. To differentiate the products delivered
-        podAssign: body.assignTo,
-        podDate: body.dateAssign,
-        podTotal: body.value, //Total amount of cash to be collected.
-        podTotalParcel: body.parcel, //Total amount of parcel to be delivered.
-        podClass: body.type, //Class is to identify who will be delivering. Freelancer or Full Time. 
-        podProduct: body.product, //Product is used to identify the delivered product.
-        podContent: body.content,
-        podArea: body.area,
-        podCreate: body.dateCreate,
-        podMade: body.madeBy,
-    })
-*/
-
 //
 function itemin(req,res){
     let parcelStatus = {statusDetail: "IN WAREHOUSE"+"["+req.body.area+"]"+ "|" + req.body.dateEntry}
     let bin = req.body.area +"/"+req.body.dateEntry
-    let inventory = new zaloraInventory({
+    let inventory = new inventory({
        trackingNumber: req.body.trackingNumber,
        parcelNumber: req.body.parcelNumber,
        name: req.body.name,
@@ -612,8 +599,8 @@ function selfCollect(req,res){
     let history = {history: {statusDetail: "SELF COLLECTED" + "["+ req.body.csName +"]"  + "|" + date}}
     let option = {upsert: true, new: true}
     console.log(req.body.trackingNum)
-    zaloraInventory.findOneAndUpdate(filter,{$push: history}, option)
-    zaloraInventory.findOneAndUpdate(filter, update, option, (err,docs) => {
+    inventory.findOneAndUpdate(filter,{$push: history}, option)
+    inventory.findOneAndUpdate(filter, update, option, (err,docs) => {
         if(err){
             console.log(err)
             res.render('error',{
