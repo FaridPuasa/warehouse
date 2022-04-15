@@ -64,7 +64,6 @@ function checkTrackingNum(field, autoMove) {
                     else if (address.includes("SALAMBIGAR") == true) { area = "B2" }
                     else if (address.includes("SALAR") == true) { area = "B2" }
                     else if (address.includes("SERASA") == true) { area = "B2" }
-                    else if (address.includes("MUARA") == true) { area = "B2" }
                     else if (address.includes("SERDANG") == true) { area = "B2" }
                     else if (address.includes("SUNGAI BASAR") == true) { area = "B2" }
                     else if (address.includes("SG BASAR") == true) { area = "B2" }
@@ -146,6 +145,7 @@ function checkTrackingNum(field, autoMove) {
                     else if (address.includes("TANJUNG BUNUT") == true) { area = "JT3" }
                     else if (address.includes("SUNGAI TAMPOI") == true) { area = "JT3" }
                     else if (address.includes("SG TAMPOI") == true) { area = "JT3" }
+                    else if (address.includes("MUARA") == true) { area = "B2" }
                     else if (address.includes("TUTONG") == true) { area = "TUTONG" } //CHANGE ADDRESS TO ....
                     else if (address.includes("SENGKARAI") == true) { area = "TUTONG" }
                     else if (address.includes("PANCHOR") == true) { area = "TUTONG" }
