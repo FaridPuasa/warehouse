@@ -31,11 +31,6 @@ const inventorySchema  = new mongoose.Schema({
     expireDate:expireDate,
     status: reqString,
     history: [{statusDetail: reqString, dateUpdated: entryDate}],
-    expireAt: {
-        type: Date,
-        default: Date.now,
-        index: { expires: '60s' }
-    }
 }, {timestamps: true})
 
 //inventorySchema.index({createdAt: 1},{expireAfterSeconds: 60});//180 days
