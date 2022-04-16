@@ -200,7 +200,12 @@ router.get('/dispatcher-report', (req,res) => {
     })
 })
 router.get('/',(req,res) => {
-    res.render('itemList')
+    inventories.find({}, function(err,inventory){
+        res.render('itemList', {
+            itemList: inventory,
+            moment: moment
+        })
+    })
 })
 
 //Zalora In
