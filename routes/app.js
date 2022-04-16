@@ -199,6 +199,9 @@ router.get('/dispatcher-report', (req,res) => {
         })
     })
 })
+router.get('/',(req,res) => {
+    res.render('itemList')
+})
 
 //Zalora In
 router.get('/itemin', (req,res) => {
