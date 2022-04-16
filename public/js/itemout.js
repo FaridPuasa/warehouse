@@ -147,6 +147,10 @@ function checkTrackingNum(field, autoMove) {
         if (document.getElementById("agentTemp").value == "1140555") {
             document.getElementById("agentName").value = "EFR ASIKIN";
         }
+        
+        if (document.getElementById("agentTemp").value == "1354406") {
+            document.getElementById("agentName").value = "EFR ISMADY";
+        }
 
         if (document.getElementById("agentTemp").value == "1003154") {
             document.getElementById("agentName").value = "IFR DYLAN";
