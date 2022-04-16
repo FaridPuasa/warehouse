@@ -201,7 +201,7 @@ router.get('/dispatcher-report', (req,res) => {
 })
 router.get('/',(req,res) => {
     inventories.find({}, function(err,inventory){
-        res.render('itemlisthistory', {
+        res.render('test', {
             itemList: inventory,
             moment: moment
         })
