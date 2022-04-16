@@ -547,7 +547,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         var arrivedTN = document.getElementById("trackingNumber").value;
         var parcelNum = document.getElementById("parcelNumber").value;
         var request = new XMLHttpRequest();
-        request.open('POST', 'https://api.tookanapp.com/v2/update_task_status');
+        request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
         request.setRequestHeader('Content-Type', 'application/json');
 
         request.onreadystatechange = function () {
@@ -591,9 +591,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         var body = {
             'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
             'job_id': arrivedTN,
-            'job_status': '4'
+            'fleet_id': '1125101',
+            'job_status': '0'
         };
-
         request.send(JSON.stringify(body));
     }
 });
