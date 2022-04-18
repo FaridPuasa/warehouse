@@ -497,55 +497,57 @@ document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("itemIn").style.display = 'none';
     document.getElementById("submitButton").addEventListener("click", submitForm);
 
-    if (document.getElementById("area").value == "B1") {
-        localStorage.setItem("lastCountB1", document.getElementById("parcelNumber").value);
-    }
-
-    if (document.getElementById("area").value == "B2") {
-        localStorage.setItem("lastCountB2", document.getElementById("parcelNumber").value);
-    }
-
-    if (document.getElementById("area").value == "G1") {
-        localStorage.setItem("lastCountG1", document.getElementById("parcelNumber").value);
-    }
-
-    if (document.getElementById("area").value == "G2") {
-        localStorage.setItem("lastCountG2", document.getElementById("parcelNumber").value);
-    }
-
-    if (document.getElementById("area").value == "JT1") {
-        localStorage.setItem("lastCountJT1", document.getElementById("parcelNumber").value);
-    }
-
-    if (document.getElementById("area").value == "JT2") {
-        localStorage.setItem("lastCountJT2", document.getElementById("parcelNumber").value);
-    }
-
-    if (document.getElementById("area").value == "JT3") {
-        localStorage.setItem("lastCountJT3", document.getElementById("parcelNumber").value);
-    }
-
-    if (document.getElementById("area").value == "TUTONG") {
-        localStorage.setItem("lastCountTUTONG", document.getElementById("parcelNumber").value);
-    }
-
-    if (document.getElementById("area").value == "KB / SERIA") {
-        localStorage.setItem("lastCountKBSERIA", document.getElementById("parcelNumber").value);
-    }
-
-    if (document.getElementById("area").value == "TEMBURONG") {
-        localStorage.setItem("lastCountTEMBURONG", document.getElementById("parcelNumber").value);
-    }
-
-    if (document.getElementById("area").value == "N/A") {
-        localStorage.setItem("lastCountNA", document.getElementById("parcelNumber").value);
-    }
-
     document.getElementById("trackingNum").focus();
 
     function submitForm() {
         var arrivedTN = document.getElementById("trackingNumber").value;
         var parcelNum = document.getElementById("parcelNumber").value;
+
+        if (document.getElementById("area").value == "B1") {
+            localStorage.setItem("lastCountB1", document.getElementById("parcelNumber").value);
+        }
+
+        if (document.getElementById("area").value == "B2") {
+            localStorage.setItem("lastCountB2", document.getElementById("parcelNumber").value);
+        }
+
+        if (document.getElementById("area").value == "G1") {
+            localStorage.setItem("lastCountG1", document.getElementById("parcelNumber").value);
+        }
+
+        if (document.getElementById("area").value == "G2") {
+            localStorage.setItem("lastCountG2", document.getElementById("parcelNumber").value);
+        }
+
+        if (document.getElementById("area").value == "JT1") {
+            localStorage.setItem("lastCountJT1", document.getElementById("parcelNumber").value);
+        }
+
+        if (document.getElementById("area").value == "JT2") {
+            localStorage.setItem("lastCountJT2", document.getElementById("parcelNumber").value);
+        }
+
+        if (document.getElementById("area").value == "JT3") {
+            localStorage.setItem("lastCountJT3", document.getElementById("parcelNumber").value);
+        }
+
+        if (document.getElementById("area").value == "TUTONG") {
+            localStorage.setItem("lastCountTUTONG", document.getElementById("parcelNumber").value);
+        }
+
+        if (document.getElementById("area").value == "KB / SERIA") {
+            localStorage.setItem("lastCountKBSERIA", document.getElementById("parcelNumber").value);
+        }
+
+        if (document.getElementById("area").value == "TEMBURONG") {
+            localStorage.setItem("lastCountTEMBURONG", document.getElementById("parcelNumber").value);
+        }
+
+        if (document.getElementById("area").value == "N/A") {
+            localStorage.setItem("lastCountNA", document.getElementById("parcelNumber").value);
+        }
+
+
         var request = new XMLHttpRequest();
         request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
         request.setRequestHeader('Content-Type', 'application/json');
