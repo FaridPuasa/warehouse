@@ -495,90 +495,90 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     if (localStorage.getItem("lastCountB1") == null) {
         localStorage.setItem("lastCountB1", 1);
-        document.getElementById("lastCountB1").innerText = parseInt(localStorage.getItem("lastCountB1"));
+        document.getElementById("lastCountB1").innerText = "B1: " + parseInt(localStorage.getItem("lastCountB1"));
     }
     if (localStorage.getItem("lastCountB1") != null) {
-        document.getElementById("lastCountB1").innerText = parseInt(localStorage.getItem("lastCountB1"));
+        document.getElementById("lastCountB1").innerText = "B1: " + parseInt(localStorage.getItem("lastCountB1"));
     }
 
     if (localStorage.getItem("lastCountB2") == null) {
         localStorage.setItem("lastCountB2", 1);
-        document.getElementById("lastCountB2").innerText = parseInt(localStorage.getItem("lastCountB2"));
+        document.getElementById("lastCountB2").innerText = "B2: " + parseInt(localStorage.getItem("lastCountB2"));
     }
     if (localStorage.getItem("lastCountB2") != null) {
-        document.getElementById("lastCountB2").innerText = parseInt(localStorage.getItem("lastCountB2"));
+        document.getElementById("lastCountB2").innerText = "B2: " + parseInt(localStorage.getItem("lastCountB2"));
     }
 
     if (localStorage.getItem("lastCountG1") == null) {
         localStorage.setItem("lastCountG1", 1);
-        document.getElementById("lastCountG1").innerText = parseInt(localStorage.getItem("lastCountG1"));
+        document.getElementById("lastCountG1").innerText = "G1: " + parseInt(localStorage.getItem("lastCountG1"));
     }
     if (localStorage.getItem("lastCountG1") != null) {
-        document.getElementById("lastCountG1").innerText = parseInt(localStorage.getItem("lastCountG1"));
+        document.getElementById("lastCountG1").innerText = "G1: " + parseInt(localStorage.getItem("lastCountG1"));
     }
 
     if (localStorage.getItem("lastCountG2") == null) {
         localStorage.setItem("lastCountG2", 1);
-        document.getElementById("lastCountG2").innerText = parseInt(localStorage.getItem("lastCountG2"));
+        document.getElementById("lastCountG2").innerText = "G2: " + parseInt(localStorage.getItem("lastCountG2"));
     }
     if (localStorage.getItem("lastCountG2") != null) {
-        document.getElementById("lastCountG2").innerText = parseInt(localStorage.getItem("lastCountG2"));
+        document.getElementById("lastCountG2").innerText = "G2: " + parseInt(localStorage.getItem("lastCountG2"));
     }
 
     if (localStorage.getItem("lastCountJT1") == null) {
         localStorage.setItem("lastCountJT1", 1);
-        document.getElementById("lastCountJT1").innerText = parseInt(localStorage.getItem("lastCountJT1"));
+        document.getElementById("lastCountJT1").innerText = "JT1: " + parseInt(localStorage.getItem("lastCountJT1"));
     }
     if (localStorage.getItem("lastCountJT1") != null) {
-        document.getElementById("lastCountJT1").innerText = parseInt(localStorage.getItem("lastCountJT1"));
+        document.getElementById("lastCountJT1").innerText = "JT1: " + parseInt(localStorage.getItem("lastCountJT1"));
     }
 
     if (localStorage.getItem("lastCountJT2") == null) {
         localStorage.setItem("lastCountJT2", 1);
-        document.getElementById("lastCountJT2").innerText = parseInt(localStorage.getItem("lastCountJT2"));
+        document.getElementById("lastCountJT2").innerText = "JT2: " + parseInt(localStorage.getItem("lastCountJT2"));
     }
     if (localStorage.getItem("lastCountJT2") != null) {
-        document.getElementById("lastCountJT2").innerText = parseInt(localStorage.getItem("lastCountJT2"));
+        document.getElementById("lastCountJT2").innerText = "JT2: " + parseInt(localStorage.getItem("lastCountJT2"));
     }
 
     if (localStorage.getItem("lastCountJT3") == null) {
         localStorage.setItem("lastCountJT3", 1);
-        document.getElementById("lastCountJT3").innerText = parseInt(localStorage.getItem("lastCountJT3"));
+        document.getElementById("lastCountJT3").innerText = "JT3: " + parseInt(localStorage.getItem("lastCountJT3"));
     }
     if (localStorage.getItem("lastCountJT3") != null) {
-        document.getElementById("lastCountJT3").innerText = parseInt(localStorage.getItem("lastCountJT3"));
+        document.getElementById("lastCountJT3").innerText = "JT3: " + parseInt(localStorage.getItem("lastCountJT3"));
     }
 
     if (localStorage.getItem("lastCountTUTONG") == null) {
         localStorage.setItem("lastCountTUTONG", 1);
-        document.getElementById("lastCountTUTONG").innerText = parseInt(localStorage.getItem("lastCountTUTONG"));
+        document.getElementById("lastCountTUTONG").innerText = "TUTONG: " + parseInt(localStorage.getItem("lastCountTUTONG"));
     }
     if (localStorage.getItem("lastCountTUTONG") != null) {
-        document.getElementById("lastCountTUTONG").innerText = parseInt(localStorage.getItem("lastCountTUTONG"));
+        document.getElementById("lastCountTUTONG").innerText = "TUTONG: " + parseInt(localStorage.getItem("lastCountTUTONG"));
     }
 
     if (localStorage.getItem("lastCountKBSERIA") == null) {
         localStorage.setItem("lastCountKBSERIA", 1);
-        document.getElementById("lastCountKBSERIA").innerText = parseInt(localStorage.getItem("lastCountKBSERIA"));
+        document.getElementById("lastCountKBSERIA").innerText = "KBSERIA: " + parseInt(localStorage.getItem("lastCountKBSERIA"));
     }
     if (localStorage.getItem("lastCountKBSERIA") != null) {
-        document.getElementById("lastCountKBSERIA").innerText = parseInt(localStorage.getItem("lastCountKBSERIA"));
+        document.getElementById("lastCountKBSERIA").innerText = "KBSERIA: " + parseInt(localStorage.getItem("lastCountKBSERIA"));
     }
 
     if (localStorage.getItem("lastCountTEMBURONG") == null) {
         localStorage.setItem("lastCountTEMBURONG", 1);
-        document.getElementById("lastCountTEMBURONG").innerText = parseInt(localStorage.getItem("lastCountTEMBURONG"));
+        document.getElementById("lastCountTEMBURONG").innerText = "TEMBURONG: " + parseInt(localStorage.getItem("lastCountTEMBURONG"));
     }
     if (localStorage.getItem("lastCountTEMBURONG") != null) {
-        document.getElementById("lastCountTEMBURONG").innerText = parseInt(localStorage.getItem("lastCountTEMBURONG"));
+        document.getElementById("lastCountTEMBURONG").innerText = "TEMBURONG: " + parseInt(localStorage.getItem("lastCountTEMBURONG"));
     }
 
     if (localStorage.getItem("lastCountNA") == null) {
         localStorage.setItem("lastCountNA", 1);
-        document.getElementById("lastCountNA").innerText = parseInt(localStorage.getItem("lastCountNA"));
+        document.getElementById("lastCountNA").innerText = "NA: " + parseInt(localStorage.getItem("lastCountNA"));
     }
     if (localStorage.getItem("lastCountNA") != null) {
-        document.getElementById("lastCountNA").innerText = parseInt(localStorage.getItem("lastCountNA"));
+        document.getElementById("lastCountNA").innerText = "NA: " + parseInt(localStorage.getItem("lastCountNA"));
     }
 
     document.addEventListener("submit", function (event) {
