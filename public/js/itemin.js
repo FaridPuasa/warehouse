@@ -24,7 +24,10 @@ function checkTrackingNum(field, autoMove) {
                 json_responsejd = JSON.parse(responsejd);
 
                 if (json_responsejd.status != 404) {
-                    document.getElementById(autoMove).focus();
+
+                    document.getElementById("trackingNumber").readOnly = false;
+                    document.getElementById("name").readOnly = false;
+                    document.getElementById("address").readOnly = false;
 
                     document.getElementById("trackingNumber").value = json_responsejd.data[0].job_id;
                     document.getElementById("name").value = json_responsejd.data[0].customer_username;
@@ -431,7 +434,6 @@ function checkTrackingNum(field, autoMove) {
 
                     var ampmhour = '';
                     var ampmmin = '';
-                    var ampmNum = '';
 
                     if (today.getHours() < 12) {
                         ampmNum = 0;
@@ -456,6 +458,10 @@ function checkTrackingNum(field, autoMove) {
                     let dateSubmitted = date + ' ' + time;
 
                     document.getElementById("dateEntry").value = dateSubmitted;
+
+                    document.getElementById("trackingNumber").readOnly = true;
+                    document.getElementById("name").readOnly = true;
+                    document.getElementById("address").readOnly = true;
 
                     document.getElementById("submitButton").focus();
 
@@ -484,107 +490,108 @@ function checkTrackingNum(field, autoMove) {
 
 document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("itemIn").style.display = 'none';
-    document.getElementById("submitButton").addEventListener("click", submitForm);
 
     document.getElementById("trackingNum").focus();
 
-    function submitForm() {
-        var arrivedTN = document.getElementById("trackingNumber").value;
-        var parcelNum = document.getElementById("parcelNumber").value;
+    document.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-        if (document.getElementById("area").value == "B1") {
-            localStorage.setItem("lastCountB1", document.getElementById("parcelNumber").value);
-        }
+        $(document).ready(function () {
+            var arrivedTN = document.getElementById("trackingNumber").value;
+            var parcelNum = document.getElementById("parcelNumber").value;
 
-        if (document.getElementById("area").value == "B2") {
-            localStorage.setItem("lastCountB2", document.getElementById("parcelNumber").value);
-        }
-
-        if (document.getElementById("area").value == "G1") {
-            localStorage.setItem("lastCountG1", document.getElementById("parcelNumber").value);
-        }
-
-        if (document.getElementById("area").value == "G2") {
-            localStorage.setItem("lastCountG2", document.getElementById("parcelNumber").value);
-        }
-
-        if (document.getElementById("area").value == "JT1") {
-            localStorage.setItem("lastCountJT1", document.getElementById("parcelNumber").value);
-        }
-
-        if (document.getElementById("area").value == "JT2") {
-            localStorage.setItem("lastCountJT2", document.getElementById("parcelNumber").value);
-        }
-
-        if (document.getElementById("area").value == "JT3") {
-            localStorage.setItem("lastCountJT3", document.getElementById("parcelNumber").value);
-        }
-
-        if (document.getElementById("area").value == "TUTONG") {
-            localStorage.setItem("lastCountTUTONG", document.getElementById("parcelNumber").value);
-        }
-
-        if (document.getElementById("area").value == "KB / SERIA") {
-            localStorage.setItem("lastCountKBSERIA", document.getElementById("parcelNumber").value);
-        }
-
-        if (document.getElementById("area").value == "TEMBURONG") {
-            localStorage.setItem("lastCountTEMBURONG", document.getElementById("parcelNumber").value);
-        }
-
-        if (document.getElementById("area").value == "N/A") {
-            localStorage.setItem("lastCountNA", document.getElementById("parcelNumber").value);
-        }
-
-
-        var request = new XMLHttpRequest();
-        request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
-        request.setRequestHeader('Content-Type', 'application/json');
-
-        request.onreadystatechange = function () {
-            if (this.readyState === 4) {
-                console.log('Status:', this.status);
-                console.log('Headers:', this.getAllResponseHeaders());
-                console.log('Body:', this.responseText);
-
-                var request = new XMLHttpRequest();
-
-                request.open('POST', 'https://api.tookanapp.com/v2/edit_task');
-
-                request.setRequestHeader('Content-Type', 'application/json');
-
-                request.onreadystatechange = function () {
-                    if (this.readyState === 4) {
-                        console.log('Status:', this.status);
-                        console.log('Headers:', this.getAllResponseHeaders());
-                        console.log('Body:', this.responseText);
-
-                        document.getElementById("itemIn").submit();
-                    }
-                };
-
-                var body = {
-                    'custom_field_template': 'Local_Delivery',
-                    'meta_data': [
-                        {
-                            'label': 'Parcel_Number',
-                            'data': parcelNum
-                        }
-                    ],
-                    'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                    'job_id': arrivedTN
-                };
-
-                request.send(JSON.stringify(body));
+            if (document.getElementById("area").value == "B1") {
+                localStorage.setItem("lastCountB1", document.getElementById("parcelNumber").value);
             }
-        };
 
-        var body = {
-            'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-            'job_id': arrivedTN,
-            'fleet_id': '1125101',
-            'job_status': '0'
-        };
-        request.send(JSON.stringify(body));
-    }
+            if (document.getElementById("area").value == "B2") {
+                localStorage.setItem("lastCountB2", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "G1") {
+                localStorage.setItem("lastCountG1", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "G2") {
+                localStorage.setItem("lastCountG2", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "JT1") {
+                localStorage.setItem("lastCountJT1", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "JT2") {
+                localStorage.setItem("lastCountJT2", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "JT3") {
+                localStorage.setItem("lastCountJT3", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "TUTONG") {
+                localStorage.setItem("lastCountTUTONG", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "KB / SERIA") {
+                localStorage.setItem("lastCountKBSERIA", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "TEMBURONG") {
+                localStorage.setItem("lastCountTEMBURONG", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "N/A") {
+                localStorage.setItem("lastCountNA", document.getElementById("parcelNumber").value);
+            }
+
+            var inventoryStatus = "IN WAREHOUSE[" + document.getElementById("area").value + "]";
+
+            var request = new XMLHttpRequest();
+            request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
+            request.setRequestHeader('Content-Type', 'application/json');
+
+            request.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    console.log('Status:', this.status);
+                    console.log('Headers:', this.getAllResponseHeaders());
+                    console.log('Body:', this.responseText);
+
+                    var request = new XMLHttpRequest();
+
+                    request.open('POST', 'https://api.tookanapp.com/v2/edit_task');
+
+                    request.setRequestHeader('Content-Type', 'application/json');
+
+                    request.onreadystatechange = function () {
+                        if (this.readyState === 4) {
+                            console.log('Status:', this.status);
+                            console.log('Headers:', this.getAllResponseHeaders());
+                            console.log('Body:', this.responseText);
+
+                            document.getElementById("itemIn").submit();
+                        }
+                    };
+
+                    var body = {
+                        'custom_field_template': 'Local_Delivery',
+                        'meta_data': [
+                            { "label": "Parcel_Number", "data": parcelNum },
+                            { "label": "Inventory_Status", "data": inventoryStatus }
+                        ],
+                        'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                        'job_id': arrivedTN
+                    };
+                    request.send(JSON.stringify(body));
+                }
+            };
+
+            var body = {
+                'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                'job_id': arrivedTN,
+                'fleet_id': '1125101',
+                'job_status': '0'
+            };
+            request.send(JSON.stringify(body));
+        });
+    });
 });
