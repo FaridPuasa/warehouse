@@ -94,19 +94,14 @@ function checkTrackingNum(field, autoMove) {
                         heading_3.innerHTML = "ITEM WITH ME";
                         let heading_4 = document.createElement('th');
                         heading_4.innerHTML = "Task ID";
-                        heading_4.setAttribute('name', 'trackingNumT');
                         let heading_5 = document.createElement('th');
                         heading_5.innerHTML = "Contact Name";
-                        heading_5.setAttribute('name', 'contactNameT');
                         let heading_6 = document.createElement('th');
                         heading_6.innerHTML = "Address";
-                        heading_6.setAttribute('name', 'addressT');
                         let heading_7 = document.createElement('th');
                         heading_7.innerHTML = "Phone";
-                        heading_7.setAttribute('name', 'phoneT');
                         let heading_8 = document.createElement('th');
                         heading_8.innerHTML = "Price";
-                        heading_8.setAttribute('name', 'priceT');
                         let heading_9 = document.createElement('th');
                         heading_9.innerHTML = "Amount Collected";
                         let heading_10 = document.createElement('th');
@@ -133,14 +128,19 @@ function checkTrackingNum(field, autoMove) {
                         var row_2_data_3 = document.createElement('td');
                         var row_2_data_4 = document.createElement('td');
                         row_2_data_4.innerHTML = json_responsetn.data[0].job_id;
+                        row_2_data_4.setAttribute('name', 'trackingNumT');
                         var row_2_data_5 = document.createElement('td');
                         row_2_data_5.innerHTML = json_responsetn.data[0].customer_username;
+                        row_2_data_5.setAttribute('name', 'contactNameT');
                         var row_2_data_6 = document.createElement('td');
                         row_2_data_6.innerHTML = json_responsetn.data[0].job_address;
+                        row_2_data_6.setAttribute('name', 'addressT');
                         var row_2_data_7 = document.createElement('td');
                         row_2_data_7.innerHTML = json_responsetn.data[0].customer_phone;
+                        row_2_data_7.setAttribute('name', 'phoneT');
                         var row_2_data_8 = document.createElement('td');
                         row_2_data_8.innerHTML = "$" + json_responsetn.data[0].job_description;
+                        row_2_data_8.setAttribute('name', 'valueT');
                         var row_2_data_9 = document.createElement('td');
                         var row_2_data_10 = document.createElement('td');
 
@@ -252,14 +252,19 @@ function checkTrackingNum(field, autoMove) {
                         var row_2_data_3 = document.createElement('td');
                         var row_2_data_4 = document.createElement('td');
                         row_2_data_4.innerHTML = json_responsetn.data[0].job_id;
+                        row_2_data_4.setAttribute('name', 'trackingNumT');
                         var row_2_data_5 = document.createElement('td');
                         row_2_data_5.innerHTML = json_responsetn.data[0].customer_username;
+                        row_2_data_5.setAttribute('name', 'contactNameT');
                         var row_2_data_6 = document.createElement('td');
                         row_2_data_6.innerHTML = json_responsetn.data[0].job_address;
+                        row_2_data_6.setAttribute('name', 'addressT');
                         var row_2_data_7 = document.createElement('td');
                         row_2_data_7.innerHTML = json_responsetn.data[0].customer_phone;
+                        row_2_data_7.setAttribute('name', 'phoneT');
                         var row_2_data_8 = document.createElement('td');
                         row_2_data_8.innerHTML = "$" + json_responsetn.data[0].job_description;
+                        row_2_data_8.setAttribute('name', 'valueT');
                         var row_2_data_9 = document.createElement('td');
                         var row_2_data_10 = document.createElement('td');
 
@@ -604,7 +609,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             tnInput.setAttribute('class', 'text-field w-input');
             tnInput.setAttribute('name', 'trackingNumTC');
             tnInput.setAttribute('id', 'trackingNumTC' + (i + 1));
-            tnInput.setAttribute('value', document.getElementsByClassName("trackingNumT")[i + 1].innerText);
+            tnInput.setAttribute('value', document.getElementsByClassName("trackingNumT")[i].innerText);
             document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
 
             var tnInput = document.createElement('input');
@@ -612,7 +617,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             tnInput.setAttribute('class', 'text-field w-input');
             tnInput.setAttribute('name', 'contactNameTC');
             tnInput.setAttribute('id', 'contactNameTC' + (i + 1));
-            tnInput.setAttribute('value', document.getElementsByClassName("contactNameT")[i + 1].innerText);
+            tnInput.setAttribute('value', document.getElementsByClassName("contactNameT")[i].innerText);
             document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
 
             var tnInput = document.createElement('input');
@@ -620,7 +625,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             tnInput.setAttribute('class', 'text-field w-input');
             tnInput.setAttribute('name', 'addressTC');
             tnInput.setAttribute('id', 'addressTC' + (i + 1));
-            tnInput.setAttribute('value', document.getElementsByClassName("addressT")[i + 1].innerText);
+            tnInput.setAttribute('value', document.getElementsByClassName("addressT")[i].innerText);
             document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
 
             var tnInput = document.createElement('input');
@@ -628,7 +633,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             tnInput.setAttribute('class', 'text-field w-input');
             tnInput.setAttribute('name', 'phoneTC');
             tnInput.setAttribute('id', 'phoneTC' + (i + 1));
-            tnInput.setAttribute('value', document.getElementsByClassName("phoneT")[i + 1].innerText);
+            tnInput.setAttribute('value', document.getElementsByClassName("phoneT")[i].innerText);
             document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
 
             var tnInput = document.createElement('input');
@@ -636,7 +641,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             tnInput.setAttribute('class', 'text-field w-input');
             tnInput.setAttribute('name', 'valueTC');
             tnInput.setAttribute('id', 'valueTC' + (i + 1));
-            tnInput.setAttribute('value', document.getElementsByClassName("valueT")[i + 1].innerText);
+            tnInput.setAttribute('value', document.getElementsByClassName("valueT")[i].innerText);
             document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
 
             trackingNumA[i] = document.getElementsByClassName("valueT")[i + 1].innerText;
