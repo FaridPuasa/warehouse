@@ -584,7 +584,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
     document.addEventListener("submit", function (event) {
         event.preventDefault();
 
-        trackingNumA
+        document.getElementById("trackingNumA").value = trackingNumA;
+        document.getElementById("contactNameA").value = contactNameA;
+        document.getElementById("addressA").value = addressA;
+        document.getElementById("phoneA").value = phoneA;
+        document.getElementById("valueA").value = valueA;
 
         document.getElementById("pod").submit();
 
