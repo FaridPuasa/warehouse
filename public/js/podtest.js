@@ -151,11 +151,11 @@ function checkTrackingNum(field, autoMove) {
                         row_2.appendChild(row_2_data_10);
                         tbody.appendChild(row_2);
 
-                        trackingNumA[countContent + 1] = json_responsetn.data[0].job_id;
-                        contactNameA[countContent + 1] = json_responsetn.data[0].customer_username;
-                        addressA[countContent + 1] = json_responsetn.data[0].job_address;
-                        phoneA[countContent + 1] = json_responsetn.data[0].job_address;
-                        valueA[countContent + 1] = "$" + json_responsetn.data[0].job_description;
+                        trackingNumA[countContent] = json_responsetn.data[0].job_id;
+                        contactNameA[countContent] = json_responsetn.data[0].customer_username;
+                        addressA[countContent] = json_responsetn.data[0].job_address;
+                        phoneA[countContent] = json_responsetn.data[0].job_address;
+                        valueA[countContent] = "$" + json_responsetn.data[0].job_description;
 
                         var tnInput = document.createElement('input');
                         tnInput.setAttribute('type', 'text');
