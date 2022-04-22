@@ -1,3 +1,4 @@
+const { type } = require("express/lib/response");
 const mongoose = require("mongoose");
 
 const reqString = {
@@ -15,7 +16,10 @@ const podSchema  = new mongoose.Schema({
     podCreate: reqString,
     podMade: reqString,
     trackingNum: {type: [String]},
-    name: {type: [String]}
+    name: {type: [String]},
+    contact: {type: [String]},
+    address: {type: [String]},
+    value: {type: [String]},
 })
 
 //module.exports = mongoose.model('contents', content)
