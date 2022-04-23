@@ -30,6 +30,8 @@ const inventorySchema  = new mongoose.Schema({
     entryDate: entryDate,
     expireDate:expireDate,
     status: reqString,
+    statusHistory: {type: [String]},
+    dateUpdate: {type: [entryDate]},
     history: [{statusDetail: reqString, dateUpdated: entryDate}],
 }, {timestamps: true})
 

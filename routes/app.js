@@ -52,6 +52,59 @@ router.post('/changesuccess', (req,res) => {
     firstTimeLogin(req,res)
 })
 
+function userEditable(req,res){
+    let body = req.body
+    let filter = {icNumber: body.icNumber}
+    let update = {position: body.position, email: body.email, contact: body.contact, office: body.office, create: body.create, update: body.update, delete: body.delete}
+    let option = {upsert: true, new: true}
+    userDB.findOneAndUpdate(filter,update,option, (err,result) => {
+        if (err){
+            console.log(err)
+            res.render('error', {
+                error_code: '11000',
+                head:'Invalid Entry',
+                message:'User IC-Number / Social Security Number already in Database'
+            })
+            if (err.name === 'MongoError' && err.code === 11000){
+                res.render('error', {
+                    error_code: '11000',
+                    head:'Invalid Entry',
+                    message:'User IC-Number / Social Security Number already in Database'
+                })
+            }
+        }else {
+            console.log("Update Success")
+        }
+    })
+}
+
+function userAttendance(req,res){
+    let dateTime = moment().format()
+    let body = req.body
+    let filter = {icNumber: body.icNumber}
+    let update = {$push: {attendance:{clockIn: dateTime, clockOut: dateTime}}}
+    let option = {upsert: true, new: true}
+    userDB.findOneAndUpdate(filter,update,option, (err,result) => {
+        if (err){
+            console.log(err)
+            res.render('error', {
+                error_code: '11000',
+                head:'Invalid Entry',
+                message:'User IC-Number / Social Security Number already in Database'
+            })
+            if (err.name === 'MongoError' && err.code === 11000){
+                res.render('error', {
+                    error_code: '11000',
+                    head:'Invalid Entry',
+                    message:'User IC-Number / Social Security Number already in Database'
+                })
+            }
+        }else {
+            console.log("Update Success")
+        }
+    })
+}
+
 function user(req,res) {
     let body = req.body
     let name = body.name
@@ -64,7 +117,10 @@ function user(req,res) {
         email: body.email,
         contact: body.contact,
         office: body.office,
-        firstTime: "TRUE"
+        firstTime: "TRUE",
+        create: body.create,
+        update: body.update,
+        delete: body.delete,
     })
     user.save((err) => {
         if (err){
@@ -199,17 +255,18 @@ router.get('/dispatcher-report', (req,res) => {
         })
     })
 })
-router.get('/',(req,res) => {
+
+/*router.get('/',(req,res) => {
     inventories.find({}, function(err,inventory){
         res.render('test', {
             itemList: inventory,
             moment: moment
         })
     })
-})
+})*/
 
 //Zalora In
-router.get('/itemin', (req,res) => {
+router.get('/', (req,res) => {
     res.render('itemin')
 })
 
@@ -221,9 +278,6 @@ router.post('/itemin',(req,res) => {
 router.get('/itemout',(req,res) => {
     res.render('itemout')
 })
-
-//if(inventory.trackingNumber == document.getElementById(trackingNum).value){document.getElementById('count').value = <%= inventory.count %>}
-//else{document.getElementById('count').value = error}
 
 router.post('/confirm',(req,res) => {
     itemOut(req,res)
@@ -450,27 +504,10 @@ function reEntry(req,res){
 }
 
 function itemOut(req,res){
-    let date = moment().format()
+    let date = moment().format("L")
     let tracker = {trackingNumber: req.body.trackingNum}
-    let update = {status: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" + "|" + date}
-    let history = {history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]"  + "|" + date }}
+    let update = {status: "OUT FOR DELIVERY " + "[" + req.body.agentName + "]" + "|" + date, $push:{history: {statusDetail: "OUT FOR DELIVERY" + "[" + req.body.agentName + "]" , dateUpdated: date}}}
     let option = {upsert: true, new: true}
-    inventories.findOneAndUpdate(tracker,{$push: history}, option, (err,docs) => {
-        if(err){
-            console.log(err)
-            res.render('error',{
-                head: "Error",
-                code: "10-A",
-                message: "Failed to push update todatabase",
-                solution: "Please contact RDI Department ext 877"
-            })
-        } 
-        else {
-            console.log('update success (push history)')
-            //let date = req.body.dateSchedule
-            res.render('itemout')
-        } 
-    })
     inventories.findOneAndUpdate(tracker,update,option,(err,docs) => {
         if(err){
             console.log(err)
@@ -519,11 +556,53 @@ router.get("/test", (req,res) => {
     })
 })
 
+function editableList(req,res){
+    let body = req.body
+    let filter = {trackingNumber: req.body.trackingNumber}
+    let update = {name: req.body.name, address: req.body.address, contact: req.body.contact,}
+    let option = {upsert: true, new: true}
+    inventories.findOneAndUpdate(filter,update,option,(err,docs) => {
+        if(err){
+            console.log(err)
+            alert("Error to update Database!. Please contact ext 877")
+        } 
+        else {
+            console.log('update success')
+            alert("Update sucess!")
+           //let date = req.body.dateSchedule 
+        }
+    })
+}
+
 //Zalora Starts here
 function pod(req,res){
     let body = req.body
+    let date = moment().format("L")
     let ref = "GR/POD/" + body.agentName + "[" + body.areaCode + "]"
-    console.log(body.trackingNumC)
+    let tracker = body.trackingNumC
+    console.log(tracker)
+    for (let i = 0; i < tracker.length; i++){
+        let filter = {trackingNumber: tracker[i]}
+        let update = {status: "SCHEDULED FOR DELIVERY" + "|" + body.dateAssign, $push: {history: {statusDetail: "SCHEDULED FOR DELIVERY", dateUpdated: date }}}
+        let option = {upsert: true, new: true}
+        console.log(filter)
+        inventories.findOneAndUpdate(filter, update, option, (err,docs) => {
+            if(err){
+                console.log(err)
+                res.render('error',{
+                    head: "Error",
+                    code: "10-A",
+                    message: "Failed to update database",
+                    solution: "Please contact RDI Department ext 877"
+                })
+            } 
+            else {
+                console.log('update success')
+               //let date = req.body.dateSchedule
+                
+            }
+        })
+    }
     let itemOut = new podDB({
         podRef: ref, //ref is auto generated by the system. To differentiate the products delivered
         podAssign: body.agentName,
@@ -541,7 +620,7 @@ function pod(req,res){
         address: body.addressC,
         value: body.valueC,
     })
-    console.log(itemOut)
+   console.log(body.trackingNumC)
     itemOut.save((err) => {
         if (err){
             if (err.name === 'MongoError' && err.code === 11000){
@@ -560,7 +639,7 @@ function pod(req,res){
     })
 }
 
-//
+//zalora in
 function itemin(req,res){
     let parcelStatus = {statusDetail: "IN WAREHOUSE"+"["+req.body.area+"]"+ "|" + req.body.dateEntry}
     let bin = req.body.area +"/"+req.body.dateEntry
@@ -583,9 +662,7 @@ function itemin(req,res){
        dateEntry: req.body.dateEntry,
        count: 0,
     })
-    //console.log("IN WAREHOUSE"+"["+req.body.area+"]"+req.body.dateEntry)
-    //console.log(parcelStatus)
-    //console.log(bin)
+    console.log(inventories)
     inventory.history.push(parcelStatus)
     inventory.save((err) => {
         if (err) {
@@ -603,13 +680,12 @@ function itemin(req,res){
 }
 
 function selfCollect(req,res){
-    let date = moment().format();
+    let date = moment().format("L");
     let filter = {trackingNumber: req.body.trackingNum}
-    let update = {status: "SELF COLLECTED" + "["+ req.body.csName +"]" + "|" + date}
-    let history = {history: {statusDetail: "SELF COLLECTED" + "["+ req.body.csName +"]"  + "|" + date}}
+    let update = {status: "SELF COLLECTED " + "["+ req.body.csName +"]" + "|" + date, $push:{history: {statusDetail: "SELF COLLECTED" + "["+ req.body.csName +"]", dateUpdated: date}}}
     let option = {upsert: true, new: true}
     console.log(req.body.trackingNum)
-    inventories.findOneAndUpdate(filter,{$push: history}, option)
+    console.log(filter)
     inventories.findOneAndUpdate(filter, update, option, (err,docs) => {
         if(err){
             console.log(err)
