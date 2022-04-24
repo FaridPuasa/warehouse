@@ -270,6 +270,10 @@ router.get('/', (req,res) => {
     res.render('itemin')
 })
 
+router.get('/itemin', (req,res) => {
+    res.render('itemin')
+})
+
 router.post('/itemin',(req,res) => {
     itemin(req,res)
 })
