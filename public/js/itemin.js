@@ -36,7 +36,7 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("value").value = json_responsejd.data[0].job_description;
                     document.getElementById("zaloraTag").value = json_responsejd.data[0].tags;
 
-                    let address = document.getElementById("address").value.toUpperCase();
+                    let address = document.getElementById("address").innerText.toUpperCase();
 
                     if (address.includes("MANGGIS") == true) { area = "B1" }
                     else if (address.includes("LANDASAN LAMA") == true) { area = "B1" }
