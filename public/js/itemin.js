@@ -403,7 +403,7 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("itemIn").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
 
-                    setTimeout(console.log("test"), 3000);
+                    setTimeout(console.log("test"), 30000);
                 }
 
                 if (json_responsejd.status == 404) {
