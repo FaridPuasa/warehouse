@@ -1,5 +1,5 @@
 function autoSubmit(){
-    console.log("test");
+    document.getElementById("itemin").submit();
 }
 
 function checkTrackingNum(field, autoMove) {
