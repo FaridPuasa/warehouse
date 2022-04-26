@@ -402,8 +402,6 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("loading").style.display = 'none';
                     document.getElementById("itemIn").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
-
-                    setTimeout(console.log("test"), 30000);
                 }
 
                 if (json_responsejd.status == 404) {
@@ -425,6 +423,7 @@ function checkTrackingNum(field, autoMove) {
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
+    setTimeout(console.log("test"), 3000);
     document.getElementById("itemIn").style.display = 'none';
 
     document.getElementById("trackingNum").focus();
