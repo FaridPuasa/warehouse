@@ -1,3 +1,7 @@
+function autoSubmit(){
+    console.log("test");
+}
+
 function checkTrackingNum(field, autoMove) {
     if (field.value.length >= field.maxLength) {
 
@@ -402,6 +406,8 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("loading").style.display = 'none';
                     document.getElementById("itemIn").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
+
+                    setTimeout(autoSubmit, 3000);
                 }
 
                 if (json_responsejd.status == 404) {
@@ -420,11 +426,6 @@ function checkTrackingNum(field, autoMove) {
         };
         request.send(JSON.stringify(body));
     }
-}
-setTimeout(testThis, 3000);
-
-function testThis(){
-    console.log("test");
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
