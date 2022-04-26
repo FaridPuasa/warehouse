@@ -24,14 +24,19 @@ function checkTrackingNum(field, autoMove) {
                 json_responsejd = JSON.parse(responsejd);
 
                 if (json_responsejd.status != 404) {
-                    document.getElementById("trackingNumber").innerText = json_responsejd.data[0].job_id;
-                    document.getElementById("name").innerText = json_responsejd.data[0].customer_username;
-                    document.getElementById("address").innerText = json_responsejd.data[0].job_address;
+
+                    document.getElementById("trackingNumber").readOnly = false;
+                    document.getElementById("name").readOnly = false;
+                    document.getElementById("address").readOnly = false;
+
+                    document.getElementById("trackingNumber").value = json_responsejd.data[0].job_id;
+                    document.getElementById("name").value = json_responsejd.data[0].customer_username;
+                    document.getElementById("address").value = json_responsejd.data[0].job_address;
                     document.getElementById("contact").value = json_responsejd.data[0].customer_phone;
                     document.getElementById("value").value = json_responsejd.data[0].job_description;
                     document.getElementById("zaloraTag").value = json_responsejd.data[0].tags;
 
-                    let address = document.getElementById("address").innerText.toUpperCase();
+                    let address = document.getElementById("address").value.toUpperCase();
 
                     if (address.includes("MANGGIS") == true) { area = "B1" }
                     else if (address.includes("LANDASAN LAMA") == true) { area = "B1" }
@@ -387,6 +392,10 @@ function checkTrackingNum(field, autoMove) {
                     let dateSubmitted = date + ' ' + time;
 
                     document.getElementById("dateEntry").value = dateSubmitted;
+
+                    document.getElementById("trackingNumber").readOnly = true;
+                    document.getElementById("name").readOnly = true;
+                    document.getElementById("address").readOnly = true;
 
                     document.getElementById("submitButton").focus();
 
