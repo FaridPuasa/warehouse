@@ -421,7 +421,11 @@ function checkTrackingNum(field, autoMove) {
         request.send(JSON.stringify(body));
     }
 }
-setTimeout(console.log("test"), 3000);
+setTimeout(testThis, 3000);
+
+function testThis(){
+    console.log("test");
+}
 
 document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("itemIn").style.display = 'none';
