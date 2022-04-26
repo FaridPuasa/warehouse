@@ -24,11 +24,6 @@ function checkTrackingNum(field, autoMove) {
                 json_responsejd = JSON.parse(responsejd);
 
                 if (json_responsejd.status != 404) {
-
-                    document.getElementById("trackingNumber").readOnly = false;
-                    document.getElementById("name").readOnly = false;
-                    document.getElementById("address").readOnly = false;
-
                     document.getElementById("trackingNumber").innerText = json_responsejd.data[0].job_id;
                     document.getElementById("name").innerText = json_responsejd.data[0].customer_username;
                     document.getElementById("address").innerText = json_responsejd.data[0].job_address;
@@ -392,10 +387,6 @@ function checkTrackingNum(field, autoMove) {
                     let dateSubmitted = date + ' ' + time;
 
                     document.getElementById("dateEntry").value = dateSubmitted;
-
-                    document.getElementById("trackingNumber").readOnly = true;
-                    document.getElementById("name").readOnly = true;
-                    document.getElementById("address").readOnly = true;
 
                     document.getElementById("submitButton").focus();
 
