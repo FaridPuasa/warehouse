@@ -481,13 +481,13 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("name").readOnly = true;
                     document.getElementById("address").readOnly = true;
 
-                    document.getElementById("trackingNum").focus();
-
                     document.getElementById("loading").style.display = 'none';
                     document.getElementById("itemIn").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
 
                     setTimeout(autoSubmit, 3000);
+
+                    document.getElementById("trackingNum").focus();
                 }
 
                 if (json_responsejd.status == 404) {
