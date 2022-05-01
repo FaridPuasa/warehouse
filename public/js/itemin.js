@@ -485,7 +485,7 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("itemIn").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
 
-                    setTimeout(autoSubmit, 3000);
+                    setTimeout(autoSubmit, 2000);
 
                     document.getElementById("trackingNum").focus();
                 }
