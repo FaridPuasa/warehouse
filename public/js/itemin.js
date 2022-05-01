@@ -42,6 +42,8 @@ function checkTrackingNum(field, autoMove) {
 
                     let address = document.getElementById("address").value.toUpperCase();
 
+                    var kampong = "";
+
                     if (address.includes("MANGGIS") == true) { area = "B1", kampong = "MANGGIS" }
                     else if (address.includes("DELIMA") == true) { area = "B1", kampong = "DELIMA" }
                     else if (address.includes("ANGGREK DESA") == true) { area = "B1", kampong = "ANGGREK DESA" }
