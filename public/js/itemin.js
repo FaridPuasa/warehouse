@@ -481,7 +481,7 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("name").readOnly = true;
                     document.getElementById("address").readOnly = true;
 
-                    document.getElementById("parcelNumber").focus();
+                    document.getElementById("trackingNum").focus();
 
                     document.getElementById("loading").style.display = 'none';
                     document.getElementById("itemIn").style.display = 'block';
@@ -602,10 +602,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     // Get the input field
-    var input = document.getElementById("parcelNumber");
+    var pressEnter = document.getElementById("trackingNum");
 
     // Execute a function when the user presses a key on the keyboard
-    input.addEventListener("keypress", function (event) {
+    pressEnter.addEventListener("keypress", function (event) {
         // If the user presses the "Enter" key on the keyboard
         if (event.key === "Enter") {
             // Cancel the default action, if needed
