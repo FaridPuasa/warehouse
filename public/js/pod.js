@@ -622,11 +622,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         let countFinalTN = $('[name=trackingNumC]').length;
 
+        let lastTN = countFinalTN - 1;
+
         for (let i = 0; i < countFinalTN; i++) {
             var assignTaskToAgent = 0;
             var assignDateTimeToTask = 0;
 
-            var checkTN = document.getElementById("trackingNumC" + (i + 1)).value
+            var currentTN = i;
+
+            var nextTN = currentTN + 1;
+
+            var checkTN = document.getElementById("trackingNumC" + nextTN).value;
 
             var request = new XMLHttpRequest();
 
@@ -650,6 +656,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 console.log('Body:', this.responseText);
 
                                 assignDateTimeToTask = 1;
+
+                                if (lastTN == currentTN) {
+                                    document.getElementById("pod").submit();
+                                }
                             }
                         };
 
@@ -675,7 +685,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 request.send(JSON.stringify(body));
             }
         }
-
-        document.getElementById("pod").submit();
     });
 });
