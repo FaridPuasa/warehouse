@@ -1,6 +1,6 @@
-function autoSubmit() {
-    document.getElementById("itemIn").submit();
-}
+/* function autoSubmit() {
+    document.getElementById("submitButton").click();
+} */
 
 function checkTrackingNum(field, autoMove) {
     if (field.value.length >= field.maxLength) {
@@ -486,7 +486,7 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("itemIn").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
 
-                    setTimeout(autoSubmit, 2000);
+                    //setTimeout(autoSubmit, 2000);
 
                     document.getElementById("trackingNum").focus();
                 }
