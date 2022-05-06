@@ -506,8 +506,6 @@ function checkTrackingNum(field, autoMove) {
 document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("itemIn").style.display = 'none';
 
-    document.getElementById("trackingNum").focus();
-
     if (localStorage.getItem("lastCountB1") == null) {
         localStorage.setItem("lastCountB1", 0);
         document.getElementById("lastCountB1").innerText = "B1: " + parseInt(localStorage.getItem("lastCountB1"));
@@ -596,7 +594,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("lastCountNA").innerText = "NA: " + parseInt(localStorage.getItem("lastCountNA"));
     }
 
-    // Get the input field
+    document.getElementById("trackingNum").focus();
+
+    /* // Get the input field
     var pressEnter = document.getElementById("trackingNum");
 
     // Execute a function when the user presses a key on the keyboard
@@ -608,7 +608,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             // Trigger the button element with a click
             document.getElementById("submitButton").click();
         }
-    });
+    }); */
 
     document.addEventListener("submit", function (event) {
         event.preventDefault();
