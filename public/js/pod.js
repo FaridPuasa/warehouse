@@ -6,12 +6,6 @@ let countContent = 0;
 var responsetn = '';
 var json_responsetn = '';
 
-const trackingNumA = [];
-const contactNameA = [];
-const addressA = [];
-const phoneA = [];
-const valueA = [];
-
 //create table
 let table = document.createElement('table');
 table.setAttribute("id", "tasklisttable");
@@ -124,7 +118,6 @@ function checkTrackingNum(field, autoMove) {
                         var row_2_data_1 = document.createElement('td');
                         row_2_data_1.innerHTML = countTN;
                         var row_2_data_2 = document.createElement('td');
-                        row_2_data_2.innerHTML = json_responsetn.data[0].order_id;
                         var row_2_data_3 = document.createElement('td');
                         var row_2_data_4 = document.createElement('td');
                         row_2_data_4.innerHTML = json_responsetn.data[0].job_id;
@@ -150,12 +143,6 @@ function checkTrackingNum(field, autoMove) {
                         row_2.appendChild(row_2_data_9);
                         row_2.appendChild(row_2_data_10);
                         tbody.appendChild(row_2);
-
-                        trackingNumA[countContent] = json_responsetn.data[0].job_id;
-                        contactNameA[countContent] = json_responsetn.data[0].customer_username;
-                        addressA[countContent] = json_responsetn.data[0].job_address;
-                        phoneA[countContent] = json_responsetn.data[0].job_address;
-                        valueA[countContent] = "$" + json_responsetn.data[0].job_description;
 
                         var tnInput = document.createElement('input');
                         tnInput.setAttribute('type', 'text');
@@ -201,7 +188,56 @@ function checkTrackingNum(field, autoMove) {
                         createTable = 1;
                         countContent = countContent + 1;
 
-                        document.getElementById("trackingNumber").value = "";
+                        var assignTaskToAgent = 0;
+                        var assignDateTimeToTask = 0;
+
+                        if (assignTaskToAgent == 0) {
+                            request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
+                            request.setRequestHeader('Content-Type', 'application/json');
+
+                            request.onreadystatechange = function () {
+                                if ((this.readyState === 4) && (assignTaskToAgent == 0)) {
+                                    console.log('Status:', this.status);
+                                    console.log('Headers:', this.getAllResponseHeaders());
+                                    console.log('Body:', this.responseText);
+
+                                    request.open('POST', 'https://api.tookanapp.com/v2/change_job_date');
+                                    request.setRequestHeader('Content-Type', 'application/json');
+
+                                    request.onreadystatechange = function () {
+                                        if ((this.readyState === 4) && (assignDateTimeToTask == 0)) {
+                                            console.log('Status:', this.status);
+                                            console.log('Headers:', this.getAllResponseHeaders());
+                                            console.log('Body:', this.responseText);
+
+                                            assignDateTimeToTask = 1;
+
+                                            document.getElementById("trackingNumber").value = "";
+                                            document.getElementById(autoMove).focus();
+                                        }
+                                    };
+
+                                    var body = {
+                                        'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                                        "job_ids": [document.getElementById("trackingNumber").value],
+                                        'layout_type': 0,
+                                        'start_time': document.getElementById("dateTime").value,
+                                        'end_time': document.getElementById("dateTimeClose").value
+                                    };
+                                    request.send(JSON.stringify(body));
+
+                                    assignTaskToAgent = 1;
+                                }
+                            };
+
+                            var body = {
+                                'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                                'job_id': document.getElementById("trackingNumber").value,
+                                'fleet_id': document.getElementById("agent").value,
+                                'job_status': '0'
+                            };
+                            request.send(JSON.stringify(body));
+                        }
                     }
 
                     if (json_responsetn.status == 404) {
@@ -236,14 +272,11 @@ function checkTrackingNum(field, autoMove) {
                     json_responsetn = JSON.parse(responsetn);
 
                     if (json_responsetn.status != 404) {
-                        document.getElementById(autoMove).focus();
-
                         var row_2 = document.createElement('tr');
 
                         var row_2_data_1 = document.createElement('td');
                         row_2_data_1.innerHTML = countTN;
                         var row_2_data_2 = document.createElement('td');
-                        row_2_data_2.innerHTML = json_responsetn.data[0].order_id;
                         var row_2_data_3 = document.createElement('td');
                         var row_2_data_4 = document.createElement('td');
                         row_2_data_4.innerHTML = json_responsetn.data[0].job_id;
@@ -269,12 +302,6 @@ function checkTrackingNum(field, autoMove) {
                         row_2.appendChild(row_2_data_9);
                         row_2.appendChild(row_2_data_10);
                         tbody.appendChild(row_2);
-
-                        trackingNumA[countContent] = json_responsetn.data[0].job_id;
-                        contactNameA[countContent] = json_responsetn.data[0].customer_username;
-                        addressA[countContent] = json_responsetn.data[0].job_address;
-                        phoneA[countContent] = json_responsetn.data[0].job_address;
-                        valueA[countContent] = "$" + json_responsetn.data[0].job_description;
 
                         var tnInput = document.createElement('input');
                         tnInput.setAttribute('type', 'text');
@@ -320,7 +347,56 @@ function checkTrackingNum(field, autoMove) {
                         countTN = countTN + 1;
                         countContent = countContent + 1;
 
-                        document.getElementById("trackingNumber").value = "";
+                        var assignTaskToAgent = 0;
+                        var assignDateTimeToTask = 0;
+
+                        if (assignTaskToAgent == 0) {
+                            request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
+                            request.setRequestHeader('Content-Type', 'application/json');
+
+                            request.onreadystatechange = function () {
+                                if ((this.readyState === 4) && (assignTaskToAgent == 0)) {
+                                    console.log('Status:', this.status);
+                                    console.log('Headers:', this.getAllResponseHeaders());
+                                    console.log('Body:', this.responseText);
+
+                                    request.open('POST', 'https://api.tookanapp.com/v2/change_job_date');
+                                    request.setRequestHeader('Content-Type', 'application/json');
+
+                                    request.onreadystatechange = function () {
+                                        if ((this.readyState === 4) && (assignDateTimeToTask == 0)) {
+                                            console.log('Status:', this.status);
+                                            console.log('Headers:', this.getAllResponseHeaders());
+                                            console.log('Body:', this.responseText);
+
+                                            assignDateTimeToTask = 1;
+
+                                            document.getElementById("trackingNumber").value = "";
+                                            document.getElementById(autoMove).focus();
+                                        }
+                                    };
+
+                                    var body = {
+                                        'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                                        "job_ids": [document.getElementById("trackingNumber").value],
+                                        'layout_type': 0,
+                                        'start_time': document.getElementById("dateTime").value,
+                                        'end_time': document.getElementById("dateTimeClose").value
+                                    };
+                                    request.send(JSON.stringify(body));
+
+                                    assignTaskToAgent = 1;
+                                }
+                            };
+
+                            var body = {
+                                'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                                'job_id': document.getElementById("trackingNumber").value,
+                                'fleet_id': document.getElementById("agent").value,
+                                'job_status': '0'
+                            };
+                            request.send(JSON.stringify(body));
+                        }
                     }
 
                     if (json_responsetn.status == 404) {
@@ -607,83 +683,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     function donePod() {
         document.getElementById("tasklisttable").contentEditable = false;
 
-        document.getElementById("trackingNumA").value = trackingNumA;
-        document.getElementById("contactNameA").value = contactNameA;
-        document.getElementById("addressA").value = addressA;
-        document.getElementById("phoneA").value = phoneA;
-        document.getElementById("valueA").value = valueA;
-
         document.getElementById("excelDbArea").style.display = 'block';
         document.getElementById("inputTnArea").style.display = 'none';
     }
-
-    document.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        let countFinalTN = $('[name=trackingNumC]').length;
-
-        let lastTN = countFinalTN - 1;
-
-        for (let i = 0; i < countFinalTN; i++) {
-            var assignTaskToAgent = 0;
-            var assignDateTimeToTask = 0;
-
-            var currentTN = i;
-
-            var nextTN = currentTN + 1;
-
-            var checkTN = document.getElementById("trackingNumC" + nextTN).value;
-
-            var request = new XMLHttpRequest();
-
-            if (assignTaskToAgent == 0) {
-                request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
-                request.setRequestHeader('Content-Type', 'application/json');
-
-                request.onreadystatechange = function () {
-                    if ((this.readyState === 4) && (assignTaskToAgent == 0)) {
-                        console.log('Status:', this.status);
-                        console.log('Headers:', this.getAllResponseHeaders());
-                        console.log('Body:', this.responseText);
-
-                        request.open('POST', 'https://api.tookanapp.com/v2/change_job_date');
-                        request.setRequestHeader('Content-Type', 'application/json');
-
-                        request.onreadystatechange = function () {
-                            if ((this.readyState === 4) && (assignDateTimeToTask == 0)) {
-                                console.log('Status:', this.status);
-                                console.log('Headers:', this.getAllResponseHeaders());
-                                console.log('Body:', this.responseText);
-
-                                assignDateTimeToTask = 1;
-
-                                if (lastTN == currentTN) {
-                                    document.getElementById("pod").submit();
-                                }
-                            }
-                        };
-
-                        var body = {
-                            'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                            "job_ids": [checkTN],
-                            'layout_type': 0,
-                            'start_time': document.getElementById("dateTime").value,
-                            'end_time': document.getElementById("dateTimeClose").value
-                        };
-                        request.send(JSON.stringify(body));
-
-                        assignTaskToAgent = 1;
-                    }
-                };
-
-                var body = {
-                    'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                    'job_id': checkTN,
-                    'fleet_id': document.getElementById("agent").value,
-                    'job_status': '0'
-                };
-                request.send(JSON.stringify(body));
-            }
-        }
-    });
 });
