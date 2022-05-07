@@ -31,7 +31,7 @@ function checkTrackingNum(field, autoMove) {
                         request.setRequestHeader('Content-Type', 'application/json');
 
                         request.onreadystatechange = function () {
-                            if ((this.readyState === 4) && (assignTaskToAgent == 0)) {
+                            if (this.readyState === 4) {
                                 console.log('Status:', this.status);
                                 console.log('Headers:', this.getAllResponseHeaders());
                                 console.log('Body:', this.responseText);
@@ -43,7 +43,7 @@ function checkTrackingNum(field, autoMove) {
 
                         var body = {
                             'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                            'job_id': document.getElementById("trackingNumber").value,
+                            'job_id': document.getElementById("trackingNum").value,
                             'fleet_id': document.getElementById("csName").value,
                             'job_status': '2'
                         };
@@ -62,7 +62,7 @@ function checkTrackingNum(field, autoMove) {
 
         var body = {
             'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-            'job_ids': [jobidentitynum],
+            'job_ids': [document.getElementById("trackingNum").value],
             'include_task_history': 0
         };
         request.send(JSON.stringify(body));
@@ -72,8 +72,7 @@ function checkTrackingNum(field, autoMove) {
 document.addEventListener("DOMContentLoaded", function (event) {
     // Retrieve
     document.getElementById("csNameTemp").value = localStorage.getItem("lastCS");
-    document.getElementById("trackingNumber").focus();
-
     document.getElementById("loading").style.display = 'none';
     document.getElementById("wronginput").style.display = 'none';
+    document.getElementById("trackingNumber").focus();
 });
