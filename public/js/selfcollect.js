@@ -26,8 +26,6 @@ function checkTrackingNum(field, autoMove) {
                 json_responsejd = JSON.parse(responsejd);
 
                 if (json_responsejd.status != 404) {
-                    var assignTaskToAgent = 0;
-                    var assignDateTimeToTask = 0;
                     if (assignTaskToAgent == 0) {
                         request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
                         request.setRequestHeader('Content-Type', 'application/json');
@@ -38,32 +36,8 @@ function checkTrackingNum(field, autoMove) {
                                 console.log('Headers:', this.getAllResponseHeaders());
                                 console.log('Body:', this.responseText);
 
-                                request.open('POST', 'https://api.tookanapp.com/v2/update_task_status');
-                                request.setRequestHeader('Content-Type', 'application/json');
-
-                                request.onreadystatechange = function () {
-                                    if ((this.readyState === 4) && (assignDateTimeToTask == 0)) {
-                                        console.log('Status:', this.status);
-                                        console.log('Headers:', this.getAllResponseHeaders());
-                                        console.log('Body:', this.responseText);
-
-                                        assignDateTimeToTask = 1;
-
-                                        // Set Item
-                                        localStorage.setItem("lastCS", document.getElementById("csName").value);
-                                        document.getElementById("selfCollect").submit();
-                                    }
-                                };
-
-                                var body = {
-                                    'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                                    'job_id': document.getElementById("trackingNumber").value,
-                                    'job_status': '2'
-                                };
-
-                                request.send(JSON.stringify(body));
-
-                                assignTaskToAgent = 1;
+                                localStorage.setItem("lastCS", document.getElementById("csName").value);
+                                document.getElementById("selfCollect").submit();
                             }
                         };
 
@@ -71,7 +45,7 @@ function checkTrackingNum(field, autoMove) {
                             'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
                             'job_id': document.getElementById("trackingNumber").value,
                             'fleet_id': document.getElementById("csName").value,
-                            'job_status': '0'
+                            'job_status': '2'
                         };
                         request.send(JSON.stringify(body));
                     }
