@@ -716,8 +716,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
             var inventoryStatus = "IN WAREHOUSE[" + document.getElementById("area").value + "]";
 
-            var request = new XMLHttpRequest();
-            request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
+            request.open('POST', 'https://api.tookanapp.com/v2/edit_task');
+
             request.setRequestHeader('Content-Type', 'application/json');
 
             request.onreadystatechange = function () {
@@ -726,40 +726,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     console.log('Headers:', this.getAllResponseHeaders());
                     console.log('Body:', this.responseText);
 
-                    var request = new XMLHttpRequest();
-
-                    request.open('POST', 'https://api.tookanapp.com/v2/edit_task');
-
-                    request.setRequestHeader('Content-Type', 'application/json');
-
-                    request.onreadystatechange = function () {
-                        if (this.readyState === 4) {
-                            console.log('Status:', this.status);
-                            console.log('Headers:', this.getAllResponseHeaders());
-                            console.log('Body:', this.responseText);
-
-                            document.getElementById("itemIn").submit();
-                        }
-                    };
-
-                    var body = {
-                        'custom_field_template': 'Local_Delivery',
-                        'meta_data': [
-                            { "label": "Parcel_Number", "data": parcelNum },
-                            { "label": "Inventory_Status", "data": inventoryStatus }
-                        ],
-                        'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                        'job_id': arrivedTN
-                    };
-                    request.send(JSON.stringify(body));
+                    document.getElementById("itemIn").submit();
                 }
             };
 
             var body = {
+                'custom_field_template': 'Local_Delivery',
+                'meta_data': [
+                    { "label": "Parcel_Number", "data": parcelNum },
+                    { "label": "Inventory_Status", "data": inventoryStatus }
+                ],
                 'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                'job_id': arrivedTN,
-                'fleet_id': '1125101',
-                'job_status': '0'
+                'job_id': arrivedTN
             };
             request.send(JSON.stringify(body));
         });
