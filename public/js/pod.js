@@ -188,10 +188,7 @@ function checkTrackingNum(field, autoMove) {
                         createTable = 1;
                         countContent = countContent + 1;
 
-                        document.getElementById("trackingNumber").value = "";
-                        document.getElementById(autoMove).focus();
-
-                        /* var assignTaskToAgent = 0;
+                        var assignTaskToAgent = 0;
                         var assignDateTimeToTask = 0;
 
                         if (assignTaskToAgent == 0) {
@@ -240,7 +237,7 @@ function checkTrackingNum(field, autoMove) {
                                 'job_status': '0'
                             };
                             request.send(JSON.stringify(body));
-                        } */
+                        }
                     }
 
                     if (json_responsetn.status == 404) {
@@ -350,10 +347,7 @@ function checkTrackingNum(field, autoMove) {
                         countTN = countTN + 1;
                         countContent = countContent + 1;
 
-                        document.getElementById("trackingNumber").value = "";
-                        document.getElementById(autoMove).focus();
-
-                        /* var assignTaskToAgent = 0;
+                        var assignTaskToAgent = 0;
                         var assignDateTimeToTask = 0;
 
                         if (assignTaskToAgent == 0) {
@@ -402,7 +396,7 @@ function checkTrackingNum(field, autoMove) {
                                 'job_status': '0'
                             };
                             request.send(JSON.stringify(body));
-                        } */
+                        }
                     }
 
                     if (json_responsetn.status == 404) {
