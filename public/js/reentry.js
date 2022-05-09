@@ -172,48 +172,49 @@ function checkTrackingNum(field, autoMove) {
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
-  var jobStatus = "";
-  document.getElementById("reEntry").style.display = 'none';
+    var jobStatus = "";
+    var decision = "";
+    document.getElementById("reEntry").style.display = 'none';
     document.getElementById("trackingNum").focus();
 
-  document.getElementById("submitButton").addEventListener("click", submitForm);
+    document.getElementById("submitButton").addEventListener("click", submitForm);
 
-  function submitForm() {
+    function submitForm() {
 
-      if (document.getElementById("reason").value == "Cancelled Delivery") {
-          jobStatus = 9;
-      }
+        if (document.getElementById("reason").value == "Cancelled Delivery") {
+            jobStatus = 9;
+            decision = 1;
+        }
 
-      if (document.getElementById("reason").value == "Failed Delivery") {
-          jobStatus = 3;
-      }
+        if ((document.getElementById("reason").value == "Failed Delivery") || (document.getElementById("reason").value == "Reschedule Delivery") || (document.getElementById("reason").value == "Unattempted Delivery") || (document.getElementById("reason").value == "Change to Self Collect")) {
+            decision = 0;
+        }
 
-      if ((document.getElementById("reason").value == "Reschedule Delivery") || (document.getElementById("reason").value == "Unattempted Delivery") || (document.getElementById("reason").value == "Change to Self Collect")) {
-          jobStatus = 3;
-      }
+        if (decision == 0) {
+            document.getElementById("reEntry").submit();
+        }
 
-      var request = new XMLHttpRequest();
+        if (decision == 1) {
+            var request = new XMLHttpRequest();
 
-      request.open('POST', 'https://api.tookanapp.com/v2/update_task_status');
+            request.open('POST', 'https://api.tookanapp.com/v2/update_task_status');
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    console.log('Status:', this.status);
+                    console.log('Headers:', this.getAllResponseHeaders());
+                    console.log('Body:', this.responseText);
 
-      request.setRequestHeader('Content-Type', 'application/json');
+                    document.getElementById("reEntry").submit();
+                }
+            };
 
-      request.onreadystatechange = function () {
-          if (this.readyState === 4) {
-              console.log('Status:', this.status);
-              console.log('Headers:', this.getAllResponseHeaders());
-              console.log('Body:', this.responseText);
-          }
-      };
-
-      var body = {
-          'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-          'job_id': document.getElementById("trackingNumber").value,
-          'job_status': jobStatus
-      };
-
-      request.send(JSON.stringify(body));
-
-      document.getElementById("reEntry").submit();
-  }
+            var body = {
+                'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                'job_id': document.getElementById("trackingNumber").value,
+                'job_status': jobStatus
+            };
+            request.send(JSON.stringify(body));
+        }
+    }
 });
