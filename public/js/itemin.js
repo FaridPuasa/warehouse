@@ -39,9 +39,9 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("dateArrive").value = document.getElementById("dateArriveTemp").value;
                     document.getElementById("area").value = document.getElementById("areaCodeTemp").value;
 
-                    var area = document.getElementById("area").value;
+                    var areaTemp = document.getElementById("area").value;
 
-                    /* let address = document.getElementById("address").value.toUpperCase();
+                    let address = document.getElementById("address").value.toUpperCase();
 
                     var kampong = "";
                     var area = "";
@@ -407,7 +407,7 @@ function checkTrackingNum(field, autoMove) {
 
                     document.getElementById("areaLoc").value = kampong;
 
-                    document.getElementById("area").value = area; */
+                    document.getElementById("area").value = areaTemp;
 
                     if (area == "B1") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountB1")) + 1;
