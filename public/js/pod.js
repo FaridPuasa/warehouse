@@ -464,6 +464,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     document.getElementById("submitPodInfoButton").addEventListener("click", createPODTemplate);
     document.getElementById("donePodButton").addEventListener("click", donePod);
+    document.getElementById("scanAgain").addEventListener("click", scanAgain);
+    /* document.getElementById("deleteRow").addEventListener("click", deleteRow); */
 
     function createPODTemplate() {
 
@@ -723,4 +725,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("excelDbArea").style.display = 'block';
         document.getElementById("inputTnArea").style.display = 'none';
     }
+
+    function scanAgain() {
+        document.getElementById("tasklisttable").contentEditable = true;
+
+        document.getElementById("excelDbArea").style.display = 'none';
+        document.getElementById("inputTnArea").style.display = 'block';
+    }
+
+    /* function deleteRow() {
+        document.getElementById("tasklisttable").deleteRow(document.getElementById("tasklisttable").rows.length);
+    } */
 });
