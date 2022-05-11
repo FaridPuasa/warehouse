@@ -24,7 +24,9 @@ function checkTrackingNum(field, autoMove) {
                 json_responsejd = JSON.parse(responsejd);
 
                 if (json_responsejd.status != 404) {
-                    document.getElementById("item").focus();
+                    document.getElementById("trackingNumber").readOnly = false;
+                    document.getElementById("newTrackingNumber").readOnly = false;
+                    document.getElementById("name").readOnly = false;
 
                     document.getElementById("trackingNumber").value = json_responsejd.data[0].order_id;
                     document.getElementById("newTrackingNumber").value = json_responsejd.data[0].job_id;
@@ -32,9 +34,15 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("address").value = json_responsejd.data[0].job_address;
                     document.getElementById("contact").value = json_responsejd.data[0].customer_phone;
 
+                    document.getElementById("trackingNumber").readOnly = true;
+                    document.getElementById("newTrackingNumber").readOnly = true;
+                    document.getElementById("name").readOnly = true;
+
                     document.getElementById("loading").style.display = 'none';
                     document.getElementById("returnIn").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
+
+                    document.getElementById("item").focus();
                 }
 
                 if (json_responsejd.status == 404) {
