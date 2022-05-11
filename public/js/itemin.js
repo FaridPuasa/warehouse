@@ -716,8 +716,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
             var inventoryStatus = "IN WAREHOUSE[" + document.getElementById("area").value + "]";
 
+            var request = new XMLHttpRequest();
             request.open('POST', 'https://api.tookanapp.com/v2/edit_task');
-
             request.setRequestHeader('Content-Type', 'application/json');
 
             request.onreadystatechange = function () {
