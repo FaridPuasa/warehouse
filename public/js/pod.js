@@ -399,7 +399,7 @@ function checkTrackingNum(field, autoMove) {
                                                 document.getElementById("trackingNumber").value = "";
                                                 document.getElementById("loading").style.display = 'none';
                                                 document.getElementById("inputTnArea").style.display = 'block';
-                                                
+
                                                 document.getElementById(autoMove).focus();
                                             }
                                         };
@@ -722,6 +722,50 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     function donePod() {
+        var table = document.getElementById("tasklisttable");
+        var footer = table.createTFoot();
+
+        var row_f = document.createElement('tr');
+
+        var row_f_data_1 = document.createElement('th');
+        row_f_data_1.innerHTML = "Dispatcher Signature:";
+        row_f_data_1.setAttribute('colspan', '2');
+        var row_f_data_2 = document.createElement('td');
+        row_f_data_2.setAttribute('colspan', '3');
+        var row_f_data_3 = document.createElement('th');
+        row_f_data_3.innerHTML = "Total Amount Collected:";
+        row_f_data_2.setAttribute('colspan', '2');
+        var row_f_data_4 = document.createElement('td');
+        row_f_data_4.setAttribute('colspan', '3');
+
+        row_f.appendChild(row_f_data_1);
+        row_f.appendChild(row_f_data_2);
+        row_f.appendChild(row_f_data_3);
+        row_f.appendChild(row_f_data_4);
+
+        footer.appendChild(row_f);
+
+        var row_f = document.createElement('tr');
+
+        var row_f_data_1 = document.createElement('th');
+        row_f_data_1.innerHTML = "Ackowledged By:";
+        row_f_data_1.setAttribute('colspan', '2');
+        var row_f_data_2 = document.createElement('td');
+        row_f_data_2.innerHTML = "Sowdeq / Chloe:";
+        row_f_data_2.setAttribute('colspan', '3');
+        var row_f_data_3 = document.createElement('th');
+        row_f_data_3.innerHTML = "Signature:";
+        row_f_data_2.setAttribute('colspan', '2');
+        var row_f_data_4 = document.createElement('td');
+        row_f_data_4.setAttribute('colspan', '3');
+
+        row_f.appendChild(row_f_data_1);
+        row_f.appendChild(row_f_data_2);
+        row_f.appendChild(row_f_data_3);
+        row_f.appendChild(row_f_data_4);
+
+        footer.appendChild(row_f);
+
         document.getElementById("tasklisttable").contentEditable = false;
 
         document.getElementById("excelDbArea").style.display = 'block';
@@ -730,6 +774,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     function scanAgain() {
         document.getElementById("tasklisttable").contentEditable = true;
+
+        document.getElementById("tasklisttable").deleteTFoot();
 
         document.getElementById("excelDbArea").style.display = 'none';
         document.getElementById("inputTnArea").style.display = 'block';
