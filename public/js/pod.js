@@ -776,8 +776,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     function scanAgain() {
         document.getElementById("tasklisttable").contentEditable = true;
 
-        document.getElementById("tasklisttable").deleteRow(document.getElementById("tasklisttable").rows.length);
-        document.getElementById("tasklisttable").deleteRow(document.getElementById("tasklisttable").rows.length);
+        document.getElementById("tasklisttable").deleteRow(document.getElementById("tasklisttable").rows.length - 1);
+        document.getElementById("tasklisttable").deleteRow(document.getElementById("tasklisttable").rows.length - 1);
 
         document.getElementById("excelDbArea").style.display = 'none';
         document.getElementById("inputTnArea").style.display = 'block';
