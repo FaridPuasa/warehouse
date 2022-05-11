@@ -104,6 +104,7 @@ function checkTrackingNum(field, autoMove) {
                         let heading_4 = document.createElement('th');
                         heading_4.innerHTML = "Contact Name";
                         let heading_5 = document.createElement('th');
+                        heading_5.setAttribute('class', 'address');
                         heading_5.innerHTML = "Address";
                         let heading_6 = document.createElement('th');
                         heading_6.innerHTML = "Phone";
@@ -138,6 +139,7 @@ function checkTrackingNum(field, autoMove) {
                         var row_2_data_4 = document.createElement('td');
                         row_2_data_4.innerHTML = json_responsetn.data[0].customer_username;
                         var row_2_data_5 = document.createElement('td');
+                        row_2_data_5.setAttribute('class', 'address');
                         row_2_data_5.innerHTML = json_responsetn.data[0].job_address;
                         var row_2_data_6 = document.createElement('td');
                         row_2_data_6.innerHTML = json_responsetn.data[0].customer_phone;
@@ -303,6 +305,7 @@ function checkTrackingNum(field, autoMove) {
                         var row_2_data_4 = document.createElement('td');
                         row_2_data_4.innerHTML = json_responsetn.data[0].customer_username;
                         var row_2_data_5 = document.createElement('td');
+                        row_2_data_5.setAttribute('class', 'address');
                         row_2_data_5.innerHTML = json_responsetn.data[0].job_address;
                         var row_2_data_6 = document.createElement('td');
                         row_2_data_6.innerHTML = json_responsetn.data[0].customer_phone;
