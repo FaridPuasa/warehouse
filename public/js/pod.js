@@ -446,6 +446,7 @@ function checkTrackingNum(field, autoMove) {
         if (checkDuplicate == 1) {
             document.getElementById("trackingNumber").value = "";
             document.getElementById("loading").style.display = 'none';
+            document.getElementById("inputTnArea").style.display = 'block';
             document.getElementById("duplicateinput").style.display = 'block';
 
             checkDuplicate = 0;
