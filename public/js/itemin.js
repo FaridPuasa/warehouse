@@ -3,8 +3,6 @@ function checkTrackingNum(field, autoMove) {
 
         document.getElementById("itemIn").style.display = 'none';
         document.getElementById("trackingnumberarea").style.display = 'none';
-        document.getElementById("dateEntryArea").style.display = 'none';
-        document.getElementById("areaCodeArea").style.display = 'none';
         document.getElementById("loading").style.display = 'block';
         document.getElementById("wronginput").style.display = 'none';
 
@@ -505,8 +503,6 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("loading").style.display = 'none';
                     document.getElementById("itemIn").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
-                    document.getElementById("dateEntryArea").style.display = 'block';
-                    document.getElementById("areaCodeArea").style.display = 'block';
 
                     document.getElementById("trackingNum").focus();
                 }
@@ -516,8 +512,6 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("itemIn").style.display = 'none';
                     document.getElementById("wronginput").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
-                    document.getElementById("dateEntryArea").style.display = 'block';
-                    document.getElementById("areaCodeArea").style.display = 'block';
                 }
             }
         };
@@ -680,6 +674,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     document.addEventListener("submit", function (event) {
         event.preventDefault();
+
+        document.getElementById("loading2").style.display = 'block';
+        document.getElementById("submitButton").style.display = 'none';
 
         $(document).ready(function () {
             var arrivedTN = document.getElementById("trackingNumber").value;
