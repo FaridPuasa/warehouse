@@ -133,7 +133,9 @@ function checkTrackingNum(field, autoMove) {
                             var row_2_data_1 = document.createElement('td');
                             row_2_data_1.innerHTML = countTN;
                             var row_2_data_2 = document.createElement('td');
-                            row_2_data_2.innerHTML = json_responsetn.data[0].custom_field[0].data;
+                            if (json_responsetn.data[0].custom_field[0].data != null) {
+                                row_2_data_2.innerHTML = json_responsetn.data[0].custom_field[0].data;
+                            }
                             var row_2_data_3 = document.createElement('td');
                             var row_2_data_4 = document.createElement('td');
                             row_2_data_4.innerHTML = json_responsetn.data[0].job_id;
