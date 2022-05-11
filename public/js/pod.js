@@ -34,14 +34,14 @@ function checkTrackingNum(field, autoMove) {
 
         let countTNlength = trackingNumA.length;
 
-        for (let i = 0; i < countTNlength; i++) {
+        /* for (let i = 0; i < countTNlength; i++) {
             if ((document.getElementById("trackingNumber").value.trim()) == trackingNumA[i]) {
                 checkDuplicate = 1;
                 i = countTNlength;
             }
         }
 
-        if (checkDuplicate != 1) {
+        if (checkDuplicate != 1) { */
             if ((countTN == 1) && (createTable == 0)) {
 
                 var request = new XMLHttpRequest();
@@ -443,7 +443,7 @@ function checkTrackingNum(field, autoMove) {
                 };
                 request.send(JSON.stringify(body));
             }
-        }
+        /* } */
 
         if (checkDuplicate == 1) {
             document.getElementById("trackingNumber").value = "";
