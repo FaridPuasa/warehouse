@@ -795,7 +795,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         //Print the DIV contents i.e. the HTML Table.
         printWindow.document.write('<body>');
-        var divContents = document.getElementById("tasklisttable").innerHTML;
+        var divContents = document.getElementById("tasklist").innerHTML;
         printWindow.document.write(divContents);
         printWindow.document.write('</body>');
 
