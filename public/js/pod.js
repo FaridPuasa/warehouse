@@ -27,6 +27,7 @@ document.getElementById('tasklist').appendChild(table);
 function checkTrackingNum(field, autoMove) {
     endLoop = 0;
     if (field.value.length >= field.maxLength) {
+        document.getElementById("inputTnArea").style.display = 'none';
         document.getElementById("wronginput").style.display = 'none';
         document.getElementById("duplicateinput").style.display = 'none';
         document.getElementById("loading").style.display = 'block';
@@ -230,6 +231,7 @@ function checkTrackingNum(field, autoMove) {
 
                                                 document.getElementById("trackingNumber").value = "";
                                                 document.getElementById("loading").style.display = 'none';
+                                                document.getElementById("inputTnArea").style.display = 'block';
 
                                                 document.getElementById(autoMove).focus();
                                             }
@@ -261,6 +263,7 @@ function checkTrackingNum(field, autoMove) {
                         if (json_responsetn.status == 404) {
                             document.getElementById("trackingNumber").value = "";
                             document.getElementById("loading").style.display = 'none';
+                            document.getElementById("inputTnArea").style.display = 'block';
                             document.getElementById("wronginput").style.display = 'block';
                         }
                     }
@@ -393,6 +396,7 @@ function checkTrackingNum(field, autoMove) {
 
                                                 document.getElementById("trackingNumber").value = "";
                                                 document.getElementById("loading").style.display = 'none';
+                                                document.getElementById("inputTnArea").style.display = 'block';
                                                 
                                                 document.getElementById(autoMove).focus();
                                             }
@@ -424,6 +428,7 @@ function checkTrackingNum(field, autoMove) {
                         if (json_responsetn.status == 404) {
                             document.getElementById("trackingNumber").value = "";
                             document.getElementById("loading").style.display = 'none';
+                            document.getElementById("inputTnArea").style.display = 'block';
                             document.getElementById("wronginput").style.display = 'block';
                         }
                     }
