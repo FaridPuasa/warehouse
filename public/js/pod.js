@@ -272,7 +272,7 @@ function checkTrackingNum(field, autoMove) {
                 var body = {
                     'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
                     'job_ids': [document.getElementById("trackingNumber").value.trim()],
-                    'include_task_history': 0
+                    'include_task_history': 1
                 };
                 request.send(JSON.stringify(body));
             }
@@ -437,7 +437,7 @@ function checkTrackingNum(field, autoMove) {
                 var body = {
                     'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
                     'job_ids': [document.getElementById("trackingNumber").value.trim()],
-                    'include_task_history': 0
+                    'include_task_history': 1
                 };
                 request.send(JSON.stringify(body));
             }
