@@ -734,7 +734,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         row_f_data_2.setAttribute('colspan', '3');
         var row_f_data_3 = document.createElement('th');
         row_f_data_3.innerHTML = "Total Amount Collected:";
-        row_f_data_2.setAttribute('colspan', '2');
+        row_f_data_3.setAttribute('colspan', '2');
         var row_f_data_4 = document.createElement('td');
         row_f_data_4.setAttribute('colspan', '3');
 
@@ -755,7 +755,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         row_f_data_2.setAttribute('colspan', '3');
         var row_f_data_3 = document.createElement('th');
         row_f_data_3.innerHTML = "Signature:";
-        row_f_data_2.setAttribute('colspan', '2');
+        row_f_data_3.setAttribute('colspan', '2');
         var row_f_data_4 = document.createElement('td');
         row_f_data_4.setAttribute('colspan', '3');
 
