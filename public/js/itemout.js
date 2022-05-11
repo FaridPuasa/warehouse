@@ -39,20 +39,23 @@ function checkTrackingNum(field, autoMove) {
         document.getElementById("dateTime").value = date + ' ' + time;
         document.getElementById("dateTimeClose").value = date + ' ' + timeClose;
 
-        document.getElementById("agent").value = document.getElementById("agentTemp").value;
+        document.getElementById("agentName").value = document.getElementById("agentTemp").value;
 
-        document.getElementById(autoMove).focus();
-        localStorage.setItem("lastAgent", document.getElementById("agent").value);
+        localStorage.setItem("lastAgent", document.getElementById("agentName").value);
         document.getElementById("itemOut").submit();
     }
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
     // Retrieve
-    document.getElementById("agentTemp").value = localStorage.getItem("lastAgent");
-    
-    document.getElementById("trackingNumber").focus();
-
+    if (localStorage.getItem("agentName") == null) {
+        localStorage.setItem("agentName", "");
+    }
+    if (localStorage.getItem("agentName") != null) {
+        document.getElementById("agentName").value = localStorage.getItem("lastAgent");
+    }
     document.getElementById("loading").style.display = 'none';
     document.getElementById("wronginput").style.display = 'none';
+
+    document.getElementById("trackingNumber").focus();
 });
