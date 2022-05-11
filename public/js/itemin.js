@@ -409,59 +409,59 @@ function checkTrackingNum(field, autoMove) {
 
                     document.getElementById("area").value = areaTemp;
 
-                    if (area == "B1") {
+                    if (areaTemp == "B1") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountB1")) + 1;
                     }
 
-                    if (area == "B2") {
+                    if (areaTemp == "B2") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountB2")) + 1;
                     }
 
-                    if (area == "G1") {
+                    if (areaTemp == "G1") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountG1")) + 1;
                     }
 
-                    if (area == "G2") {
+                    if (areaTemp == "G2") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountG2")) + 1;
                     }
 
-                    if (area == "JT1") {
+                    if (areaTemp == "JT1") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountJT1")) + 1;
                     }
 
-                    if (area == "JT2") {
+                    if (areaTemp == "JT2") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountJT2")) + 1;
                     }
 
-                    if (area == "JT3") {
+                    if (areaTemp == "JT3") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountJT3")) + 1;
                     }
 
-                    if (area == "TUTONG") {
+                    if (areaTemp == "TUTONG") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountTUTONG")) + 1;
                     }
 
-                    if (area == "KB / SERIA") {
+                    if (areaTemp == "KB / SERIA") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountKBSERIA")) + 1;
                     }
 
-                    if (area == "LUMUT") {
+                    if (areaTemp == "LUMUT") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountLUMUT")) + 1;
                     }
 
-                    if (area == "SERIA") {
+                    if (areaTemp == "SERIA") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountSERIA")) + 1;
                     }
 
-                    if (area == "KB") {
+                    if (areaTemp == "KB") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountKB")) + 1;
                     }
 
-                    if (area == "TEMBURONG") {
+                    if (areaTemp == "TEMBURONG") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountTEMBURONG")) + 1;
                     }
 
-                    if (area == "N/A") {
+                    if (areaTemp == "N/A") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountNA")) + 1;
                     }
 
