@@ -3,6 +3,8 @@ function checkTrackingNum(field, autoMove) {
 
         document.getElementById("itemIn").style.display = 'none';
         document.getElementById("trackingnumberarea").style.display = 'none';
+        document.getElementById("dateEntryArea").style.display = 'none';
+        document.getElementById("areaCodeArea").style.display = 'none';
         document.getElementById("loading").style.display = 'block';
         document.getElementById("wronginput").style.display = 'none';
 
@@ -36,7 +38,12 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("value").value = json_responsejd.data[0].job_description;
                     document.getElementById("zaloraTag").value = json_responsejd.data[0].tags;
 
-                    let address = document.getElementById("address").value.toUpperCase();
+                    document.getElementById("dateArrive").value = document.getElementById("dateArriveTemp").value;
+                    document.getElementById("area").value = document.getElementById("areaCodeTemp").value;
+
+                    var area = document.getElementById("area").value;
+
+                    /* let address = document.getElementById("address").value.toUpperCase();
 
                     var kampong = "";
                     var area = "";
@@ -402,7 +409,7 @@ function checkTrackingNum(field, autoMove) {
 
                     document.getElementById("areaLoc").value = kampong;
 
-                    document.getElementById("area").value = area;
+                    document.getElementById("area").value = area; */
 
                     if (area == "B1") {
                         document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountB1")) + 1;
@@ -498,6 +505,8 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("loading").style.display = 'none';
                     document.getElementById("itemIn").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
+                    document.getElementById("dateEntryArea").style.display = 'block';
+                    document.getElementById("areaCodeArea").style.display = 'block';
 
                     document.getElementById("trackingNum").focus();
                 }
@@ -507,6 +516,8 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("itemIn").style.display = 'none';
                     document.getElementById("wronginput").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
+                    document.getElementById("dateEntryArea").style.display = 'block';
+                    document.getElementById("areaCodeArea").style.display = 'block';
                 }
             }
         };
@@ -522,6 +533,14 @@ function checkTrackingNum(field, autoMove) {
 
 document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("itemIn").style.display = 'none';
+
+    if (localStorage.getItem("lastArea") == null) {
+        localStorage.setItem("lastArea", "");
+        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastArea");
+    }
+    if (localStorage.getItem("lastArea") != null) {
+        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastArea");
+    }
 
     if (localStorage.getItem("lastCountB1") == null) {
         localStorage.setItem("lastCountB1", 0);
@@ -635,6 +654,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("lastCountNA").innerText = "NA: " + parseInt(localStorage.getItem("lastCountNA"));
     }
 
+    if (localStorage.getItem("lastArriveDate") == null) {
+        localStorage.setItem("lastArriveDate", "");
+        document.getElementById("dateArriveTemp").value = localStorage.getItem("lastArriveDate");
+    }
+    if (localStorage.getItem("lastArriveDate") != null) {
+        document.getElementById("dateArriveTemp").value = localStorage.getItem("lastArriveDate");
+    }
+
     document.getElementById("trackingNum").focus();
 
     /* // Get the input field
@@ -657,6 +684,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $(document).ready(function () {
             var arrivedTN = document.getElementById("trackingNumber").value;
             var parcelNum = document.getElementById("parcelNumber").value;
+            var arriveDate = document.getElementById("dateArrive").value;
 
             if (document.getElementById("area").value == "B1") {
                 localStorage.setItem("lastCountB1", document.getElementById("parcelNumber").value);
@@ -714,6 +742,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 localStorage.setItem("lastCountNA", document.getElementById("parcelNumber").value);
             }
 
+            localStorage.setItem("lastArriveDate", document.getElementById("dateArrive").value);
+            localStorage.setItem("lastArea", document.getElementById("area").value);
+
             var inventoryStatus = "IN WAREHOUSE[" + document.getElementById("area").value + "]";
 
             var request = new XMLHttpRequest();
@@ -734,7 +765,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 'custom_field_template': 'Local_Delivery',
                 'meta_data': [
                     { "label": "Parcel_Number", "data": parcelNum },
-                    { "label": "Inventory_Status", "data": inventoryStatus }
+                    { "label": "Inventory_Status", "data": inventoryStatus },
+                    { "label": "Arrive_Date", "data": arriveDate }
                 ],
                 'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
                 'job_id': arrivedTN
