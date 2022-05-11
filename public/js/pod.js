@@ -467,6 +467,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("submitPodInfoButton").addEventListener("click", createPODTemplate);
     document.getElementById("donePodButton").addEventListener("click", donePod);
     document.getElementById("scanAgain").addEventListener("click", scanAgain);
+    document.getElementById("printPOD").addEventListener("click", printPOD);
     /* document.getElementById("deleteRow").addEventListener("click", deleteRow); */
 
     function createPODTemplate() {
@@ -779,6 +780,28 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         document.getElementById("excelDbArea").style.display = 'none';
         document.getElementById("inputTnArea").style.display = 'block';
+    }
+
+    function printPOD() {
+        var printWindow = window.open('', '', 'height=500,width=500');
+        printWindow.document.write('<html><head><title>Table Contents</title>');
+
+        //Print the Table CSS.
+        var table_style = document.getElementById("table_style").innerHTML;
+        printWindow.document.write('<style type = "text/css">');
+        printWindow.document.write(table_style);
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head>');
+
+        //Print the DIV contents i.e. the HTML Table.
+        printWindow.document.write('<body>');
+        var divContents = document.getElementById("tasklisttable").innerHTML;
+        printWindow.document.write(divContents);
+        printWindow.document.write('</body>');
+
+        printWindow.document.write('</html>');
+        printWindow.document.close();
+        printWindow.print();
     }
 
     /* function deleteRow() {
