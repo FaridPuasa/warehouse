@@ -6,6 +6,8 @@ let countContent = 0;
 var responsetn = '';
 var json_responsetn = '';
 
+const trackingNumA = [];
+
 //create table
 let table = document.createElement('table');
 table.setAttribute("id", "tasklisttable");
@@ -25,6 +27,15 @@ function checkTrackingNum(field, autoMove) {
     endLoop = 0;
     if (field.value.length >= field.maxLength) {
         document.getElementById("wronginput").style.display = 'none';
+
+        /* for (let i = 0; i < counttaskhistory; i++) {
+
+        }
+
+        if document.getElementById("trackingNumber").value.trim() */
+
+
+
         if ((countTN == 1) && (createTable == 0)) {
 
             var request = new XMLHttpRequest();
@@ -144,6 +155,8 @@ function checkTrackingNum(field, autoMove) {
                         row_2.appendChild(row_2_data_10);
                         tbody.appendChild(row_2);
 
+                        trackingNumA[countContent] = json_responsetn.data[0].job_id;
+
                         var tnInput = document.createElement('input');
                         tnInput.setAttribute('type', 'text');
                         tnInput.setAttribute('class', 'text-field w-input');
@@ -250,7 +263,7 @@ function checkTrackingNum(field, autoMove) {
 
             var body = {
                 'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                'job_ids': [document.getElementById("trackingNumber").value],
+                'job_ids': [document.getElementById("trackingNumber").value.trim()],
                 'include_task_history': 0
             };
             request.send(JSON.stringify(body));
@@ -302,6 +315,8 @@ function checkTrackingNum(field, autoMove) {
                         row_2.appendChild(row_2_data_9);
                         row_2.appendChild(row_2_data_10);
                         tbody.appendChild(row_2);
+
+                        trackingNumA[countContent] = json_responsetn.data[0].job_id;
 
                         var tnInput = document.createElement('input');
                         tnInput.setAttribute('type', 'text');
@@ -409,7 +424,7 @@ function checkTrackingNum(field, autoMove) {
 
             var body = {
                 'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                'job_ids': [document.getElementById("trackingNumber").value],
+                'job_ids': [document.getElementById("trackingNumber").value.trim()],
                 'include_task_history': 0
             };
             request.send(JSON.stringify(body));
