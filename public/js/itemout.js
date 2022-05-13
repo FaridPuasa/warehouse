@@ -48,11 +48,11 @@ function checkTrackingNum(field, autoMove) {
 
 document.addEventListener("DOMContentLoaded", function (event) {
     // Retrieve
-    if (localStorage.getItem("agentName") == null) {
-        localStorage.setItem("agentName", "");
+    if (localStorage.getItem("lastAgent") == null) {
+        localStorage.setItem("lastAgent", "");
     }
-    if (localStorage.getItem("agentName") != null) {
-        document.getElementById("agentName").value = localStorage.getItem("lastAgent");
+    if (localStorage.getItem("lastAgent") != null) {
+        document.getElementById("agentTemp").value = localStorage.getItem("lastAgent");
     }
     document.getElementById("loading").style.display = 'none';
     document.getElementById("wronginput").style.display = 'none';
