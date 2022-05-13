@@ -3,7 +3,6 @@ let createTable = 0;
 let endLoop = 0;
 let countContent = 0;
 let checkDuplicate = 0;
-let checkError = 0;
 
 var responsetn = '';
 var json_responsetn = '';
@@ -26,9 +25,6 @@ table.appendChild(tbody);
 document.getElementById('tasklist').appendChild(table);
 
 function checkTrackingNum(field, autoMove) {
-    var assignTaskToAgent = 0;
-    var assignDateTimeToTask = 0;
-    checkError = 0;
     endLoop = 0;
     if (field.value.length >= field.maxLength) {
         document.getElementById("inputTnArea").style.display = 'none';
@@ -62,6 +58,158 @@ function checkTrackingNum(field, autoMove) {
                         json_responsetn = JSON.parse(responsetn);
 
                         if (json_responsetn.status != 404) {
+                            // Creating and adding data to first row of the table
+                            let row_h = document.createElement('tr');
+                            let row_h_data_1 = document.createElement('th');
+                            row_h_data_1.innerHTML = "DATE OF POD: ";
+                            let row_h_data_2 = document.createElement('td');
+                            row_h_data_2.innerHTML = document.getElementById("dateCreate").value;
+                            let row_h_data_3 = document.createElement('th');
+                            row_h_data_3.innerHTML = "AREA: ";
+                            let row_h_data_4 = document.createElement('td');
+                            row_h_data_4.innerHTML = document.getElementById("areaCode").value;
+                            /* row_h_data_4.setAttribute('colspan', '7'); */
+                            let row_h_data_5 = document.createElement('th');
+                            row_h_data_5.innerHTML = "MADE BY: ";
+                            let row_h_data_6 = document.createElement('td');
+                            row_h_data_6.innerHTML = document.getElementById("madeBy").value;
+                            let row_h_data_7 = document.createElement('th');
+                            row_h_data_7.innerHTML = "DISPATCHER NAME: ";
+                            let row_h_data_8 = document.createElement('td');
+                            row_h_data_8.innerHTML = document.getElementById("agentName").value;
+                            let row_h_data_9 = document.createElement('th');
+                            row_h_data_9.innerHTML = "DATE OF DELIVERY: ";
+                            let row_h_data_10 = document.createElement('td');
+                            row_h_data_10.innerHTML = document.getElementById("dateAssign").value
+
+                            row_h.appendChild(row_h_data_1);
+                            row_h.appendChild(row_h_data_2);
+                            row_h.appendChild(row_h_data_3);
+                            row_h.appendChild(row_h_data_4);
+                            row_h.appendChild(row_h_data_5);
+                            row_h.appendChild(row_h_data_6);
+                            row_h.appendChild(row_h_data_7);
+                            row_h.appendChild(row_h_data_8);
+                            row_h.appendChild(row_h_data_9);
+                            row_h.appendChild(row_h_data_10);
+                            thead.appendChild(row_h);
+
+                            let row_1 = document.createElement('tr');
+                            let heading_1 = document.createElement('th');
+                            heading_1.innerHTML = "No.";
+                            let heading_2 = document.createElement('th');
+                            heading_2.innerHTML = "ITEM WITH ME";
+                            let heading_3 = document.createElement('th');
+                            heading_3.innerHTML = "Task ID";
+                            let heading_4 = document.createElement('th');
+                            heading_4.innerHTML = "Contact Name";
+                            let heading_5 = document.createElement('th');
+                            heading_5.setAttribute('class', 'address');
+                            heading_5.innerHTML = "Address";
+                            let heading_6 = document.createElement('th');
+                            heading_6.innerHTML = "Phone";
+                            let heading_7 = document.createElement('th');
+                            heading_7.innerHTML = "Price";
+                            let heading_8 = document.createElement('th');
+                            heading_8.innerHTML = "Amount Collected";
+                            let heading_9 = document.createElement('th');
+                            heading_9.innerHTML = "I have uploaded the BT";
+                            let heading_10 = document.createElement('th');
+                            heading_10.innerHTML = "Task Completed";
+
+                            row_1.appendChild(heading_1);
+                            row_1.appendChild(heading_2);
+                            row_1.appendChild(heading_3);
+                            row_1.appendChild(heading_4);
+                            row_1.appendChild(heading_5);
+                            row_1.appendChild(heading_6);
+                            row_1.appendChild(heading_7);
+                            row_1.appendChild(heading_8);
+                            row_1.appendChild(heading_9);
+                            row_1.appendChild(heading_10);
+                            thead.appendChild(row_1);
+
+                            var row_2 = document.createElement('tr');
+
+                            var row_2_data_1 = document.createElement('td');
+                            row_2_data_1.innerHTML = countTN;
+                            var row_2_data_2 = document.createElement('td');
+                            var row_2_data_3 = document.createElement('td');
+                            row_2_data_3.innerHTML = json_responsetn.data[0].job_id;
+                            var row_2_data_4 = document.createElement('td');
+                            row_2_data_4.innerHTML = json_responsetn.data[0].customer_username;
+                            var row_2_data_5 = document.createElement('td');
+                            row_2_data_5.setAttribute('class', 'address');
+                            row_2_data_5.innerHTML = json_responsetn.data[0].job_address;
+                            var row_2_data_6 = document.createElement('td');
+                            row_2_data_6.innerHTML = json_responsetn.data[0].customer_phone;
+                            var row_2_data_7 = document.createElement('td');
+                            row_2_data_7.innerHTML = "$" + json_responsetn.data[0].job_description;
+                            var row_2_data_8 = document.createElement('td');
+                            var row_2_data_9 = document.createElement('td');
+                            var row_2_data_10 = document.createElement('td');
+
+                            row_2.appendChild(row_2_data_1);
+                            row_2.appendChild(row_2_data_2);
+                            row_2.appendChild(row_2_data_3);
+                            row_2.appendChild(row_2_data_4);
+                            row_2.appendChild(row_2_data_5);
+                            row_2.appendChild(row_2_data_6);
+                            row_2.appendChild(row_2_data_7);
+                            row_2.appendChild(row_2_data_8);
+                            row_2.appendChild(row_2_data_9);
+                            row_2.appendChild(row_2_data_10);
+                            tbody.appendChild(row_2);
+
+                            trackingNumA[countContent] = json_responsetn.data[0].job_id;
+
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'trackingNumC');
+                            tnInput.setAttribute('id', 'trackingNumC' + (countContent + 1));
+                            tnInput.setAttribute('value', json_responsetn.data[0].job_id);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'contactNameC');
+                            tnInput.setAttribute('id', 'contactNameC' + (countContent + 1));
+                            tnInput.setAttribute('value', json_responsetn.data[0].customer_username);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'addressC');
+                            tnInput.setAttribute('id', 'addressC' + (countContent + 1));
+                            tnInput.setAttribute('value', json_responsetn.data[0].job_address);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'phoneC');
+                            tnInput.setAttribute('id', 'phoneC' + (countContent + 1));
+                            tnInput.setAttribute('value', json_responsetn.data[0].customer_phone);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'valueC');
+                            tnInput.setAttribute('id', 'valueC' + (countContent + 1));
+                            tnInput.setAttribute('value', "$" + json_responsetn.data[0].job_description);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
+                            countTN = countTN + 1;
+                            createTable = 1;
+                            countContent = countContent + 1;
+
+                            var assignTaskToAgent = 0;
+                            var assignDateTimeToTask = 0;
+
                             if (assignTaskToAgent == 0) {
                                 request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
                                 request.setRequestHeader('Content-Type', 'application/json');
@@ -72,177 +220,24 @@ function checkTrackingNum(field, autoMove) {
                                         console.log('Headers:', this.getAllResponseHeaders());
                                         console.log('Body:', this.responseText);
 
-                                        assignTaskToAgent = 1;
+                                        request.open('POST', 'https://api.tookanapp.com/v2/change_job_date');
+                                        request.setRequestHeader('Content-Type', 'application/json');
 
-                                        if (assignDateTimeToTask == 0) {
-                                            request.open('POST', 'https://api.tookanapp.com/v2/change_job_date');
-                                            request.setRequestHeader('Content-Type', 'application/json');
+                                        request.onreadystatechange = function () {
+                                            if ((this.readyState === 4) && (assignDateTimeToTask == 0)) {
+                                                console.log('Status:', this.status);
+                                                console.log('Headers:', this.getAllResponseHeaders());
+                                                console.log('Body:', this.responseText);
 
-                                            request.onreadystatechange = function () {
-                                                if ((this.readyState === 4) && (assignDateTimeToTask == 0)) {
-                                                    console.log('Status:', this.status);
-                                                    console.log('Headers:', this.getAllResponseHeaders());
-                                                    console.log('Body:', this.responseText);
+                                                assignDateTimeToTask = 1;
 
-                                                    assignDateTimeToTask = 1;
+                                                document.getElementById("trackingNumber").value = "";
+                                                document.getElementById("loading").style.display = 'none';
+                                                document.getElementById("inputTnArea").style.display = 'block';
 
-                                                    // Creating and adding data to first row of the table
-                                                    let row_h = document.createElement('tr');
-                                                    let row_h_data_1 = document.createElement('th');
-                                                    row_h_data_1.innerHTML = "DATE OF POD: ";
-                                                    let row_h_data_2 = document.createElement('td');
-                                                    row_h_data_2.innerHTML = document.getElementById("dateCreate").value;
-                                                    let row_h_data_3 = document.createElement('th');
-                                                    row_h_data_3.innerHTML = "AREA: ";
-                                                    let row_h_data_4 = document.createElement('td');
-                                                    row_h_data_4.innerHTML = document.getElementById("areaCode").value;
-                                                    /* row_h_data_4.setAttribute('colspan', '7'); */
-                                                    let row_h_data_5 = document.createElement('th');
-                                                    row_h_data_5.innerHTML = "MADE BY: ";
-                                                    let row_h_data_6 = document.createElement('td');
-                                                    row_h_data_6.innerHTML = document.getElementById("madeBy").value;
-                                                    let row_h_data_7 = document.createElement('th');
-                                                    row_h_data_7.innerHTML = "DISPATCHER NAME: ";
-                                                    let row_h_data_8 = document.createElement('td');
-                                                    row_h_data_8.innerHTML = document.getElementById("agentName").value;
-                                                    let row_h_data_9 = document.createElement('th');
-                                                    row_h_data_9.innerHTML = "DATE OF DELIVERY: ";
-                                                    let row_h_data_10 = document.createElement('td');
-                                                    row_h_data_10.innerHTML = document.getElementById("dateAssign").value
-
-                                                    row_h.appendChild(row_h_data_1);
-                                                    row_h.appendChild(row_h_data_2);
-                                                    row_h.appendChild(row_h_data_3);
-                                                    row_h.appendChild(row_h_data_4);
-                                                    row_h.appendChild(row_h_data_5);
-                                                    row_h.appendChild(row_h_data_6);
-                                                    row_h.appendChild(row_h_data_7);
-                                                    row_h.appendChild(row_h_data_8);
-                                                    row_h.appendChild(row_h_data_9);
-                                                    row_h.appendChild(row_h_data_10);
-                                                    thead.appendChild(row_h);
-
-                                                    let row_1 = document.createElement('tr');
-                                                    let heading_1 = document.createElement('th');
-                                                    heading_1.innerHTML = "No.";
-                                                    let heading_2 = document.createElement('th');
-                                                    heading_2.innerHTML = "ITEM WITH ME";
-                                                    let heading_3 = document.createElement('th');
-                                                    heading_3.innerHTML = "Task ID";
-                                                    let heading_4 = document.createElement('th');
-                                                    heading_4.innerHTML = "Contact Name";
-                                                    let heading_5 = document.createElement('th');
-                                                    heading_5.setAttribute('class', 'address');
-                                                    heading_5.innerHTML = "Address";
-                                                    let heading_6 = document.createElement('th');
-                                                    heading_6.innerHTML = "Phone";
-                                                    let heading_7 = document.createElement('th');
-                                                    heading_7.innerHTML = "Price";
-                                                    let heading_8 = document.createElement('th');
-                                                    heading_8.innerHTML = "Amount Collected";
-                                                    let heading_9 = document.createElement('th');
-                                                    heading_9.innerHTML = "I have uploaded the BT";
-                                                    let heading_10 = document.createElement('th');
-                                                    heading_10.innerHTML = "Task Completed";
-
-                                                    row_1.appendChild(heading_1);
-                                                    row_1.appendChild(heading_2);
-                                                    row_1.appendChild(heading_3);
-                                                    row_1.appendChild(heading_4);
-                                                    row_1.appendChild(heading_5);
-                                                    row_1.appendChild(heading_6);
-                                                    row_1.appendChild(heading_7);
-                                                    row_1.appendChild(heading_8);
-                                                    row_1.appendChild(heading_9);
-                                                    row_1.appendChild(heading_10);
-                                                    thead.appendChild(row_1);
-
-                                                    var row_2 = document.createElement('tr');
-
-                                                    var row_2_data_1 = document.createElement('td');
-                                                    row_2_data_1.innerHTML = countTN;
-                                                    var row_2_data_2 = document.createElement('td');
-                                                    var row_2_data_3 = document.createElement('td');
-                                                    row_2_data_3.innerHTML = json_responsetn.data[0].job_id;
-                                                    var row_2_data_4 = document.createElement('td');
-                                                    row_2_data_4.innerHTML = json_responsetn.data[0].customer_username;
-                                                    var row_2_data_5 = document.createElement('td');
-                                                    row_2_data_5.setAttribute('class', 'address');
-                                                    row_2_data_5.innerHTML = json_responsetn.data[0].job_address;
-                                                    var row_2_data_6 = document.createElement('td');
-                                                    row_2_data_6.innerHTML = json_responsetn.data[0].customer_phone;
-                                                    var row_2_data_7 = document.createElement('td');
-                                                    row_2_data_7.innerHTML = "$" + json_responsetn.data[0].job_description;
-                                                    var row_2_data_8 = document.createElement('td');
-                                                    var row_2_data_9 = document.createElement('td');
-                                                    var row_2_data_10 = document.createElement('td');
-
-                                                    row_2.appendChild(row_2_data_1);
-                                                    row_2.appendChild(row_2_data_2);
-                                                    row_2.appendChild(row_2_data_3);
-                                                    row_2.appendChild(row_2_data_4);
-                                                    row_2.appendChild(row_2_data_5);
-                                                    row_2.appendChild(row_2_data_6);
-                                                    row_2.appendChild(row_2_data_7);
-                                                    row_2.appendChild(row_2_data_8);
-                                                    row_2.appendChild(row_2_data_9);
-                                                    row_2.appendChild(row_2_data_10);
-                                                    tbody.appendChild(row_2);
-
-                                                    trackingNumA[countContent] = json_responsetn.data[0].job_id;
-
-                                                    var tnInput = document.createElement('input');
-                                                    tnInput.setAttribute('type', 'text');
-                                                    tnInput.setAttribute('class', 'text-field w-input');
-                                                    tnInput.setAttribute('name', 'trackingNumC');
-                                                    tnInput.setAttribute('id', 'trackingNumC' + (countContent + 1));
-                                                    tnInput.setAttribute('value', json_responsetn.data[0].job_id);
-                                                    document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                                                    var tnInput = document.createElement('input');
-                                                    tnInput.setAttribute('type', 'text');
-                                                    tnInput.setAttribute('class', 'text-field w-input');
-                                                    tnInput.setAttribute('name', 'contactNameC');
-                                                    tnInput.setAttribute('id', 'contactNameC' + (countContent + 1));
-                                                    tnInput.setAttribute('value', json_responsetn.data[0].customer_username);
-                                                    document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                                                    var tnInput = document.createElement('input');
-                                                    tnInput.setAttribute('type', 'text');
-                                                    tnInput.setAttribute('class', 'text-field w-input');
-                                                    tnInput.setAttribute('name', 'addressC');
-                                                    tnInput.setAttribute('id', 'addressC' + (countContent + 1));
-                                                    tnInput.setAttribute('value', json_responsetn.data[0].job_address);
-                                                    document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                                                    var tnInput = document.createElement('input');
-                                                    tnInput.setAttribute('type', 'text');
-                                                    tnInput.setAttribute('class', 'text-field w-input');
-                                                    tnInput.setAttribute('name', 'phoneC');
-                                                    tnInput.setAttribute('id', 'phoneC' + (countContent + 1));
-                                                    tnInput.setAttribute('value', json_responsetn.data[0].customer_phone);
-                                                    document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                                                    var tnInput = document.createElement('input');
-                                                    tnInput.setAttribute('type', 'text');
-                                                    tnInput.setAttribute('class', 'text-field w-input');
-                                                    tnInput.setAttribute('name', 'valueC');
-                                                    tnInput.setAttribute('id', 'valueC' + (countContent + 1));
-                                                    tnInput.setAttribute('value', "$" + json_responsetn.data[0].job_description);
-                                                    document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                                                    countTN = countTN + 1;
-                                                    createTable = 1;
-                                                    countContent = countContent + 1;
-
-                                                    document.getElementById("trackingNumber").value = "";
-                                                    document.getElementById("loading").style.display = 'none';
-                                                    document.getElementById("inputTnArea").style.display = 'block';
-
-                                                    document.getElementById(autoMove).focus();
-                                                }
-                                            };
-                                        }
+                                                document.getElementById(autoMove).focus();
+                                            }
+                                        };
 
                                         var body = {
                                             'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
@@ -252,6 +247,8 @@ function checkTrackingNum(field, autoMove) {
                                             'end_time': document.getElementById("dateTimeClose").value
                                         };
                                         request.send(JSON.stringify(body));
+
+                                        assignTaskToAgent = 1;
                                     }
                                 };
 
@@ -283,6 +280,7 @@ function checkTrackingNum(field, autoMove) {
             }
 
             if ((countTN > 1) && (createTable > 0)) {
+
                 var request = new XMLHttpRequest();
                 request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
                 request.setRequestHeader('Content-Type', 'application/json');
@@ -297,6 +295,87 @@ function checkTrackingNum(field, autoMove) {
                         json_responsetn = JSON.parse(responsetn);
 
                         if (json_responsetn.status != 404) {
+                            var row_2 = document.createElement('tr');
+
+                            var row_2_data_1 = document.createElement('td');
+                            row_2_data_1.innerHTML = countTN;
+                            var row_2_data_2 = document.createElement('td');
+                            var row_2_data_3 = document.createElement('td');
+                            row_2_data_3.innerHTML = json_responsetn.data[0].job_id;
+                            var row_2_data_4 = document.createElement('td');
+                            row_2_data_4.innerHTML = json_responsetn.data[0].customer_username;
+                            var row_2_data_5 = document.createElement('td');
+                            row_2_data_5.setAttribute('class', 'address');
+                            row_2_data_5.innerHTML = json_responsetn.data[0].job_address;
+                            var row_2_data_6 = document.createElement('td');
+                            row_2_data_6.innerHTML = json_responsetn.data[0].customer_phone;
+                            var row_2_data_7 = document.createElement('td');
+                            row_2_data_7.innerHTML = "$" + json_responsetn.data[0].job_description;
+                            var row_2_data_8 = document.createElement('td');
+                            var row_2_data_9 = document.createElement('td');
+                            var row_2_data_10 = document.createElement('td');
+
+                            row_2.appendChild(row_2_data_1);
+                            row_2.appendChild(row_2_data_2);
+                            row_2.appendChild(row_2_data_3);
+                            row_2.appendChild(row_2_data_4);
+                            row_2.appendChild(row_2_data_5);
+                            row_2.appendChild(row_2_data_6);
+                            row_2.appendChild(row_2_data_7);
+                            row_2.appendChild(row_2_data_8);
+                            row_2.appendChild(row_2_data_9);
+                            row_2.appendChild(row_2_data_10);
+                            tbody.appendChild(row_2);
+
+                            trackingNumA[countContent] = json_responsetn.data[0].job_id;
+
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'trackingNumC');
+                            tnInput.setAttribute('id', 'trackingNumC' + (countContent + 1));
+                            tnInput.setAttribute('value', json_responsetn.data[0].job_id);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'contactNameC');
+                            tnInput.setAttribute('id', 'contactNameC' + (countContent + 1));
+                            tnInput.setAttribute('value', json_responsetn.data[0].customer_username);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'addressC');
+                            tnInput.setAttribute('id', 'addressC' + (countContent + 1));
+                            tnInput.setAttribute('value', json_responsetn.data[0].job_address);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'phoneC');
+                            tnInput.setAttribute('id', 'phoneC' + (countContent + 1));
+                            tnInput.setAttribute('value', json_responsetn.data[0].customer_phone);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
+                            var tnInput = document.createElement('input');
+                            tnInput.setAttribute('type', 'text');
+                            tnInput.setAttribute('class', 'text-field w-input');
+                            tnInput.setAttribute('name', 'valueC');
+                            tnInput.setAttribute('id', 'valueC' + (countContent + 1));
+                            tnInput.setAttribute('value', "$" + json_responsetn.data[0].job_description);
+                            document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
+
+                            endLoop = endLoop + 1;
+                            countTN = countTN + 1;
+                            countContent = countContent + 1;
+
+                            var assignTaskToAgent = 0;
+                            var assignDateTimeToTask = 0;
+
                             if (assignTaskToAgent == 0) {
                                 request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
                                 request.setRequestHeader('Content-Type', 'application/json');
@@ -307,10 +386,7 @@ function checkTrackingNum(field, autoMove) {
                                         console.log('Headers:', this.getAllResponseHeaders());
                                         console.log('Body:', this.responseText);
 
-                                        assignTaskToAgent = 1;
-
-                                        if (assignDateTimeToTask == 0) {
-                                            request.open('POST', 'https://api.tookanapp.com/v2/change_job_date');
+                                        request.open('POST', 'https://api.tookanapp.com/v2/change_job_date');
                                         request.setRequestHeader('Content-Type', 'application/json');
 
                                         request.onreadystatechange = function () {
@@ -320,84 +396,6 @@ function checkTrackingNum(field, autoMove) {
                                                 console.log('Body:', this.responseText);
 
                                                 assignDateTimeToTask = 1;
-
-                                                var row_2 = document.createElement('tr');
-
-                                                var row_2_data_1 = document.createElement('td');
-                                                row_2_data_1.innerHTML = countTN;
-                                                var row_2_data_2 = document.createElement('td');
-                                                var row_2_data_3 = document.createElement('td');
-                                                row_2_data_3.innerHTML = json_responsetn.data[0].job_id;
-                                                var row_2_data_4 = document.createElement('td');
-                                                row_2_data_4.innerHTML = json_responsetn.data[0].customer_username;
-                                                var row_2_data_5 = document.createElement('td');
-                                                row_2_data_5.setAttribute('class', 'address');
-                                                row_2_data_5.innerHTML = json_responsetn.data[0].job_address;
-                                                var row_2_data_6 = document.createElement('td');
-                                                row_2_data_6.innerHTML = json_responsetn.data[0].customer_phone;
-                                                var row_2_data_7 = document.createElement('td');
-                                                row_2_data_7.innerHTML = "$" + json_responsetn.data[0].job_description;
-                                                var row_2_data_8 = document.createElement('td');
-                                                var row_2_data_9 = document.createElement('td');
-                                                var row_2_data_10 = document.createElement('td');
-
-                                                row_2.appendChild(row_2_data_1);
-                                                row_2.appendChild(row_2_data_2);
-                                                row_2.appendChild(row_2_data_3);
-                                                row_2.appendChild(row_2_data_4);
-                                                row_2.appendChild(row_2_data_5);
-                                                row_2.appendChild(row_2_data_6);
-                                                row_2.appendChild(row_2_data_7);
-                                                row_2.appendChild(row_2_data_8);
-                                                row_2.appendChild(row_2_data_9);
-                                                row_2.appendChild(row_2_data_10);
-                                                tbody.appendChild(row_2);
-
-                                                trackingNumA[countContent] = json_responsetn.data[0].job_id;
-
-                                                var tnInput = document.createElement('input');
-                                                tnInput.setAttribute('type', 'text');
-                                                tnInput.setAttribute('class', 'text-field w-input');
-                                                tnInput.setAttribute('name', 'trackingNumC');
-                                                tnInput.setAttribute('id', 'trackingNumC' + (countContent + 1));
-                                                tnInput.setAttribute('value', json_responsetn.data[0].job_id);
-                                                document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                                                var tnInput = document.createElement('input');
-                                                tnInput.setAttribute('type', 'text');
-                                                tnInput.setAttribute('class', 'text-field w-input');
-                                                tnInput.setAttribute('name', 'contactNameC');
-                                                tnInput.setAttribute('id', 'contactNameC' + (countContent + 1));
-                                                tnInput.setAttribute('value', json_responsetn.data[0].customer_username);
-                                                document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                                                var tnInput = document.createElement('input');
-                                                tnInput.setAttribute('type', 'text');
-                                                tnInput.setAttribute('class', 'text-field w-input');
-                                                tnInput.setAttribute('name', 'addressC');
-                                                tnInput.setAttribute('id', 'addressC' + (countContent + 1));
-                                                tnInput.setAttribute('value', json_responsetn.data[0].job_address);
-                                                document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                                                var tnInput = document.createElement('input');
-                                                tnInput.setAttribute('type', 'text');
-                                                tnInput.setAttribute('class', 'text-field w-input');
-                                                tnInput.setAttribute('name', 'phoneC');
-                                                tnInput.setAttribute('id', 'phoneC' + (countContent + 1));
-                                                tnInput.setAttribute('value', json_responsetn.data[0].customer_phone);
-                                                document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                                                var tnInput = document.createElement('input');
-                                                tnInput.setAttribute('type', 'text');
-                                                tnInput.setAttribute('class', 'text-field w-input');
-                                                tnInput.setAttribute('name', 'valueC');
-                                                tnInput.setAttribute('id', 'valueC' + (countContent + 1));
-                                                tnInput.setAttribute('value', "$" + json_responsetn.data[0].job_description);
-                                                document.getElementById("trackingNumberDetailsArea").appendChild(tnInput);
-
-                                                endLoop = endLoop + 1;
-                                                countTN = countTN + 1;
-                                                countContent = countContent + 1;
 
                                                 document.getElementById("trackingNumber").value = "";
                                                 document.getElementById("loading").style.display = 'none';
@@ -415,7 +413,8 @@ function checkTrackingNum(field, autoMove) {
                                             'end_time': document.getElementById("dateTimeClose").value
                                         };
                                         request.send(JSON.stringify(body));
-                                        }
+
+                                        assignTaskToAgent = 1;
                                     }
                                 };
 
