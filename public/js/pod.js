@@ -2,7 +2,7 @@ let countTN = 1;
 let createTable = 0;
 let endLoop = 0;
 let countContent = 0;
-/* let checkDuplicate = 0; */
+let checkDuplicate = 0;
 let checkError = 0;
 
 var responsetn = '';
@@ -36,7 +36,7 @@ function checkTrackingNum(field, autoMove) {
         document.getElementById("duplicateinput").style.display = 'none';
         document.getElementById("loading").style.display = 'block';
 
-        /* let countTNlength = trackingNumA.length;
+        let countTNlength = trackingNumA.length;
 
         for (let i = 0; i < countTNlength; i++) {
             if ((document.getElementById("trackingNumber").value.trim()) == trackingNumA[i]) {
@@ -45,7 +45,7 @@ function checkTrackingNum(field, autoMove) {
             }
         }
 
-        if (checkDuplicate != 1) { */
+        if (checkDuplicate != 1) {
             if ((countTN == 1) && (createTable == 0)) {
 
                 var request = new XMLHttpRequest();
@@ -445,7 +445,7 @@ function checkTrackingNum(field, autoMove) {
                 };
                 request.send(JSON.stringify(body));
             }
-        /* }
+        }
 
         if (checkDuplicate == 1) {
             document.getElementById("trackingNumber").value = "";
@@ -454,7 +454,7 @@ function checkTrackingNum(field, autoMove) {
             document.getElementById("duplicateinput").style.display = 'block';
 
             checkDuplicate = 0;
-        } */
+        }
     }
 }
 
