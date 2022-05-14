@@ -34,7 +34,7 @@ function checkTrackingNum(field, autoMove) {
                     var counttaskhistory = json_responsejd.data[0].task_history["length"];
 
                     for (let i = 0; i < counttaskhistory; i++) {
-                        if (json_responsejd.data[0].task_history[i].description.includes('to Failed')) {
+                        if (json_responsejd.data[0].task_history[i].description.includes('Failed at')) {
                             document.getElementById("remark").value = json_responsejd.data[0].task_history[i].reason;
                         }
                     }
