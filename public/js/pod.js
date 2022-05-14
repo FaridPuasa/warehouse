@@ -473,6 +473,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     function createPODTemplate() {
 
+        if ($("#productTemp").val().length == 0) {
+            alert("Please do not leave the POD type field empty!");
+        }
+
         if ($("#podDateTemp").val().length == 0) {
             alert("Please do not leave the Date of POD field empty!");
         }
@@ -493,10 +497,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
             alert("Please do not leave the Agent field empty!");
         }
 
-        if (($("#podDateTemp").val().length != 0) && ($("#completionDateTemp").val().length != 0)
+        if (($("#productTemp").val().length != 0) && ($("#podDateTemp").val().length != 0) && ($("#completionDateTemp").val().length != 0)
             && ($("#areaCodeTemp").val().length != 0) && ($("#podDoneByTemp").val().length != 0)
             && ($("#agentTemp").val().length != 0)) {
 
+            document.getElementById("product").value = document.getElementById("productTemp").value;
             document.getElementById("dateCreate").value = document.getElementById("podDateTemp").value;
             document.getElementById("dateAssign").value = document.getElementById("completionDateTemp").value;
             document.getElementById("value").value = "$ N/A";
@@ -671,55 +676,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
             document.getElementById("dateTime").value = date + ' ' + time;
             document.getElementById("dateTimeClose").value = document.getElementById("dateAssign").value + ' ' + timeClose;
 
-            //getSubmittedDate
-            var podDay = "";
-            var podMonth = "";
-            var podToday = new Date();
-
-            if (podToday.getDate() < 10) {
-                podDay = "0" + podToday.getDate();
-            }
-
-            if (podToday.getDate() >= 10) {
-                podDay = podToday.getDate();
-            }
-
-            if (podToday.getMonth() < 9) {
-                podMonth = "0" + (podToday.getMonth() + 1);
-            }
-
-            if (podToday.getMonth() >= 9) {
-                podMonth = (podToday.getMonth() + 1);
-            }
-
-            var podDate = podDay + podMonth + podToday.getFullYear();
-
-            var ampmhour = '';
-            var ampmmin = '';
-
-            if (podToday.getHours() < 10) {
-                ampmhour = "0" + (podToday.getHours());
-            }
-
-            if (podToday.getHours() >= 10) {
-                ampmhour = (podToday.getHours());
-            }
-
-            if (podToday.getMinutes() < 10) {
-                ampmmin = "0" + (podToday.getMinutes());
-            }
-
-            if (podToday.getMinutes() >= 10) {
-                ampmmin = (podToday.getMinutes());
-            }
-
-            document.getElementById("podRef").value = "ZAL/GR/POD/" + document.getElementById("areaCode").value + "/" + podDate + ampmhour + ampmmin;
-
-            document.getElementById("trackingNumber").focus();
-
             document.getElementById("podInfoArea").style.display = 'none';
             document.getElementById("podArea").style.display = 'block';
             document.getElementById("inputTnArea").style.display = 'block';
+
+            document.getElementById("trackingNumber").focus();
         }
     }
 
