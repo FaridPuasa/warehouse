@@ -34,11 +34,10 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("address").value = json_responsejd.data[0].job_address;
                     document.getElementById("contact").value = json_responsejd.data[0].customer_phone;
                     document.getElementById("value").value = json_responsejd.data[0].job_description;
-                    document.getElementById("patientNum").value = json_responsejd.data[0].order_id;
+                    document.getElementById("malTrackingNum").value = json_responsejd.data[0].order_id;
 
                     document.getElementById("dateArrive").value = document.getElementById("dateArriveTemp").value;
                     document.getElementById("area").value = document.getElementById("areaCodeTemp").value;
-                    document.getElementById("fridge").value = document.getElementById("fridgeTemp").value;
 
                     var areaTemp = document.getElementById("area").value;
 
