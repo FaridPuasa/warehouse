@@ -24,14 +24,20 @@ function checkTrackingNum(field, autoMove) {
                 json_responsejd = JSON.parse(responsejd);
 
                 if (json_responsejd.status != 404) {
-                    document.getElementById("reason").focus();
-
                     document.getElementById("trackingNumber").value = json_responsejd.data[0].job_id;
                     document.getElementById("name").value = json_responsejd.data[0].customer_username;
                     document.getElementById("address").value = json_responsejd.data[0].job_address;
                     document.getElementById("contact").value = json_responsejd.data[0].customer_phone;
                     document.getElementById("value").value = json_responsejd.data[0].job_description;
                     document.getElementById("zaloraTag").value = json_responsejd.data[0].tags;
+
+                    var counttaskhistory = json_responsejd.data[0].task_history["length"];
+
+                    for (let i = 0; i < counttaskhistory; i++) {
+                        if (json_responsejd.data[0].task_history[i].description.includes('to Failed')) {
+                            document.getElementById("remark").value = json_responsejd.data[0].task_history[i].reason;
+                        }
+                    }
 
                     let address = document.getElementById("address").value.toUpperCase();
                     if (address.includes("MANGGIS") == true) { area = "B1"; }
@@ -150,7 +156,7 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("reEntry").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
 
-
+                    document.getElementById("reason").focus();
                 }
 
                 if (json_responsejd.status == 404) {
@@ -165,7 +171,7 @@ function checkTrackingNum(field, autoMove) {
         var body = {
             'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
             'job_ids': [jobidentitynum],
-            'include_task_history': 0
+            'include_task_history': 1
         };
         request.send(JSON.stringify(body));
     }
@@ -186,8 +192,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
             decision = 1;
         }
 
-        if ((document.getElementById("reason").value == "Failed Delivery") || (document.getElementById("reason").value == "Reschedule Delivery") || (document.getElementById("reason").value == "Unattempted Delivery") || (document.getElementById("reason").value == "Change to Self Collect")) {
+        if ((document.getElementById("reason").value == "Failed Delivery") || (document.getElementById("reason").value == "Unattempted Delivery")) {
             decision = 0;
+        }
+
+        if ((document.getElementById("reason").value == "Change Address") || (document.getElementById("reason").value == "Reschedule Delivery") ||
+        (document.getElementById("reason").value == "Change to Self Collect")) {
+            decision = 1;
+            jobStatus = 8;
         }
 
         if (decision == 0) {
