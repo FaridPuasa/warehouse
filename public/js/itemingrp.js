@@ -1,7 +1,5 @@
 function checkTrackingNum(field, autoMove) {
-    console.log(document.getElementById("trackingNum").value);
-    if (field.value.length >= field.maxlength) {
-        console.log(document.getElementById("trackingNum").value);
+    if (field.value.length >= field.minLength) {
         document.getElementById("itemIn").style.display = 'none';
         document.getElementById("trackingnumberarea").style.display = 'none';
         document.getElementById("loading").style.display = 'block';
