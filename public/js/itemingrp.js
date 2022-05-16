@@ -832,7 +832,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
 
             localStorage.setItem("lastArriveDate", document.getElementById("dateArrive").value);
-            localStorage.setItem("lastArea", document.getElementById("area").value);
+            localStorage.setItem("lastShelf", document.getElementById("area").value);
 
             document.getElementById("itemIn").submit();
         });
