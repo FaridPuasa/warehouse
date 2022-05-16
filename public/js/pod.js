@@ -101,7 +101,7 @@ function checkTrackingNum(field, autoMove) {
                             let heading_2 = document.createElement('th');
                             heading_2.innerHTML = "ITEM WITH ME";
                             let heading_3 = document.createElement('th');
-                            heading_3.innerHTML = "Fridge Item";
+                            heading_3.innerHTML = "Fridge Item (Pharmacy only)";
                             let heading_4 = document.createElement('th');
                             heading_4.innerHTML = "Task ID";
                             let heading_5 = document.createElement('th');
