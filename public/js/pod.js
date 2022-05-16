@@ -73,6 +73,7 @@ function checkTrackingNum(field, autoMove) {
                             row_h_data_5.innerHTML = "MADE BY: ";
                             let row_h_data_6 = document.createElement('td');
                             row_h_data_6.innerHTML = document.getElementById("madeBy").value;
+                            row_h_data_6.setAttribute('colspan', '2');
                             let row_h_data_7 = document.createElement('th');
                             row_h_data_7.innerHTML = "DISPATCHER NAME: ";
                             let row_h_data_8 = document.createElement('td');
@@ -100,22 +101,23 @@ function checkTrackingNum(field, autoMove) {
                             let heading_2 = document.createElement('th');
                             heading_2.innerHTML = "ITEM WITH ME";
                             let heading_3 = document.createElement('th');
-                            heading_3.innerHTML = "Task ID";
+                            heading_3.innerHTML = "Fridge Item";
                             let heading_4 = document.createElement('th');
-                            heading_4.innerHTML = "Contact Name";
+                            heading_4.innerHTML = "Task ID";
                             let heading_5 = document.createElement('th');
-                            heading_5.setAttribute('class', 'address');
-                            heading_5.innerHTML = "Address";
+                            heading_5.innerHTML = "Contact Name";
                             let heading_6 = document.createElement('th');
-                            heading_6.innerHTML = "Phone";
+                            heading_6.innerHTML = "Address";
                             let heading_7 = document.createElement('th');
-                            heading_7.innerHTML = "Price";
+                            heading_7.innerHTML = "Phone";
                             let heading_8 = document.createElement('th');
-                            heading_8.innerHTML = "Amount Collected";
+                            heading_8.innerHTML = "Price";
                             let heading_9 = document.createElement('th');
-                            heading_9.innerHTML = "I have uploaded the BT";
+                            heading_9.innerHTML = "Amount Collected";
                             let heading_10 = document.createElement('th');
-                            heading_10.innerHTML = "Task Completed";
+                            heading_10.innerHTML = "I have uploaded the BT";
+                            let heading_11 = document.createElement('th');
+                            heading_11.innerHTML = "Task Completed";
 
                             row_1.appendChild(heading_1);
                             row_1.appendChild(heading_2);
@@ -127,30 +129,35 @@ function checkTrackingNum(field, autoMove) {
                             row_1.appendChild(heading_8);
                             row_1.appendChild(heading_9);
                             row_1.appendChild(heading_10);
+                            row_1.appendChild(heading_11);
                             thead.appendChild(row_1);
 
                             var row_2 = document.createElement('tr');
-
                             var row_2_data_1 = document.createElement('td');
                             row_2_data_1.innerHTML = countTN;
                             var row_2_data_2 = document.createElement('td');
                             var row_2_data_3 = document.createElement('td');
-                            row_2_data_3.innerHTML = json_responsetn.data[0].job_id;
+                            var row_2_data_3_checkbox = document.createElement("input");
+                            row_2_data_3_checkbox.setAttribute("type", "checkbox");
+                            row_2_data_3_checkbox.setAttribute("name", "fridge");
                             var row_2_data_4 = document.createElement('td');
-                            row_2_data_4.innerHTML = json_responsetn.data[0].customer_username;
+                            row_2_data_4.innerHTML = json_responsetn.data[0].job_id;
                             var row_2_data_5 = document.createElement('td');
-                            row_2_data_5.setAttribute('class', 'address');
-                            row_2_data_5.innerHTML = json_responsetn.data[0].job_address;
+                            row_2_data_5.innerHTML = json_responsetn.data[0].customer_username;
                             var row_2_data_6 = document.createElement('td');
-                            row_2_data_6.innerHTML = json_responsetn.data[0].customer_phone;
+                            row_2_data_6.innerHTML = json_responsetn.data[0].job_address;
                             var row_2_data_7 = document.createElement('td');
-                            row_2_data_7.innerHTML = "$" + json_responsetn.data[0].job_description;
+                            row_2_data_7.innerHTML = json_responsetn.data[0].customer_phone;
                             var row_2_data_8 = document.createElement('td');
+                            row_2_data_8.innerHTML = "$" + json_responsetn.data[0].job_description;
                             var row_2_data_9 = document.createElement('td');
                             var row_2_data_10 = document.createElement('td');
+                            var row_2_data_11 = document.createElement('td');
 
                             row_2.appendChild(row_2_data_1);
                             row_2.appendChild(row_2_data_2);
+                            row_2.appendChild(row_2_data_3);
+                            row_2_data_3.appendChild(row_2_data_3_checkbox);
                             row_2.appendChild(row_2_data_3);
                             row_2.appendChild(row_2_data_4);
                             row_2.appendChild(row_2_data_5);
@@ -159,6 +166,7 @@ function checkTrackingNum(field, autoMove) {
                             row_2.appendChild(row_2_data_8);
                             row_2.appendChild(row_2_data_9);
                             row_2.appendChild(row_2_data_10);
+                            row_2.appendChild(row_2_data_11);
                             tbody.appendChild(row_2);
 
                             trackingNumA[countContent] = json_responsetn.data[0].job_id;
@@ -296,27 +304,31 @@ function checkTrackingNum(field, autoMove) {
 
                         if (json_responsetn.status != 404) {
                             var row_2 = document.createElement('tr');
-
                             var row_2_data_1 = document.createElement('td');
                             row_2_data_1.innerHTML = countTN;
                             var row_2_data_2 = document.createElement('td');
                             var row_2_data_3 = document.createElement('td');
-                            row_2_data_3.innerHTML = json_responsetn.data[0].job_id;
+                            var row_2_data_3_checkbox = document.createElement("input");
+                            row_2_data_3_checkbox.setAttribute("type", "checkbox");
+                            row_2_data_3_checkbox.setAttribute("name", "fridge");
                             var row_2_data_4 = document.createElement('td');
-                            row_2_data_4.innerHTML = json_responsetn.data[0].customer_username;
+                            row_2_data_4.innerHTML = json_responsetn.data[0].job_id;
                             var row_2_data_5 = document.createElement('td');
-                            row_2_data_5.setAttribute('class', 'address');
-                            row_2_data_5.innerHTML = json_responsetn.data[0].job_address;
+                            row_2_data_5.innerHTML = json_responsetn.data[0].customer_username;
                             var row_2_data_6 = document.createElement('td');
-                            row_2_data_6.innerHTML = json_responsetn.data[0].customer_phone;
+                            row_2_data_6.innerHTML = json_responsetn.data[0].job_address;
                             var row_2_data_7 = document.createElement('td');
-                            row_2_data_7.innerHTML = "$" + json_responsetn.data[0].job_description;
+                            row_2_data_7.innerHTML = json_responsetn.data[0].customer_phone;
                             var row_2_data_8 = document.createElement('td');
+                            row_2_data_8.innerHTML = "$" + json_responsetn.data[0].job_description;
                             var row_2_data_9 = document.createElement('td');
                             var row_2_data_10 = document.createElement('td');
+                            var row_2_data_11 = document.createElement('td');
 
                             row_2.appendChild(row_2_data_1);
                             row_2.appendChild(row_2_data_2);
+                            row_2.appendChild(row_2_data_3);
+                            row_2_data_3.appendChild(row_2_data_3_checkbox);
                             row_2.appendChild(row_2_data_3);
                             row_2.appendChild(row_2_data_4);
                             row_2.appendChild(row_2_data_5);
@@ -325,6 +337,7 @@ function checkTrackingNum(field, autoMove) {
                             row_2.appendChild(row_2_data_8);
                             row_2.appendChild(row_2_data_9);
                             row_2.appendChild(row_2_data_10);
+                            row_2.appendChild(row_2_data_11);
                             tbody.appendChild(row_2);
 
                             trackingNumA[countContent] = json_responsetn.data[0].job_id;
@@ -696,7 +709,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         row_f_data_1.innerHTML = "Dispatcher Signature:";
         row_f_data_1.setAttribute('colspan', '2');
         var row_f_data_2 = document.createElement('td');
-        row_f_data_2.setAttribute('colspan', '3');
+        row_f_data_2.setAttribute('colspan', '4');
         var row_f_data_3 = document.createElement('th');
         row_f_data_3.innerHTML = "Total Amount Collected:";
         row_f_data_3.setAttribute('colspan', '2');
@@ -717,7 +730,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         row_f_data_1.setAttribute('colspan', '2');
         var row_f_data_2 = document.createElement('td');
         row_f_data_2.innerHTML = "Sowdeq / Chloe";
-        row_f_data_2.setAttribute('colspan', '3');
+        row_f_data_2.setAttribute('colspan', '4');
         var row_f_data_3 = document.createElement('th');
         row_f_data_3.innerHTML = "Signature:";
         row_f_data_3.setAttribute('colspan', '2');
