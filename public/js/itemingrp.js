@@ -1,5 +1,5 @@
 function checkTrackingNum(field, autoMove) {
-    if (field.value.length >= field.maxLength) {
+    if (field.value.length >= 3) {
 
         document.getElementById("itemIn").style.display = 'none';
         document.getElementById("trackingnumberarea").style.display = 'none';
@@ -11,7 +11,7 @@ function checkTrackingNum(field, autoMove) {
         document.getElementById('trackingNum').value = '';
 
         var request = new XMLHttpRequest();
-        request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
+        request.open('POST', 'https://api.tookanapp.com/v2/get_job_details_by_order_id');
         request.setRequestHeader('Content-Type', 'application/json');
 
         request.onreadystatechange = function () {
@@ -409,60 +409,84 @@ function checkTrackingNum(field, autoMove) {
 
                     document.getElementById("area").value = areaTemp;
 
-                    if (areaTemp == "B1") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountB1")) + 1;
+                    if (areaTemp == "A-1") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountA-1")) + 1;
                     }
 
-                    if (areaTemp == "B2") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountB2")) + 1;
+                    if (areaTemp == "A-2") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountA-2")) + 1;
                     }
 
-                    if (areaTemp == "G1") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountG1")) + 1;
+                    if (areaTemp == "A-3") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountA-3")) + 1;
                     }
 
-                    if (areaTemp == "G2") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountG2")) + 1;
+                    if (areaTemp == "A-4") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountA-4")) + 1;
                     }
 
-                    if (areaTemp == "JT1") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountJT1")) + 1;
+                    if (areaTemp == "B-1") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountB-1")) + 1;
                     }
 
-                    if (areaTemp == "JT2") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountJT2")) + 1;
+                    if (areaTemp == "B-2") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountB-2")) + 1;
                     }
 
-                    if (areaTemp == "JT3") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountJT3")) + 1;
+                    if (areaTemp == "B-3") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountB-3")) + 1;
                     }
 
-                    if (areaTemp == "TUTONG") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountTUTONG")) + 1;
+                    if (areaTemp == "B-4") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountB-4")) + 1;
                     }
 
-                    if (areaTemp == "KB / SERIA") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountKBSERIA")) + 1;
+                    if (areaTemp == "C-1") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountC-1")) + 1;
                     }
 
-                    if (areaTemp == "LUMUT") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountLUMUT")) + 1;
+                    if (areaTemp == "C-2") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountC-2")) + 1;
                     }
 
-                    if (areaTemp == "SERIA") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountSERIA")) + 1;
+                    if (areaTemp == "C-3") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountC-3")) + 1;
                     }
 
-                    if (areaTemp == "KB") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountKB")) + 1;
+                    if (areaTemp == "C-4") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountC-4")) + 1;
                     }
 
-                    if (areaTemp == "TEMBURONG") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountTEMBURONG")) + 1;
+                    if (areaTemp == "D-1") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountD-1")) + 1;
                     }
 
-                    if (areaTemp == "N/A") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountNA")) + 1;
+                    if (areaTemp == "D-2") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountD-2")) + 1;
+                    }
+
+                    if (areaTemp == "D-3") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountD-3")) + 1;
+                    }
+
+                    if (areaTemp == "D-4") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountD-4")) + 1;
+                    }
+
+                    if (areaTemp == "E-1") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountE-1")) + 1;
+                    }
+
+                    if (areaTemp == "E-2") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountE-2")) + 1;
+                    }
+
+                    if (areaTemp == "E-3") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountE-3")) + 1;
+                    }
+
+                    if (areaTemp == "E-4") {
+                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountE-4")) + 1;
                     }
 
                     //getSubmittedDate
@@ -517,8 +541,8 @@ function checkTrackingNum(field, autoMove) {
         };
 
         var body = {
-            'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-            'job_ids': [jobidentitynum],
+            'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
+            'order_ids': [jobidentitynum],
             'include_task_history': 0
         };
         request.send(JSON.stringify(body));
@@ -528,124 +552,172 @@ function checkTrackingNum(field, autoMove) {
 document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("itemIn").style.display = 'none';
 
-    if (localStorage.getItem("lastArea") == null) {
-        localStorage.setItem("lastArea", "");
-        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastArea");
+    if (localStorage.getItem("lastShelf") == null) {
+        localStorage.setItem("lastShelf", "");
+        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastShelf");
     }
-    if (localStorage.getItem("lastArea") != null) {
-        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastArea");
-    }
-
-    if (localStorage.getItem("lastCountB1") == null) {
-        localStorage.setItem("lastCountB1", 0);
-        document.getElementById("lastCountB1").innerText = "B1: " + parseInt(localStorage.getItem("lastCountB1"));
-    }
-    if (localStorage.getItem("lastCountB1") != null) {
-        document.getElementById("lastCountB1").innerText = "B1: " + parseInt(localStorage.getItem("lastCountB1"));
+    if (localStorage.getItem("lastShelf") != null) {
+        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastShelf");
     }
 
-    if (localStorage.getItem("lastCountB2") == null) {
-        localStorage.setItem("lastCountB2", 0);
-        document.getElementById("lastCountB2").innerText = "B2: " + parseInt(localStorage.getItem("lastCountB2"));
+    if (localStorage.getItem("lastCountA-1") == null) {
+        localStorage.setItem("lastCountA-1", 0);
+        document.getElementById("lastCountA-1").innerText = "A-1: " + parseInt(localStorage.getItem("lastCountA-1"));
     }
-    if (localStorage.getItem("lastCountB2") != null) {
-        document.getElementById("lastCountB2").innerText = "B2: " + parseInt(localStorage.getItem("lastCountB2"));
-    }
-
-    if (localStorage.getItem("lastCountG1") == null) {
-        localStorage.setItem("lastCountG1", 0);
-        document.getElementById("lastCountG1").innerText = "G1: " + parseInt(localStorage.getItem("lastCountG1"));
-    }
-    if (localStorage.getItem("lastCountG1") != null) {
-        document.getElementById("lastCountG1").innerText = "G1: " + parseInt(localStorage.getItem("lastCountG1"));
+    if (localStorage.getItem("lastCountA-1") != null) {
+        document.getElementById("lastCountA-1").innerText = "A-1: " + parseInt(localStorage.getItem("lastCountA-1"));
     }
 
-    if (localStorage.getItem("lastCountG2") == null) {
-        localStorage.setItem("lastCountG2", 0);
-        document.getElementById("lastCountG2").innerText = "G2: " + parseInt(localStorage.getItem("lastCountG2"));
+    if (localStorage.getItem("lastCountA-2") == null) {
+        localStorage.setItem("lastCountA-2", 0);
+        document.getElementById("lastCountA-2").innerText = "A-2: " + parseInt(localStorage.getItem("lastCountA-2"));
     }
-    if (localStorage.getItem("lastCountG2") != null) {
-        document.getElementById("lastCountG2").innerText = "G2: " + parseInt(localStorage.getItem("lastCountG2"));
-    }
-
-    if (localStorage.getItem("lastCountJT1") == null) {
-        localStorage.setItem("lastCountJT1", 0);
-        document.getElementById("lastCountJT1").innerText = "JT1: " + parseInt(localStorage.getItem("lastCountJT1"));
-    }
-    if (localStorage.getItem("lastCountJT1") != null) {
-        document.getElementById("lastCountJT1").innerText = "JT1: " + parseInt(localStorage.getItem("lastCountJT1"));
+    if (localStorage.getItem("lastCountA-2") != null) {
+        document.getElementById("lastCountA-2").innerText = "A-2: " + parseInt(localStorage.getItem("lastCountA-2"));
     }
 
-    if (localStorage.getItem("lastCountJT2") == null) {
-        localStorage.setItem("lastCountJT2", 0);
-        document.getElementById("lastCountJT2").innerText = "JT2: " + parseInt(localStorage.getItem("lastCountJT2"));
+    if (localStorage.getItem("lastCountA-3") == null) {
+        localStorage.setItem("lastCountA-3", 0);
+        document.getElementById("lastCountA-3").innerText = "A-3: " + parseInt(localStorage.getItem("lastCountA-3"));
     }
-    if (localStorage.getItem("lastCountJT2") != null) {
-        document.getElementById("lastCountJT2").innerText = "JT2: " + parseInt(localStorage.getItem("lastCountJT2"));
-    }
-
-    if (localStorage.getItem("lastCountJT3") == null) {
-        localStorage.setItem("lastCountJT3", 0);
-        document.getElementById("lastCountJT3").innerText = "JT3: " + parseInt(localStorage.getItem("lastCountJT3"));
-    }
-    if (localStorage.getItem("lastCountJT3") != null) {
-        document.getElementById("lastCountJT3").innerText = "JT3: " + parseInt(localStorage.getItem("lastCountJT3"));
+    if (localStorage.getItem("lastCountA-3") != null) {
+        document.getElementById("lastCountA-3").innerText = "A-3: " + parseInt(localStorage.getItem("lastCountA-3"));
     }
 
-    if (localStorage.getItem("lastCountTUTONG") == null) {
-        localStorage.setItem("lastCountTUTONG", 0);
-        document.getElementById("lastCountTUTONG").innerText = "TUTONG: " + parseInt(localStorage.getItem("lastCountTUTONG"));
+    if (localStorage.getItem("lastCountA-4") == null) {
+        localStorage.setItem("lastCountA-4", 0);
+        document.getElementById("lastCountA-4").innerText = "A-4: " + parseInt(localStorage.getItem("lastCountA-4"));
     }
-    if (localStorage.getItem("lastCountTUTONG") != null) {
-        document.getElementById("lastCountTUTONG").innerText = "TUTONG: " + parseInt(localStorage.getItem("lastCountTUTONG"));
-    }
-
-    if (localStorage.getItem("lastCountKBSERIA") == null) {
-        localStorage.setItem("lastCountKBSERIA", 0);
-        document.getElementById("lastCountKBSERIA").innerText = "KBSERIA: " + parseInt(localStorage.getItem("lastCountKBSERIA"));
-    }
-    if (localStorage.getItem("lastCountKBSERIA") != null) {
-        document.getElementById("lastCountKBSERIA").innerText = "KBSERIA: " + parseInt(localStorage.getItem("lastCountKBSERIA"));
+    if (localStorage.getItem("lastCountA-4") != null) {
+        document.getElementById("lastCountA-4").innerText = "A-4: " + parseInt(localStorage.getItem("lastCountA-4"));
     }
 
-    if (localStorage.getItem("lastCountLUMUT") == null) {
-        localStorage.setItem("lastCountLUMUT", 0);
-        document.getElementById("lastCountLUMUT").innerText = "LUMUT: " + parseInt(localStorage.getItem("lastCountLUMUT"));
+    if (localStorage.getItem("lastCountB-1") == null) {
+        localStorage.setItem("lastCountB-1", 0);
+        document.getElementById("lastCountB-1").innerText = "B-1: " + parseInt(localStorage.getItem("lastCountB-1"));
     }
-    if (localStorage.getItem("lastCountLUMUT") != null) {
-        document.getElementById("lastCountLUMUT").innerText = "LUMUT: " + parseInt(localStorage.getItem("lastCountLUMUT"));
-    }
-
-    if (localStorage.getItem("lastCountSERIA") == null) {
-        localStorage.setItem("lastCountSERIA", 0);
-        document.getElementById("lastCountSERIA").innerText = "SERIA: " + parseInt(localStorage.getItem("lastCountSERIA"));
-    }
-    if (localStorage.getItem("lastCountSERIA") != null) {
-        document.getElementById("lastCountSERIA").innerText = "SERIA: " + parseInt(localStorage.getItem("lastCountSERIA"));
+    if (localStorage.getItem("lastCountB-1") != null) {
+        document.getElementById("lastCountB-1").innerText = "B-1: " + parseInt(localStorage.getItem("lastCountB-1"));
     }
 
-    if (localStorage.getItem("lastCountKB") == null) {
-        localStorage.setItem("lastCountKB", 0);
-        document.getElementById("lastCountKB").innerText = "KB: " + parseInt(localStorage.getItem("lastCountKB"));
+    if (localStorage.getItem("lastCountB-2") == null) {
+        localStorage.setItem("lastCountB-2", 0);
+        document.getElementById("lastCountB-2").innerText = "B-2: " + parseInt(localStorage.getItem("lastCountB-2"));
     }
-    if (localStorage.getItem("lastCountKB") != null) {
-        document.getElementById("lastCountKB").innerText = "KB: " + parseInt(localStorage.getItem("lastCountKB"));
-    }
-
-    if (localStorage.getItem("lastCountTEMBURONG") == null) {
-        localStorage.setItem("lastCountTEMBURONG", 0);
-        document.getElementById("lastCountTEMBURONG").innerText = "TEMBURONG: " + parseInt(localStorage.getItem("lastCountTEMBURONG"));
-    }
-    if (localStorage.getItem("lastCountTEMBURONG") != null) {
-        document.getElementById("lastCountTEMBURONG").innerText = "TEMBURONG: " + parseInt(localStorage.getItem("lastCountTEMBURONG"));
+    if (localStorage.getItem("lastCountB-2") != null) {
+        document.getElementById("lastCountB-2").innerText = "B-2: " + parseInt(localStorage.getItem("lastCountB-2"));
     }
 
-    if (localStorage.getItem("lastCountNA") == null) {
-        localStorage.setItem("lastCountNA", 0);
-        document.getElementById("lastCountNA").innerText = "NA: " + parseInt(localStorage.getItem("lastCountNA"));
+    if (localStorage.getItem("lastCountB-3") == null) {
+        localStorage.setItem("lastCountB-3", 0);
+        document.getElementById("lastCountB-3").innerText = "B-3: " + parseInt(localStorage.getItem("lastCountB-3"));
     }
-    if (localStorage.getItem("lastCountNA") != null) {
-        document.getElementById("lastCountNA").innerText = "NA: " + parseInt(localStorage.getItem("lastCountNA"));
+    if (localStorage.getItem("lastCountB-3") != null) {
+        document.getElementById("lastCountB-3").innerText = "B-3: " + parseInt(localStorage.getItem("lastCountB-3"));
+    }
+
+    if (localStorage.getItem("lastCountB-4") == null) {
+        localStorage.setItem("lastCountB-4", 0);
+        document.getElementById("lastCountB-4").innerText = "B-4: " + parseInt(localStorage.getItem("lastCountB-4"));
+    }
+    if (localStorage.getItem("lastCountB-4") != null) {
+        document.getElementById("lastCountB-4").innerText = "B-4: " + parseInt(localStorage.getItem("lastCountB-4"));
+    }
+
+    if (localStorage.getItem("lastCountC-1") == null) {
+        localStorage.setItem("lastCountC-1", 0);
+        document.getElementById("lastCountC-1").innerText = "C-1: " + parseInt(localStorage.getItem("lastCountC-1"));
+    }
+    if (localStorage.getItem("lastCountC-1") != null) {
+        document.getElementById("lastCountC-1").innerText = "C-1: " + parseInt(localStorage.getItem("lastCountC-1"));
+    }
+
+    if (localStorage.getItem("lastCountC-2") == null) {
+        localStorage.setItem("lastCountC-2", 0);
+        document.getElementById("lastCountC-2").innerText = "C-2: " + parseInt(localStorage.getItem("lastCountC-2"));
+    }
+    if (localStorage.getItem("lastCountC-2") != null) {
+        document.getElementById("lastCountC-2").innerText = "C-2: " + parseInt(localStorage.getItem("lastCountC-2"));
+    }
+
+    if (localStorage.getItem("lastCountC-3") == null) {
+        localStorage.setItem("lastCountC-3", 0);
+        document.getElementById("lastCountC-3").innerText = "C-3: " + parseInt(localStorage.getItem("lastCountC-3"));
+    }
+    if (localStorage.getItem("lastCountC-3") != null) {
+        document.getElementById("lastCountC-3").innerText = "C-3: " + parseInt(localStorage.getItem("lastCountC-3"));
+    }
+
+    if (localStorage.getItem("lastCountC-4") == null) {
+        localStorage.setItem("lastCountC-4", 0);
+        document.getElementById("lastCountC-4").innerText = "C-4: " + parseInt(localStorage.getItem("lastCountC-4"));
+    }
+    if (localStorage.getItem("lastCountC-4") != null) {
+        document.getElementById("lastCountC-4").innerText = "C-4: " + parseInt(localStorage.getItem("lastCountC-4"));
+    }
+
+    if (localStorage.getItem("lastCountD-1") == null) {
+        localStorage.setItem("lastCountD-1", 0);
+        document.getElementById("lastCountD-1").innerText = "D-1: " + parseInt(localStorage.getItem("lastCountD-1"));
+    }
+    if (localStorage.getItem("lastCountD-1") != null) {
+        document.getElementById("lastCountD-1").innerText = "D-1: " + parseInt(localStorage.getItem("lastCountD-1"));
+    }
+
+    if (localStorage.getItem("lastCountD-2") == null) {
+        localStorage.setItem("lastCountD-2", 0);
+        document.getElementById("lastCountD-2").innerText = "D-2: " + parseInt(localStorage.getItem("lastCountD-2"));
+    }
+    if (localStorage.getItem("lastCountD-2") != null) {
+        document.getElementById("lastCountD-2").innerText = "D-2: " + parseInt(localStorage.getItem("lastCountD-2"));
+    }
+
+    if (localStorage.getItem("lastCountD-3") == null) {
+        localStorage.setItem("lastCountD-3", 0);
+        document.getElementById("lastCountD-3").innerText = "D-3: " + parseInt(localStorage.getItem("lastCountD-3"));
+    }
+    if (localStorage.getItem("lastCountD-3") != null) {
+        document.getElementById("lastCountD-3").innerText = "D-3: " + parseInt(localStorage.getItem("lastCountD-3"));
+    }
+
+    if (localStorage.getItem("lastCountD-4") == null) {
+        localStorage.setItem("lastCountD-4", 0);
+        document.getElementById("lastCountD-4").innerText = "D-4: " + parseInt(localStorage.getItem("lastCountD-4"));
+    }
+    if (localStorage.getItem("lastCountD-4") != null) {
+        document.getElementById("lastCountD-4").innerText = "D-4: " + parseInt(localStorage.getItem("lastCountD-4"));
+    }
+
+    if (localStorage.getItem("lastCountE-1") == null) {
+        localStorage.setItem("lastCountE-1", 0);
+        document.getElementById("lastCountE-1").innerText = "E-1: " + parseInt(localStorage.getItem("lastCountE-1"));
+    }
+    if (localStorage.getItem("lastCountE-1") != null) {
+        document.getElementById("lastCountE-1").innerText = "E-1: " + parseInt(localStorage.getItem("lastCountE-1"));
+    }
+
+    if (localStorage.getItem("lastCountE-2") == null) {
+        localStorage.setItem("lastCountE-2", 0);
+        document.getElementById("lastCountE-2").innerText = "E-2: " + parseInt(localStorage.getItem("lastCountE-2"));
+    }
+    if (localStorage.getItem("lastCountE-2") != null) {
+        document.getElementById("lastCountE-2").innerText = "D-2: " + parseInt(localStorage.getItem("lastCountE-2"));
+    }
+
+    if (localStorage.getItem("lastCountE-3") == null) {
+        localStorage.setItem("lastCountE-3", 0);
+        document.getElementById("lastCountE-3").innerText = "E-3: " + parseInt(localStorage.getItem("lastCountE-3"));
+    }
+    if (localStorage.getItem("lastCountE-3") != null) {
+        document.getElementById("lastCountE-3").innerText = "E-3: " + parseInt(localStorage.getItem("lastCountE-3"));
+    }
+
+    if (localStorage.getItem("lastCountE-4") == null) {
+        localStorage.setItem("lastCountE-4", 0);
+        document.getElementById("lastCountE-4").innerText = "E-4: " + parseInt(localStorage.getItem("lastCountE-4"));
+    }
+    if (localStorage.getItem("lastCountE-4") != null) {
+        document.getElementById("lastCountE-4").innerText = "E-4: " + parseInt(localStorage.getItem("lastCountE-4"));
     }
 
     if (localStorage.getItem("lastArriveDate") == null) {
@@ -679,60 +751,84 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("submitButton").style.display = 'none';
 
         $(document).ready(function () {
-            if (document.getElementById("area").value == "B1") {
-                localStorage.setItem("lastCountB1", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "A-1") {
+                localStorage.setItem("lastCountA-1", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "B2") {
-                localStorage.setItem("lastCountB2", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "A-2") {
+                localStorage.setItem("lastCountA-2", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "G1") {
-                localStorage.setItem("lastCountG1", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "A-3") {
+                localStorage.setItem("lastCountA-3", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "G2") {
-                localStorage.setItem("lastCountG2", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "A-4") {
+                localStorage.setItem("lastCountA-4", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "JT1") {
-                localStorage.setItem("lastCountJT1", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "B-1") {
+                localStorage.setItem("lastCountB-1", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "JT2") {
-                localStorage.setItem("lastCountJT2", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "B-2") {
+                localStorage.setItem("lastCountB-2", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "JT3") {
-                localStorage.setItem("lastCountJT3", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "B-3") {
+                localStorage.setItem("lastCountB-3", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "TUTONG") {
-                localStorage.setItem("lastCountTUTONG", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "B-4") {
+                localStorage.setItem("lastCountB-4", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "KB / SERIA") {
-                localStorage.setItem("lastCountKBSERIA", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "C-1") {
+                localStorage.setItem("lastCountC-1", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "LUMUT") {
-                localStorage.setItem("lastCountLUMUT", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "C-2") {
+                localStorage.setItem("lastCountC-2", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "SERIA") {
-                localStorage.setItem("lastCountSERIA", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "C-3") {
+                localStorage.setItem("lastCountC-3", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "KB") {
-                localStorage.setItem("lastCountKB", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "C-4") {
+                localStorage.setItem("lastCountC-4", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "TEMBURONG") {
-                localStorage.setItem("lastCountTEMBURONG", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "D-1") {
+                localStorage.setItem("lastCountD-1", document.getElementById("parcelNumber").value);
             }
 
-            if (document.getElementById("area").value == "N/A") {
-                localStorage.setItem("lastCountNA", document.getElementById("parcelNumber").value);
+            if (document.getElementById("area").value == "D-2") {
+                localStorage.setItem("lastCountD-2", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "D-3") {
+                localStorage.setItem("lastCountD-3", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "D-4") {
+                localStorage.setItem("lastCountD-4", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "E-1") {
+                localStorage.setItem("lastCountE-1", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "E-2") {
+                localStorage.setItem("lastCountE-2", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "E-3") {
+                localStorage.setItem("lastCountE-3", document.getElementById("parcelNumber").value);
+            }
+
+            if (document.getElementById("area").value == "E-4") {
+                localStorage.setItem("lastCountE-4", document.getElementById("parcelNumber").value);
             }
 
             localStorage.setItem("lastArriveDate", document.getElementById("dateArrive").value);
