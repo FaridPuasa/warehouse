@@ -1,5 +1,5 @@
 function checkTrackingNum(field, autoMove) {
-    if (field.value.length >= field.maxLength) {
+    if (field.value.length >= 3) {
         document.getElementById("inputAgentArea").style.display = 'none';
         document.getElementById("inputTnArea").style.display = 'none';
         document.getElementById("completeTimeNotice").style.display = 'none';
