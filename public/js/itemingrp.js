@@ -1,5 +1,4 @@
 function checkTrackingNum(field, autoMove) {
-    console.log(document.getElementById("trackingNum").value);
     if (field.value.length >= field.minLength) {
 
         document.getElementById("itemIn").style.display = 'none';
@@ -9,6 +8,7 @@ function checkTrackingNum(field, autoMove) {
 
         var jobidentitynum = '';
         jobidentitynum = document.getElementById("trackingNum").value;
+        console.log(document.getElementById("trackingNum").value);
         document.getElementById('trackingNum').value = '';
 
         var request = new XMLHttpRequest();
