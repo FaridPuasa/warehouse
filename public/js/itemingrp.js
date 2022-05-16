@@ -1,5 +1,201 @@
-function checkTrackingNum(field, autoMove) {
-    if (field.value.length >= field.minLength) {
+document.addEventListener("DOMContentLoaded", function (event) {
+    document.getElementById("itemIn").style.display = 'none';
+
+    if (localStorage.getItem("lastShelf") == null) {
+        localStorage.setItem("lastShelf", "");
+        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastShelf");
+    }
+    if (localStorage.getItem("lastShelf") != null) {
+        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastShelf");
+    }
+
+    if (localStorage.getItem("lastCountA-1") == null) {
+        localStorage.setItem("lastCountA-1", 0);
+        document.getElementById("lastCountA-1").innerText = "A-1: " + parseInt(localStorage.getItem("lastCountA-1"));
+    }
+    if (localStorage.getItem("lastCountA-1") != null) {
+        document.getElementById("lastCountA-1").innerText = "A-1: " + parseInt(localStorage.getItem("lastCountA-1"));
+    }
+
+    if (localStorage.getItem("lastCountA-2") == null) {
+        localStorage.setItem("lastCountA-2", 0);
+        document.getElementById("lastCountA-2").innerText = "A-2: " + parseInt(localStorage.getItem("lastCountA-2"));
+    }
+    if (localStorage.getItem("lastCountA-2") != null) {
+        document.getElementById("lastCountA-2").innerText = "A-2: " + parseInt(localStorage.getItem("lastCountA-2"));
+    }
+
+    if (localStorage.getItem("lastCountA-3") == null) {
+        localStorage.setItem("lastCountA-3", 0);
+        document.getElementById("lastCountA-3").innerText = "A-3: " + parseInt(localStorage.getItem("lastCountA-3"));
+    }
+    if (localStorage.getItem("lastCountA-3") != null) {
+        document.getElementById("lastCountA-3").innerText = "A-3: " + parseInt(localStorage.getItem("lastCountA-3"));
+    }
+
+    if (localStorage.getItem("lastCountA-4") == null) {
+        localStorage.setItem("lastCountA-4", 0);
+        document.getElementById("lastCountA-4").innerText = "A-4: " + parseInt(localStorage.getItem("lastCountA-4"));
+    }
+    if (localStorage.getItem("lastCountA-4") != null) {
+        document.getElementById("lastCountA-4").innerText = "A-4: " + parseInt(localStorage.getItem("lastCountA-4"));
+    }
+
+    if (localStorage.getItem("lastCountB-1") == null) {
+        localStorage.setItem("lastCountB-1", 0);
+        document.getElementById("lastCountB-1").innerText = "B-1: " + parseInt(localStorage.getItem("lastCountB-1"));
+    }
+    if (localStorage.getItem("lastCountB-1") != null) {
+        document.getElementById("lastCountB-1").innerText = "B-1: " + parseInt(localStorage.getItem("lastCountB-1"));
+    }
+
+    if (localStorage.getItem("lastCountB-2") == null) {
+        localStorage.setItem("lastCountB-2", 0);
+        document.getElementById("lastCountB-2").innerText = "B-2: " + parseInt(localStorage.getItem("lastCountB-2"));
+    }
+    if (localStorage.getItem("lastCountB-2") != null) {
+        document.getElementById("lastCountB-2").innerText = "B-2: " + parseInt(localStorage.getItem("lastCountB-2"));
+    }
+
+    if (localStorage.getItem("lastCountB-3") == null) {
+        localStorage.setItem("lastCountB-3", 0);
+        document.getElementById("lastCountB-3").innerText = "B-3: " + parseInt(localStorage.getItem("lastCountB-3"));
+    }
+    if (localStorage.getItem("lastCountB-3") != null) {
+        document.getElementById("lastCountB-3").innerText = "B-3: " + parseInt(localStorage.getItem("lastCountB-3"));
+    }
+
+    if (localStorage.getItem("lastCountB-4") == null) {
+        localStorage.setItem("lastCountB-4", 0);
+        document.getElementById("lastCountB-4").innerText = "B-4: " + parseInt(localStorage.getItem("lastCountB-4"));
+    }
+    if (localStorage.getItem("lastCountB-4") != null) {
+        document.getElementById("lastCountB-4").innerText = "B-4: " + parseInt(localStorage.getItem("lastCountB-4"));
+    }
+
+    if (localStorage.getItem("lastCountC-1") == null) {
+        localStorage.setItem("lastCountC-1", 0);
+        document.getElementById("lastCountC-1").innerText = "C-1: " + parseInt(localStorage.getItem("lastCountC-1"));
+    }
+    if (localStorage.getItem("lastCountC-1") != null) {
+        document.getElementById("lastCountC-1").innerText = "C-1: " + parseInt(localStorage.getItem("lastCountC-1"));
+    }
+
+    if (localStorage.getItem("lastCountC-2") == null) {
+        localStorage.setItem("lastCountC-2", 0);
+        document.getElementById("lastCountC-2").innerText = "C-2: " + parseInt(localStorage.getItem("lastCountC-2"));
+    }
+    if (localStorage.getItem("lastCountC-2") != null) {
+        document.getElementById("lastCountC-2").innerText = "C-2: " + parseInt(localStorage.getItem("lastCountC-2"));
+    }
+
+    if (localStorage.getItem("lastCountC-3") == null) {
+        localStorage.setItem("lastCountC-3", 0);
+        document.getElementById("lastCountC-3").innerText = "C-3: " + parseInt(localStorage.getItem("lastCountC-3"));
+    }
+    if (localStorage.getItem("lastCountC-3") != null) {
+        document.getElementById("lastCountC-3").innerText = "C-3: " + parseInt(localStorage.getItem("lastCountC-3"));
+    }
+
+    if (localStorage.getItem("lastCountC-4") == null) {
+        localStorage.setItem("lastCountC-4", 0);
+        document.getElementById("lastCountC-4").innerText = "C-4: " + parseInt(localStorage.getItem("lastCountC-4"));
+    }
+    if (localStorage.getItem("lastCountC-4") != null) {
+        document.getElementById("lastCountC-4").innerText = "C-4: " + parseInt(localStorage.getItem("lastCountC-4"));
+    }
+
+    if (localStorage.getItem("lastCountD-1") == null) {
+        localStorage.setItem("lastCountD-1", 0);
+        document.getElementById("lastCountD-1").innerText = "D-1: " + parseInt(localStorage.getItem("lastCountD-1"));
+    }
+    if (localStorage.getItem("lastCountD-1") != null) {
+        document.getElementById("lastCountD-1").innerText = "D-1: " + parseInt(localStorage.getItem("lastCountD-1"));
+    }
+
+    if (localStorage.getItem("lastCountD-2") == null) {
+        localStorage.setItem("lastCountD-2", 0);
+        document.getElementById("lastCountD-2").innerText = "D-2: " + parseInt(localStorage.getItem("lastCountD-2"));
+    }
+    if (localStorage.getItem("lastCountD-2") != null) {
+        document.getElementById("lastCountD-2").innerText = "D-2: " + parseInt(localStorage.getItem("lastCountD-2"));
+    }
+
+    if (localStorage.getItem("lastCountD-3") == null) {
+        localStorage.setItem("lastCountD-3", 0);
+        document.getElementById("lastCountD-3").innerText = "D-3: " + parseInt(localStorage.getItem("lastCountD-3"));
+    }
+    if (localStorage.getItem("lastCountD-3") != null) {
+        document.getElementById("lastCountD-3").innerText = "D-3: " + parseInt(localStorage.getItem("lastCountD-3"));
+    }
+
+    if (localStorage.getItem("lastCountD-4") == null) {
+        localStorage.setItem("lastCountD-4", 0);
+        document.getElementById("lastCountD-4").innerText = "D-4: " + parseInt(localStorage.getItem("lastCountD-4"));
+    }
+    if (localStorage.getItem("lastCountD-4") != null) {
+        document.getElementById("lastCountD-4").innerText = "D-4: " + parseInt(localStorage.getItem("lastCountD-4"));
+    }
+
+    if (localStorage.getItem("lastCountE-1") == null) {
+        localStorage.setItem("lastCountE-1", 0);
+        document.getElementById("lastCountE-1").innerText = "E-1: " + parseInt(localStorage.getItem("lastCountE-1"));
+    }
+    if (localStorage.getItem("lastCountE-1") != null) {
+        document.getElementById("lastCountE-1").innerText = "E-1: " + parseInt(localStorage.getItem("lastCountE-1"));
+    }
+
+    if (localStorage.getItem("lastCountE-2") == null) {
+        localStorage.setItem("lastCountE-2", 0);
+        document.getElementById("lastCountE-2").innerText = "E-2: " + parseInt(localStorage.getItem("lastCountE-2"));
+    }
+    if (localStorage.getItem("lastCountE-2") != null) {
+        document.getElementById("lastCountE-2").innerText = "D-2: " + parseInt(localStorage.getItem("lastCountE-2"));
+    }
+
+    if (localStorage.getItem("lastCountE-3") == null) {
+        localStorage.setItem("lastCountE-3", 0);
+        document.getElementById("lastCountE-3").innerText = "E-3: " + parseInt(localStorage.getItem("lastCountE-3"));
+    }
+    if (localStorage.getItem("lastCountE-3") != null) {
+        document.getElementById("lastCountE-3").innerText = "E-3: " + parseInt(localStorage.getItem("lastCountE-3"));
+    }
+
+    if (localStorage.getItem("lastCountE-4") == null) {
+        localStorage.setItem("lastCountE-4", 0);
+        document.getElementById("lastCountE-4").innerText = "E-4: " + parseInt(localStorage.getItem("lastCountE-4"));
+    }
+    if (localStorage.getItem("lastCountE-4") != null) {
+        document.getElementById("lastCountE-4").innerText = "E-4: " + parseInt(localStorage.getItem("lastCountE-4"));
+    }
+
+    if (localStorage.getItem("lastArriveDate") == null) {
+        localStorage.setItem("lastArriveDate", "");
+        document.getElementById("dateArriveTemp").value = localStorage.getItem("lastArriveDate");
+    }
+    if (localStorage.getItem("lastArriveDate") != null) {
+        document.getElementById("dateArriveTemp").value = localStorage.getItem("lastArriveDate");
+    }
+
+    document.getElementById("trackingNum").focus();
+
+    /* // Get the input field
+    var pressEnter = document.getElementById("trackingNum");
+
+    // Execute a function when the user presses a key on the keyboard
+    pressEnter.addEventListener("keypress", function (event) {
+        // If the user presses the "Enter" key on the keyboard
+        if (event.key === "Enter") {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            document.getElementById("submitButton").click();
+        }
+    }); */
+
+    document.getElementById("submitTN").addEventListener("click", checkTrackingNum);
+
+    function checkTrackingNum() {
         document.getElementById("itemIn").style.display = 'none';
         document.getElementById("trackingnumberarea").style.display = 'none';
         document.getElementById("loading").style.display = 'block';
@@ -7,7 +203,6 @@ function checkTrackingNum(field, autoMove) {
 
         var jobidentitynum = '';
         jobidentitynum = document.getElementById("trackingNum").value;
-        console.log(document.getElementById("trackingNum").value);
         document.getElementById('trackingNum').value = '';
 
         var request = new XMLHttpRequest();
@@ -547,202 +742,6 @@ function checkTrackingNum(field, autoMove) {
         };
         request.send(JSON.stringify(body));
     }
-}
-
-document.addEventListener("DOMContentLoaded", function (event) {
-    document.getElementById("itemIn").style.display = 'none';
-
-    if (localStorage.getItem("lastShelf") == null) {
-        localStorage.setItem("lastShelf", "");
-        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastShelf");
-    }
-    if (localStorage.getItem("lastShelf") != null) {
-        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastShelf");
-    }
-
-    if (localStorage.getItem("lastCountA-1") == null) {
-        localStorage.setItem("lastCountA-1", 0);
-        document.getElementById("lastCountA-1").innerText = "A-1: " + parseInt(localStorage.getItem("lastCountA-1"));
-    }
-    if (localStorage.getItem("lastCountA-1") != null) {
-        document.getElementById("lastCountA-1").innerText = "A-1: " + parseInt(localStorage.getItem("lastCountA-1"));
-    }
-
-    if (localStorage.getItem("lastCountA-2") == null) {
-        localStorage.setItem("lastCountA-2", 0);
-        document.getElementById("lastCountA-2").innerText = "A-2: " + parseInt(localStorage.getItem("lastCountA-2"));
-    }
-    if (localStorage.getItem("lastCountA-2") != null) {
-        document.getElementById("lastCountA-2").innerText = "A-2: " + parseInt(localStorage.getItem("lastCountA-2"));
-    }
-
-    if (localStorage.getItem("lastCountA-3") == null) {
-        localStorage.setItem("lastCountA-3", 0);
-        document.getElementById("lastCountA-3").innerText = "A-3: " + parseInt(localStorage.getItem("lastCountA-3"));
-    }
-    if (localStorage.getItem("lastCountA-3") != null) {
-        document.getElementById("lastCountA-3").innerText = "A-3: " + parseInt(localStorage.getItem("lastCountA-3"));
-    }
-
-    if (localStorage.getItem("lastCountA-4") == null) {
-        localStorage.setItem("lastCountA-4", 0);
-        document.getElementById("lastCountA-4").innerText = "A-4: " + parseInt(localStorage.getItem("lastCountA-4"));
-    }
-    if (localStorage.getItem("lastCountA-4") != null) {
-        document.getElementById("lastCountA-4").innerText = "A-4: " + parseInt(localStorage.getItem("lastCountA-4"));
-    }
-
-    if (localStorage.getItem("lastCountB-1") == null) {
-        localStorage.setItem("lastCountB-1", 0);
-        document.getElementById("lastCountB-1").innerText = "B-1: " + parseInt(localStorage.getItem("lastCountB-1"));
-    }
-    if (localStorage.getItem("lastCountB-1") != null) {
-        document.getElementById("lastCountB-1").innerText = "B-1: " + parseInt(localStorage.getItem("lastCountB-1"));
-    }
-
-    if (localStorage.getItem("lastCountB-2") == null) {
-        localStorage.setItem("lastCountB-2", 0);
-        document.getElementById("lastCountB-2").innerText = "B-2: " + parseInt(localStorage.getItem("lastCountB-2"));
-    }
-    if (localStorage.getItem("lastCountB-2") != null) {
-        document.getElementById("lastCountB-2").innerText = "B-2: " + parseInt(localStorage.getItem("lastCountB-2"));
-    }
-
-    if (localStorage.getItem("lastCountB-3") == null) {
-        localStorage.setItem("lastCountB-3", 0);
-        document.getElementById("lastCountB-3").innerText = "B-3: " + parseInt(localStorage.getItem("lastCountB-3"));
-    }
-    if (localStorage.getItem("lastCountB-3") != null) {
-        document.getElementById("lastCountB-3").innerText = "B-3: " + parseInt(localStorage.getItem("lastCountB-3"));
-    }
-
-    if (localStorage.getItem("lastCountB-4") == null) {
-        localStorage.setItem("lastCountB-4", 0);
-        document.getElementById("lastCountB-4").innerText = "B-4: " + parseInt(localStorage.getItem("lastCountB-4"));
-    }
-    if (localStorage.getItem("lastCountB-4") != null) {
-        document.getElementById("lastCountB-4").innerText = "B-4: " + parseInt(localStorage.getItem("lastCountB-4"));
-    }
-
-    if (localStorage.getItem("lastCountC-1") == null) {
-        localStorage.setItem("lastCountC-1", 0);
-        document.getElementById("lastCountC-1").innerText = "C-1: " + parseInt(localStorage.getItem("lastCountC-1"));
-    }
-    if (localStorage.getItem("lastCountC-1") != null) {
-        document.getElementById("lastCountC-1").innerText = "C-1: " + parseInt(localStorage.getItem("lastCountC-1"));
-    }
-
-    if (localStorage.getItem("lastCountC-2") == null) {
-        localStorage.setItem("lastCountC-2", 0);
-        document.getElementById("lastCountC-2").innerText = "C-2: " + parseInt(localStorage.getItem("lastCountC-2"));
-    }
-    if (localStorage.getItem("lastCountC-2") != null) {
-        document.getElementById("lastCountC-2").innerText = "C-2: " + parseInt(localStorage.getItem("lastCountC-2"));
-    }
-
-    if (localStorage.getItem("lastCountC-3") == null) {
-        localStorage.setItem("lastCountC-3", 0);
-        document.getElementById("lastCountC-3").innerText = "C-3: " + parseInt(localStorage.getItem("lastCountC-3"));
-    }
-    if (localStorage.getItem("lastCountC-3") != null) {
-        document.getElementById("lastCountC-3").innerText = "C-3: " + parseInt(localStorage.getItem("lastCountC-3"));
-    }
-
-    if (localStorage.getItem("lastCountC-4") == null) {
-        localStorage.setItem("lastCountC-4", 0);
-        document.getElementById("lastCountC-4").innerText = "C-4: " + parseInt(localStorage.getItem("lastCountC-4"));
-    }
-    if (localStorage.getItem("lastCountC-4") != null) {
-        document.getElementById("lastCountC-4").innerText = "C-4: " + parseInt(localStorage.getItem("lastCountC-4"));
-    }
-
-    if (localStorage.getItem("lastCountD-1") == null) {
-        localStorage.setItem("lastCountD-1", 0);
-        document.getElementById("lastCountD-1").innerText = "D-1: " + parseInt(localStorage.getItem("lastCountD-1"));
-    }
-    if (localStorage.getItem("lastCountD-1") != null) {
-        document.getElementById("lastCountD-1").innerText = "D-1: " + parseInt(localStorage.getItem("lastCountD-1"));
-    }
-
-    if (localStorage.getItem("lastCountD-2") == null) {
-        localStorage.setItem("lastCountD-2", 0);
-        document.getElementById("lastCountD-2").innerText = "D-2: " + parseInt(localStorage.getItem("lastCountD-2"));
-    }
-    if (localStorage.getItem("lastCountD-2") != null) {
-        document.getElementById("lastCountD-2").innerText = "D-2: " + parseInt(localStorage.getItem("lastCountD-2"));
-    }
-
-    if (localStorage.getItem("lastCountD-3") == null) {
-        localStorage.setItem("lastCountD-3", 0);
-        document.getElementById("lastCountD-3").innerText = "D-3: " + parseInt(localStorage.getItem("lastCountD-3"));
-    }
-    if (localStorage.getItem("lastCountD-3") != null) {
-        document.getElementById("lastCountD-3").innerText = "D-3: " + parseInt(localStorage.getItem("lastCountD-3"));
-    }
-
-    if (localStorage.getItem("lastCountD-4") == null) {
-        localStorage.setItem("lastCountD-4", 0);
-        document.getElementById("lastCountD-4").innerText = "D-4: " + parseInt(localStorage.getItem("lastCountD-4"));
-    }
-    if (localStorage.getItem("lastCountD-4") != null) {
-        document.getElementById("lastCountD-4").innerText = "D-4: " + parseInt(localStorage.getItem("lastCountD-4"));
-    }
-
-    if (localStorage.getItem("lastCountE-1") == null) {
-        localStorage.setItem("lastCountE-1", 0);
-        document.getElementById("lastCountE-1").innerText = "E-1: " + parseInt(localStorage.getItem("lastCountE-1"));
-    }
-    if (localStorage.getItem("lastCountE-1") != null) {
-        document.getElementById("lastCountE-1").innerText = "E-1: " + parseInt(localStorage.getItem("lastCountE-1"));
-    }
-
-    if (localStorage.getItem("lastCountE-2") == null) {
-        localStorage.setItem("lastCountE-2", 0);
-        document.getElementById("lastCountE-2").innerText = "E-2: " + parseInt(localStorage.getItem("lastCountE-2"));
-    }
-    if (localStorage.getItem("lastCountE-2") != null) {
-        document.getElementById("lastCountE-2").innerText = "D-2: " + parseInt(localStorage.getItem("lastCountE-2"));
-    }
-
-    if (localStorage.getItem("lastCountE-3") == null) {
-        localStorage.setItem("lastCountE-3", 0);
-        document.getElementById("lastCountE-3").innerText = "E-3: " + parseInt(localStorage.getItem("lastCountE-3"));
-    }
-    if (localStorage.getItem("lastCountE-3") != null) {
-        document.getElementById("lastCountE-3").innerText = "E-3: " + parseInt(localStorage.getItem("lastCountE-3"));
-    }
-
-    if (localStorage.getItem("lastCountE-4") == null) {
-        localStorage.setItem("lastCountE-4", 0);
-        document.getElementById("lastCountE-4").innerText = "E-4: " + parseInt(localStorage.getItem("lastCountE-4"));
-    }
-    if (localStorage.getItem("lastCountE-4") != null) {
-        document.getElementById("lastCountE-4").innerText = "E-4: " + parseInt(localStorage.getItem("lastCountE-4"));
-    }
-
-    if (localStorage.getItem("lastArriveDate") == null) {
-        localStorage.setItem("lastArriveDate", "");
-        document.getElementById("dateArriveTemp").value = localStorage.getItem("lastArriveDate");
-    }
-    if (localStorage.getItem("lastArriveDate") != null) {
-        document.getElementById("dateArriveTemp").value = localStorage.getItem("lastArriveDate");
-    }
-
-    document.getElementById("trackingNum").focus();
-
-    /* // Get the input field
-    var pressEnter = document.getElementById("trackingNum");
-
-    // Execute a function when the user presses a key on the keyboard
-    pressEnter.addEventListener("keypress", function (event) {
-        // If the user presses the "Enter" key on the keyboard
-        if (event.key === "Enter") {
-            // Cancel the default action, if needed
-            event.preventDefault();
-            // Trigger the button element with a click
-            document.getElementById("submitButton").click();
-        }
-    }); */
 
     document.addEventListener("submit", function (event) {
         event.preventDefault();
