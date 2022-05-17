@@ -1,5 +1,5 @@
 function checkTrackingNum(field, autoMove) {
-    if (field.value.length >= 3) {
+    if (field.value.length >= field.maxLength) {
         document.getElementById("inputAgentArea").style.display = 'none';
         document.getElementById("inputTnArea").style.display = 'none';
         document.getElementById("completeTimeNotice").style.display = 'none';
@@ -11,38 +11,72 @@ function checkTrackingNum(field, autoMove) {
         document.getElementById("trackingNum").value = jobidentitynum;
         document.getElementById('trackingNumber').value = '';
 
-        var today = new Date();
-        var todayDate = "";
-        var todayMonth = "";
+        var request = new XMLHttpRequest();
+        request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
+        request.setRequestHeader('Content-Type', 'application/json');
 
-        var nextMonth = (today.getMonth()) + 1;
+        request.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                console.log('Status:', this.status);
+                console.log('Headers:', this.getAllResponseHeaders());
+                console.log('Body:', this.responseText);
 
-        if (today.getDate() < 10) {
-            todayDate = "0" + (today.getDate());
-        }
+                responsejd = this.responseText;
+                json_responsejd = JSON.parse(responsejd);
 
-        if (today.getDate() >= 10) {
-            todayDate = (today.getDate());
-        }
+                if (json_responsejd.status != 404) {
+                    var today = new Date();
+                    var todayDate = "";
+                    var todayMonth = "";
 
-        if (nextMonth < 10) {
-            todayMonth = "0" + (nextMonth);
-        }
+                    var nextMonth = (today.getMonth()) + 1;
 
-        if (nextMonth >= 10) {
-            todayMonth = (nextMonth);
-        }
+                    if (today.getDate() < 10) {
+                        todayDate = "0" + (today.getDate());
+                    }
 
-        var date = today.getFullYear() + '-' + todayMonth + '-' + todayDate;
-        var time = "01:00:00";
-        var timeClose = "23:00:00";
-        document.getElementById("dateTime").value = date + ' ' + time;
-        document.getElementById("dateTimeClose").value = date + ' ' + timeClose;
+                    if (today.getDate() >= 10) {
+                        todayDate = (today.getDate());
+                    }
 
-        document.getElementById("agentName").value = document.getElementById("agentTemp").value;
+                    if (nextMonth < 10) {
+                        todayMonth = "0" + (nextMonth);
+                    }
 
-        localStorage.setItem("lastAgent", document.getElementById("agentName").value);
-        document.getElementById("itemOut").submit();
+                    if (nextMonth >= 10) {
+                        todayMonth = (nextMonth);
+                    }
+
+                    var date = today.getFullYear() + '-' + todayMonth + '-' + todayDate;
+                    var time = "01:00:00";
+                    var timeClose = "23:00:00";
+                    document.getElementById("dateTime").value = date + ' ' + time;
+                    document.getElementById("dateTimeClose").value = date + ' ' + timeClose;
+
+                    document.getElementById("agentName").value = document.getElementById("agentTemp").value;
+
+                    localStorage.setItem("lastAgent", document.getElementById("agentName").value);
+                    document.getElementById("itemOut").submit();
+                }
+
+                if (json_responsejd.status == 404) {
+                    document.getElementById("inputAgentArea").style.display = 'block';
+                    document.getElementById("inputTnArea").style.display = 'block';
+                    document.getElementById("completeTimeNotice").style.display = 'block';
+                    document.getElementById("loading").style.display = 'none';
+                    document.getElementById("wronginput").style.display = 'block';
+
+                    document.getElementById("trackingNumber").focus();
+                }
+            }
+        };
+
+        var body = {
+            'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+            'job_ids': [jobidentitynum],
+            'include_task_history': 0
+        };
+        request.send(JSON.stringify(body));
     }
 }
 
