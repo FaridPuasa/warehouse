@@ -229,10 +229,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     document.getElementById("address").value = json_responsejd.data[0].job_address;
                     document.getElementById("contact").value = json_responsejd.data[0].customer_phone;
                     document.getElementById("value").value = json_responsejd.data[0].job_description;
-                    document.getElementById("malTrackingNum").value = json_responsejd.data[0].order_id;
+                    document.getElementById("grpTrack").value = json_responsejd.data[0].order_id;
 
                     document.getElementById("dateArrive").value = document.getElementById("dateArriveTemp").value;
                     document.getElementById("area").value = document.getElementById("areaCodeTemp").value;
+                    document.getElementById("note").value = document.getElementById("noteTemp").value;
 
                     var areaTemp = document.getElementById("area").value;
 
@@ -731,6 +732,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     document.getElementById("itemIn").style.display = 'none';
                     document.getElementById("wronginput").style.display = 'block';
                     document.getElementById("trackingnumberarea").style.display = 'block';
+
+                    document.getElementById("trackingNum").focus();
                 }
             }
         };
