@@ -523,7 +523,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             document.getElementById("agent").value = document.getElementById("agentTemp").value;
             document.getElementById("parcel").value = "Temporary Parcel Number";
             document.getElementById("type").value = "Temporary Agent Class";
-            document.getElementById("product").value = document.getElementById("formMETHOD").value;
 
             if (document.getElementById("agentTemp").value == "994634") {
                 document.getElementById("agentName").value = "FD SOWDEQ";
