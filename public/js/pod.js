@@ -149,6 +149,12 @@ function checkTrackingNum(field, autoMove) {
                             var row_2_data_7 = document.createElement('td');
                             row_2_data_7.innerHTML = json_responsetn.data[0].customer_phone;
                             var row_2_data_8 = document.createElement('td');
+
+                            if (json_responsetn.data[0].job_description.includes('Standard') || json_responsetn.data[0].job_description.includes('Express')) {
+
+                            }
+
+
                             row_2_data_8.innerHTML = "$" + json_responsetn.data[0].job_description;
                             var row_2_data_9 = document.createElement('td');
                             var row_2_data_10 = document.createElement('td');
@@ -654,6 +660,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
             if (document.getElementById("agentTemp").value == "1354438") {
                 document.getElementById("agentName").value = "EFR ERMA";
+            }
+
+            if (document.getElementById("agentTemp").value == "1138696") {
+                document.getElementById("agentName").value = "IFR NISA";
+            }
+
+            if (document.getElementById("agentTemp").value == "1339173") {
+                document.getElementById("agentName").value = "IFR FATHIN";
             }
 
             if (document.getElementById("agentTemp").value == "1003154") {
