@@ -59,10 +59,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }
 
                 if (json_responsejd.status == 404) {
+                    document.getElementById("inputCSArea").style.display = 'block';
+                    document.getElementById("inputTnArea").style.display = 'block';
                     document.getElementById("loading").style.display = 'none';
-                    document.getElementById("selfCollect").style.display = 'none';
                     document.getElementById("wronginput").style.display = 'block';
-                    document.getElementById("trackingnumberarea").style.display = 'block';
                 }
             }
         };
