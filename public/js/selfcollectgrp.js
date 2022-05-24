@@ -1,5 +1,13 @@
-function checkTrackingNum(field, autoMove) {
-    if (field.value.length >= field.maxLength) {
+document.addEventListener("DOMContentLoaded", function (event) {
+    // Retrieve
+    document.getElementById("csNameTemp").value = localStorage.getItem("lastCS");
+    document.getElementById("loading").style.display = 'none';
+    document.getElementById("wronginput").style.display = 'none';
+    document.getElementById("trackingNumber").focus();
+
+    document.getElementById("submitTN").addEventListener("click", checkTrackingNum);
+
+    function checkTrackingNum() {
         document.getElementById("inputCSArea").style.display = 'none';
         document.getElementById("inputTnArea").style.display = 'none';
         document.getElementById("loading").style.display = 'block';
@@ -66,12 +74,4 @@ function checkTrackingNum(field, autoMove) {
         };
         request.send(JSON.stringify(body));
     }
-}
-
-document.addEventListener("DOMContentLoaded", function (event) {
-    // Retrieve
-    document.getElementById("csNameTemp").value = localStorage.getItem("lastCS");
-    document.getElementById("loading").style.display = 'none';
-    document.getElementById("wronginput").style.display = 'none';
-    document.getElementById("trackingNumber").focus();
 });
