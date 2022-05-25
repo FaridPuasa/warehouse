@@ -1,32 +1,271 @@
-let countTN = 1;
-let createTable = 0;
-let endLoop = 0;
-let countContent = 0;
-let checkDuplicate = 0;
+document.addEventListener("DOMContentLoaded", function (event) {
+    document.getElementById("podArea").style.display = 'none';
+    document.getElementById("trackingNumberDetailsArea").style.display = 'none';
+    document.getElementById("inputTnArea").style.display = 'none';
+    document.getElementById("excelDbArea").style.display = 'none';
+    document.getElementById("loading").style.display = 'none';
+    document.getElementById("wronginput").style.display = 'none';
 
-var responsetn = '';
-var json_responsetn = '';
+    document.getElementById("submitPodInfoButton").addEventListener("click", createPODTemplate);
+    document.getElementById("submitTN").addEventListener("click", checkTrackingNum);
+    document.getElementById("donePodButton").addEventListener("click", donePod);
+    document.getElementById("scanAgain").addEventListener("click", scanAgain);
+    document.getElementById("printPOD").addEventListener("click", printPOD);
+    /* document.getElementById("deleteRow").addEventListener("click", deleteRow); */
 
-const trackingNumA = [];
+    let countTN = 1;
+    let createTable = 0;
+    let endLoop = 0;
+    let countContent = 0;
+    let checkDuplicate = 0;
 
-//create table
-let table = document.createElement('table');
-table.setAttribute("id", "tasklisttable");
-table.setAttribute("border", "1");
-table.setAttribute('contenteditable', true);
-table.className = "table table-striped table-hover table-bordered table-responsive";
-let thead = document.createElement('thead');
-let tbody = document.createElement('tbody');
-tbody.setAttribute('name', 'contents')
+    var responsetn = '';
+    var json_responsetn = '';
 
-table.appendChild(thead);
-table.appendChild(tbody);
+    const trackingNumA = [];
 
-document.getElementById('tasklist').appendChild(table);
+    //create table
+    let table = document.createElement('table');
+    table.setAttribute("id", "tasklisttable");
+    table.setAttribute("border", "1");
+    table.setAttribute('contenteditable', true);
+    table.className = "table table-striped table-hover table-bordered table-responsive";
+    let thead = document.createElement('thead');
+    let tbody = document.createElement('tbody');
+    tbody.setAttribute('name', 'contents')
 
-function checkTrackingNum(field, autoMove) {
-    endLoop = 0;
-    if (field.value.length >= field.maxLength) {
+    table.appendChild(thead);
+    table.appendChild(tbody);
+
+    document.getElementById('tasklist').appendChild(table);
+
+    function createPODTemplate() {
+
+        if ($("#productTemp").val().length == 0) {
+            alert("Please do not leave the POD type field empty!");
+        }
+
+        if ($("#podDateTemp").val().length == 0) {
+            alert("Please do not leave the Date of POD field empty!");
+        }
+
+        if ($("#completionDateTemp").val().length == 0) {
+            alert("Please do not leave the Date of Completion field empty!");
+        }
+
+        if ($("#areaCodeTemp").val().length == 0) {
+            alert("Please do not leave the Area field empty!");
+        }
+
+        if ($("#podDoneByTemp").val().length == 0) {
+            alert("Please do not leave the POD done field empty!");
+        }
+
+        if ($("#agentTemp").val().length == 0) {
+            alert("Please do not leave the Agent field empty!");
+        }
+
+        if (($("#productTemp").val().length != 0) && ($("#podDateTemp").val().length != 0) && ($("#completionDateTemp").val().length != 0)
+            && ($("#areaCodeTemp").val().length != 0) && ($("#podDoneByTemp").val().length != 0)
+            && ($("#agentTemp").val().length != 0)) {
+
+            document.getElementById("product").value = document.getElementById("productTemp").value;
+            document.getElementById("dateCreate").value = document.getElementById("podDateTemp").value;
+            document.getElementById("dateAssign").value = document.getElementById("completionDateTemp").value;
+            document.getElementById("value").value = "$ N/A";
+            document.getElementById("areaCode").value = document.getElementById("areaCodeTemp").value;
+            document.getElementById("madeBy").value = document.getElementById("podDoneByTemp").value;
+            document.getElementById("agent").value = document.getElementById("agentTemp").value;
+            document.getElementById("parcel").value = "Temporary Parcel Number";
+            document.getElementById("type").value = "Temporary Agent Class";
+
+            if (document.getElementById("agentTemp").value == "994634") {
+                document.getElementById("agentName").value = "FD SOWDEQ";
+            }
+
+            if (document.getElementById("agentTemp").value == "997381") {
+                document.getElementById("agentName").value = "FD RAHIM";
+            }
+
+            if (document.getElementById("agentTemp").value == "1029275") {
+                document.getElementById("agentName").value = "FD AIMI";
+            }
+
+            if (document.getElementById("agentTemp").value == "1050947") {
+                document.getElementById("agentName").value = "FD HASBUL";
+            }
+
+            if (document.getElementById("agentTemp").value == "1071388") {
+                document.getElementById("agentName").value = "FD FADARUS";
+            }
+
+            if (document.getElementById("agentTemp").value == "1079095") {
+                document.getElementById("agentName").value = "FD HAMIDIN";
+            }
+
+            if (document.getElementById("agentTemp").value == "1113078") {
+                document.getElementById("agentName").value = "FD HANAFI";
+            }
+
+            if (document.getElementById("agentTemp").value == "1230427") {
+                document.getElementById("agentName").value = "FD FAEZ";
+            }
+
+            if (document.getElementById("agentTemp").value == "1254189") {
+                document.getElementById("agentName").value = "FDZUL";
+            }
+
+            if (document.getElementById("agentTemp").value == "1130495") {
+                document.getElementById("agentName").value = "EFR HAJID";
+            }
+
+            if (document.getElementById("agentTemp").value == "1130524") {
+                document.getElementById("agentName").value = "EFR FAKHRIAH";
+            }
+
+            if (document.getElementById("agentTemp").value == "1268554") {
+                document.getElementById("agentName").value = "EFR GHAFUR";
+            }
+
+            if (document.getElementById("agentTemp").value == "1106491") {
+                document.getElementById("agentName").value = "EFR RASHID";
+            }
+
+            if (document.getElementById("agentTemp").value == "1105549") {
+                document.getElementById("agentName").value = "EFR NAZRY";
+            }
+
+            if (document.getElementById("agentTemp").value == "1124160") {
+                document.getElementById("agentName").value = "EFR HANIZAN";
+            }
+
+            if (document.getElementById("agentTemp").value == "996642") {
+                document.getElementById("agentName").value = "IFR ZIZAH";
+            }
+
+            if (document.getElementById("agentTemp").value == "977110") {
+                document.getElementById("agentName").value = "IFR NAN";
+            }
+
+            if (document.getElementById("agentTemp").value == "1268557") {
+                document.getElementById("agentName").value = "EFR KHAIRUL";
+            }
+
+            if (document.getElementById("agentTemp").value == "1311747") {
+                document.getElementById("agentName").value = "FD IQBAL";
+            }
+
+            if (document.getElementById("agentTemp").value == "1166672") {
+                document.getElementById("agentName").value = "FD AZRI";
+            }
+
+            if (document.getElementById("agentTemp").value == "1290342") {
+                document.getElementById("agentName").value = "IFR UMAR";
+            }
+
+            if (document.getElementById("agentTemp").value == "1276415") {
+                document.getElementById("agentName").value = "IFR ZUDIN";
+            }
+
+            if (document.getElementById("agentTemp").value == "1295953") {
+                document.getElementById("agentName").value = "EFR ROSMAWATI";
+            }
+
+            if (document.getElementById("agentTemp").value == "1104714") {
+                document.getElementById("agentName").value = "IFR AQEELAH";
+            }
+
+            if (document.getElementById("agentTemp").value == "1303254") {
+                document.getElementById("agentName").value = "FD HAFIZ";
+            }
+
+            if (document.getElementById("agentTemp").value == "1140555") {
+                document.getElementById("agentName").value = "EFR ASIKIN";
+            }
+
+            if (document.getElementById("agentTemp").value == "1359048") {
+                document.getElementById("agentName").value = "FD SAIFUDDIN";
+            }
+
+            if (document.getElementById("agentTemp").value == "1358816") {
+                document.getElementById("agentName").value = "FD AMIN";
+            }
+
+            if (document.getElementById("agentTemp").value == "1354406") {
+                document.getElementById("agentName").value = "EFR ISMADY";
+            }
+
+            if (document.getElementById("agentTemp").value == "1362520") {
+                document.getElementById("agentName").value = "EFR AMALIA";
+            }
+
+            if (document.getElementById("agentTemp").value == "1352241") {
+                document.getElementById("agentName").value = "EFR HAFIZ";
+            }
+
+            if (document.getElementById("agentTemp").value == "1358835") {
+                document.getElementById("agentName").value = "EFR MDAMY";
+            }
+
+            if (document.getElementById("agentTemp").value == "1354438") {
+                document.getElementById("agentName").value = "EFR ERMA";
+            }
+
+            if (document.getElementById("agentTemp").value == "1138696") {
+                document.getElementById("agentName").value = "IFR NISA";
+            }
+
+            if (document.getElementById("agentTemp").value == "1339173") {
+                document.getElementById("agentName").value = "IFR FATHIN";
+            }
+
+            if (document.getElementById("agentTemp").value == "1368849") {
+                document.getElementById("agentName").value = "IFR KEE";
+            }
+
+            if (document.getElementById("agentTemp").value == "1003154") {
+                document.getElementById("agentName").value = "IFR DYLAN";
+            }
+
+            var today = new Date();
+            var todayDate = "";
+            var todayMonth = "";
+
+            var nextMonth = (today.getMonth()) + 1;
+
+            if (today.getDate() < 10) {
+                todayDate = "0" + (today.getDate());
+            }
+
+            if (today.getDate() >= 10) {
+                todayDate = (today.getDate());
+            }
+
+            if (nextMonth < 10) {
+                todayMonth = "0" + (nextMonth);
+            }
+
+            if (nextMonth >= 10) {
+                todayMonth = (nextMonth);
+            }
+
+            var date = today.getFullYear() + '-' + todayMonth + '-' + todayDate;
+            var time = "01:00:00";
+            var timeClose = "23:00:00";
+            document.getElementById("dateTime").value = date + ' ' + time;
+            document.getElementById("dateTimeClose").value = document.getElementById("dateAssign").value + ' ' + timeClose;
+
+            document.getElementById("podInfoArea").style.display = 'none';
+            document.getElementById("podArea").style.display = 'block';
+            document.getElementById("inputTnArea").style.display = 'block';
+
+            document.getElementById("trackingNumber").focus();
+        }
+    }
+
+    function checkTrackingNum() {
+        endLoop = 0;
+
         document.getElementById("inputTnArea").style.display = 'none';
         document.getElementById("wronginput").style.display = 'none';
         document.getElementById("duplicateinput").style.display = 'none';
@@ -466,245 +705,6 @@ function checkTrackingNum(field, autoMove) {
             document.getElementById("duplicateinput").style.display = 'block';
 
             checkDuplicate = 0;
-        }
-    }
-}
-
-document.addEventListener("DOMContentLoaded", function (event) {
-    document.getElementById("podArea").style.display = 'none';
-    document.getElementById("trackingNumberDetailsArea").style.display = 'none';
-    document.getElementById("inputTnArea").style.display = 'none';
-    document.getElementById("excelDbArea").style.display = 'none';
-    document.getElementById("loading").style.display = 'none';
-    document.getElementById("wronginput").style.display = 'none';
-
-    document.getElementById("submitPodInfoButton").addEventListener("click", createPODTemplate);
-    document.getElementById("donePodButton").addEventListener("click", donePod);
-    document.getElementById("scanAgain").addEventListener("click", scanAgain);
-    document.getElementById("printPOD").addEventListener("click", printPOD);
-    /* document.getElementById("deleteRow").addEventListener("click", deleteRow); */
-
-    function createPODTemplate() {
-
-        if ($("#productTemp").val().length == 0) {
-            alert("Please do not leave the POD type field empty!");
-        }
-
-        if ($("#podDateTemp").val().length == 0) {
-            alert("Please do not leave the Date of POD field empty!");
-        }
-
-        if ($("#completionDateTemp").val().length == 0) {
-            alert("Please do not leave the Date of Completion field empty!");
-        }
-
-        if ($("#areaCodeTemp").val().length == 0) {
-            alert("Please do not leave the Area field empty!");
-        }
-
-        if ($("#podDoneByTemp").val().length == 0) {
-            alert("Please do not leave the POD done field empty!");
-        }
-
-        if ($("#agentTemp").val().length == 0) {
-            alert("Please do not leave the Agent field empty!");
-        }
-
-        if (($("#productTemp").val().length != 0) && ($("#podDateTemp").val().length != 0) && ($("#completionDateTemp").val().length != 0)
-            && ($("#areaCodeTemp").val().length != 0) && ($("#podDoneByTemp").val().length != 0)
-            && ($("#agentTemp").val().length != 0)) {
-
-            document.getElementById("product").value = document.getElementById("productTemp").value;
-            document.getElementById("dateCreate").value = document.getElementById("podDateTemp").value;
-            document.getElementById("dateAssign").value = document.getElementById("completionDateTemp").value;
-            document.getElementById("value").value = "$ N/A";
-            document.getElementById("areaCode").value = document.getElementById("areaCodeTemp").value;
-            document.getElementById("madeBy").value = document.getElementById("podDoneByTemp").value;
-            document.getElementById("agent").value = document.getElementById("agentTemp").value;
-            document.getElementById("parcel").value = "Temporary Parcel Number";
-            document.getElementById("type").value = "Temporary Agent Class";
-
-            if (document.getElementById("agentTemp").value == "994634") {
-                document.getElementById("agentName").value = "FD SOWDEQ";
-            }
-
-            if (document.getElementById("agentTemp").value == "997381") {
-                document.getElementById("agentName").value = "FD RAHIM";
-            }
-
-            if (document.getElementById("agentTemp").value == "1029275") {
-                document.getElementById("agentName").value = "FD AIMI";
-            }
-
-            if (document.getElementById("agentTemp").value == "1050947") {
-                document.getElementById("agentName").value = "FD HASBUL";
-            }
-
-            if (document.getElementById("agentTemp").value == "1071388") {
-                document.getElementById("agentName").value = "FD FADARUS";
-            }
-
-            if (document.getElementById("agentTemp").value == "1079095") {
-                document.getElementById("agentName").value = "FD HAMIDIN";
-            }
-
-            if (document.getElementById("agentTemp").value == "1113078") {
-                document.getElementById("agentName").value = "FD HANAFI";
-            }
-
-            if (document.getElementById("agentTemp").value == "1230427") {
-                document.getElementById("agentName").value = "FD FAEZ";
-            }
-
-            if (document.getElementById("agentTemp").value == "1254189") {
-                document.getElementById("agentName").value = "FDZUL";
-            }
-
-            if (document.getElementById("agentTemp").value == "1130495") {
-                document.getElementById("agentName").value = "EFR HAJID";
-            }
-
-            if (document.getElementById("agentTemp").value == "1130524") {
-                document.getElementById("agentName").value = "EFR FAKHRIAH";
-            }
-
-            if (document.getElementById("agentTemp").value == "1268554") {
-                document.getElementById("agentName").value = "EFR GHAFUR";
-            }
-
-            if (document.getElementById("agentTemp").value == "1106491") {
-                document.getElementById("agentName").value = "EFR RASHID";
-            }
-
-            if (document.getElementById("agentTemp").value == "1105549") {
-                document.getElementById("agentName").value = "EFR NAZRY";
-            }
-
-            if (document.getElementById("agentTemp").value == "1124160") {
-                document.getElementById("agentName").value = "EFR HANIZAN";
-            }
-
-            if (document.getElementById("agentTemp").value == "996642") {
-                document.getElementById("agentName").value = "IFR ZIZAH";
-            }
-
-            if (document.getElementById("agentTemp").value == "977110") {
-                document.getElementById("agentName").value = "IFR NAN";
-            }
-
-            if (document.getElementById("agentTemp").value == "1268557") {
-                document.getElementById("agentName").value = "EFR KHAIRUL";
-            }
-
-            if (document.getElementById("agentTemp").value == "1311747") {
-                document.getElementById("agentName").value = "FD IQBAL";
-            }
-
-            if (document.getElementById("agentTemp").value == "1166672") {
-                document.getElementById("agentName").value = "FD AZRI";
-            }
-
-            if (document.getElementById("agentTemp").value == "1290342") {
-                document.getElementById("agentName").value = "IFR UMAR";
-            }
-
-            if (document.getElementById("agentTemp").value == "1276415") {
-                document.getElementById("agentName").value = "IFR ZUDIN";
-            }
-
-            if (document.getElementById("agentTemp").value == "1295953") {
-                document.getElementById("agentName").value = "EFR ROSMAWATI";
-            }
-
-            if (document.getElementById("agentTemp").value == "1104714") {
-                document.getElementById("agentName").value = "IFR AQEELAH";
-            }
-
-            if (document.getElementById("agentTemp").value == "1303254") {
-                document.getElementById("agentName").value = "FD HAFIZ";
-            }
-
-            if (document.getElementById("agentTemp").value == "1140555") {
-                document.getElementById("agentName").value = "EFR ASIKIN";
-            }
-
-            if (document.getElementById("agentTemp").value == "1359048") {
-                document.getElementById("agentName").value = "FD SAIFUDDIN";
-            }
-
-            if (document.getElementById("agentTemp").value == "1358816") {
-                document.getElementById("agentName").value = "FD AMIN";
-            }
-
-            if (document.getElementById("agentTemp").value == "1354406") {
-                document.getElementById("agentName").value = "EFR ISMADY";
-            }
-
-            if (document.getElementById("agentTemp").value == "1362520") {
-                document.getElementById("agentName").value = "EFR AMALIA";
-            }
-
-            if (document.getElementById("agentTemp").value == "1352241") {
-                document.getElementById("agentName").value = "EFR HAFIZ";
-            }
-
-            if (document.getElementById("agentTemp").value == "1358835") {
-                document.getElementById("agentName").value = "EFR MDAMY";
-            }
-
-            if (document.getElementById("agentTemp").value == "1354438") {
-                document.getElementById("agentName").value = "EFR ERMA";
-            }
-
-            if (document.getElementById("agentTemp").value == "1138696") {
-                document.getElementById("agentName").value = "IFR NISA";
-            }
-
-            if (document.getElementById("agentTemp").value == "1339173") {
-                document.getElementById("agentName").value = "IFR FATHIN";
-            }
-
-            if (document.getElementById("agentTemp").value == "1368849") {
-                document.getElementById("agentName").value = "IFR KEE";
-            }
-
-            if (document.getElementById("agentTemp").value == "1003154") {
-                document.getElementById("agentName").value = "IFR DYLAN";
-            }
-
-            var today = new Date();
-            var todayDate = "";
-            var todayMonth = "";
-
-            var nextMonth = (today.getMonth()) + 1;
-
-            if (today.getDate() < 10) {
-                todayDate = "0" + (today.getDate());
-            }
-
-            if (today.getDate() >= 10) {
-                todayDate = (today.getDate());
-            }
-
-            if (nextMonth < 10) {
-                todayMonth = "0" + (nextMonth);
-            }
-
-            if (nextMonth >= 10) {
-                todayMonth = (nextMonth);
-            }
-
-            var date = today.getFullYear() + '-' + todayMonth + '-' + todayDate;
-            var time = "01:00:00";
-            var timeClose = "23:00:00";
-            document.getElementById("dateTime").value = date + ' ' + time;
-            document.getElementById("dateTimeClose").value = document.getElementById("dateAssign").value + ' ' + timeClose;
-
-            document.getElementById("podInfoArea").style.display = 'none';
-            document.getElementById("podArea").style.display = 'block';
-            document.getElementById("inputTnArea").style.display = 'block';
-
-            document.getElementById("trackingNumber").focus();
         }
     }
 
