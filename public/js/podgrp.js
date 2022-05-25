@@ -485,7 +485,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                                 document.getElementById("loading").style.display = 'none';
                                                 document.getElementById("inputTnArea").style.display = 'block';
 
-                                                document.getElementById(autoMove).focus();
+                                                document.getElementById("trackingNumber").focus();
                                             }
                                         };
 
@@ -661,7 +661,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                                 document.getElementById("loading").style.display = 'none';
                                                 document.getElementById("inputTnArea").style.display = 'block';
 
-                                                document.getElementById(autoMove).focus();
+                                                document.getElementById("trackingNumber").focus();
                                             }
                                         };
 
