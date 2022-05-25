@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 json_responsejd = JSON.parse(responsejd);
 
                 if (json_responsejd.status != 404) {
-                    request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
+                    request.open('POST', 'https://api.tookanapp.com/v2/assign_fleet_to_task');
                     request.setRequestHeader('Content-Type', 'application/json');
 
                     request.onreadystatechange = function () {
@@ -50,9 +50,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                     var body = {
                         'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
+                        'merchant_id': 1180025,
                         'job_id': json_responsejd.data[0].job_id,
+                        'team_id': 921691,
                         'fleet_id': document.getElementById("csName").value,
-                        'team_id': '921691',
                         'job_status': '2'
                     };
                     request.send(JSON.stringify(body));

@@ -284,7 +284,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             if ((countTN == 1) && (createTable == 0)) {
 
                 var request = new XMLHttpRequest();
-                request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
+                request.open('POST', 'https://api.tookanapp.com/v2/get_job_details_by_order_id');
                 request.setRequestHeader('Content-Type', 'application/json');
 
                 request.onreadystatechange = function () {
@@ -458,7 +458,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             var assignDateTimeToTask = 0;
 
                             if (assignTaskToAgent == 0) {
-                                request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
+                                request.open('POST', 'https://api.tookanapp.com/v2/assign_fleet_to_task');
                                 request.setRequestHeader('Content-Type', 'application/json');
 
                                 request.onreadystatechange = function () {
@@ -466,6 +466,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         console.log('Status:', this.status);
                                         console.log('Headers:', this.getAllResponseHeaders());
                                         console.log('Body:', this.responseText);
+
+                                        responsejd = this.responseText;
+                                        json_responsejd = JSON.parse(responsejd);
 
                                         request.open('POST', 'https://api.tookanapp.com/v2/change_job_date');
                                         request.setRequestHeader('Content-Type', 'application/json');
@@ -487,8 +490,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         };
 
                                         var body = {
-                                            'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                                            "job_ids": [document.getElementById("trackingNumber").value],
+                                            'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
+                                            "job_ids": [json_responsejd.data[0].job_id],
                                             'layout_type': 0,
                                             'start_time': document.getElementById("dateTime").value,
                                             'end_time': document.getElementById("dateTimeClose").value
@@ -500,8 +503,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 };
 
                                 var body = {
-                                    'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                                    'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
+                                    'merchant_id': 1180025,
                                     'job_id': document.getElementById("trackingNumber").value,
+                                    'team_id': 921691,
                                     'fleet_id': document.getElementById("agent").value,
                                     'job_status': '0'
                                 };
@@ -519,8 +524,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 };
 
                 var body = {
-                    'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                    'job_ids': [document.getElementById("trackingNumber").value.trim()],
+                    'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
+                    'order_ids': [document.getElementById("trackingNumber").value.trim()],
                     'include_task_history': 1
                 };
                 request.send(JSON.stringify(body));
@@ -529,7 +534,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             if ((countTN > 1) && (createTable > 0)) {
 
                 var request = new XMLHttpRequest();
-                request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
+                request.open('POST', 'https://api.tookanapp.com/v2/get_job_details_by_order_id');
                 request.setRequestHeader('Content-Type', 'application/json');
 
                 request.onreadystatechange = function () {
@@ -629,7 +634,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             var assignDateTimeToTask = 0;
 
                             if (assignTaskToAgent == 0) {
-                                request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
+                                request.open('POST', 'https://api.tookanapp.com/v2/assign_fleet_to_task');
                                 request.setRequestHeader('Content-Type', 'application/json');
 
                                 request.onreadystatechange = function () {
@@ -637,6 +642,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         console.log('Status:', this.status);
                                         console.log('Headers:', this.getAllResponseHeaders());
                                         console.log('Body:', this.responseText);
+
+                                        responsejd = this.responseText;
+                                        json_responsejd = JSON.parse(responsejd);
 
                                         request.open('POST', 'https://api.tookanapp.com/v2/change_job_date');
                                         request.setRequestHeader('Content-Type', 'application/json');
@@ -658,8 +666,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         };
 
                                         var body = {
-                                            'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                                            "job_ids": [document.getElementById("trackingNumber").value],
+                                            'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
+                                            "job_ids": [json_responsejd.data[0].job_id],
                                             'layout_type': 0,
                                             'start_time': document.getElementById("dateTime").value,
                                             'end_time': document.getElementById("dateTimeClose").value
@@ -671,8 +679,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 };
 
                                 var body = {
-                                    'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                                    'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
+                                    'merchant_id': 1180025,
                                     'job_id': document.getElementById("trackingNumber").value,
+                                    'team_id': 921691,
                                     'fleet_id': document.getElementById("agent").value,
                                     'job_status': '0'
                                 };
@@ -690,8 +700,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 };
 
                 var body = {
-                    'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                    'job_ids': [document.getElementById("trackingNumber").value.trim()],
+                    'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
+                    'order_ids': [document.getElementById("trackingNumber").value.trim()],
                     'include_task_history': 1
                 };
                 request.send(JSON.stringify(body));
