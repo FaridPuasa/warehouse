@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         var jobidentitynum = '';
         jobidentitynum = document.getElementById("trackingNumber").value;
-        document.getElementById("trackingNum").value = jobidentitynum;
         document.getElementById('trackingNumber').value = '';
 
         var request = new XMLHttpRequest();
@@ -68,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     document.getElementById("dateTimeClose").value = date + ' ' + timeClose;
 
                     document.getElementById("agentName").value = document.getElementById("agentTemp").value;
+                    document.getElementById("trackingNum").value = json_responsejd.data[0].job_id;
 
                     localStorage.setItem("lastAgent", document.getElementById("agentName").value);
                     document.getElementById("itemOut").submit();

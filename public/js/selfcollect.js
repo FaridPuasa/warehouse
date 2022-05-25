@@ -10,7 +10,17 @@ function checkTrackingNum(field, autoMove) {
         document.getElementById("trackingNum").value = jobidentitynum;
         document.getElementById('trackingNumber').value = '';
 
-        document.getElementById("csName").value = document.getElementById("csNameTemp").value;
+        if (document.getElementById("csNameTemp").value == "1138696") {
+            document.getElementById("csName").value = "CS NISA";
+        }
+
+        if (document.getElementById("csNameTemp").value == "1339173") {
+            document.getElementById("csName").value = "CS FATHIN";
+        }
+
+        if (document.getElementById("csNameTemp").value == "1368849") {
+            document.getElementById("csName").value = "CS KEE";
+        }
 
         var request = new XMLHttpRequest();
         request.open('POST', 'https://api.tookanapp.com/v2/get_job_details');
@@ -35,7 +45,7 @@ function checkTrackingNum(field, autoMove) {
                             console.log('Headers:', this.getAllResponseHeaders());
                             console.log('Body:', this.responseText);
 
-                            localStorage.setItem("lastCS", document.getElementById("csName").value);
+                            localStorage.setItem("lastCS", document.getElementById("csNameTemp").value);
                             document.getElementById("selfCollect").submit();
                         }
                     };
@@ -43,7 +53,7 @@ function checkTrackingNum(field, autoMove) {
                     var body = {
                         'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
                         'job_id': document.getElementById("trackingNum").value,
-                        'fleet_id': document.getElementById("csName").value,
+                        'fleet_id': document.getElementById("csNameTemp").value,
                         'job_status': '2'
                     };
                     request.send(JSON.stringify(body));

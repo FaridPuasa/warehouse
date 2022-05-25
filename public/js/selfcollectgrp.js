@@ -15,10 +15,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         var jobidentitynum = '';
         jobidentitynum = document.getElementById("trackingNumber").value;
-        document.getElementById("trackingNum").value = jobidentitynum;
         document.getElementById('trackingNumber').value = '';
 
-        document.getElementById("csName").value = document.getElementById("csNameTemp").value;
+        if (document.getElementById("csNameTemp").value == "1138696") {
+            document.getElementById("csName").value = "CS NISA";
+        }
+
+        if (document.getElementById("csNameTemp").value == "1339173") {
+            document.getElementById("csName").value = "CS FATHIN";
+        }
+
+        if (document.getElementById("csNameTemp").value == "1368849") {
+            document.getElementById("csName").value = "CS KEE";
+        }
 
         var request = new XMLHttpRequest();
         request.open('POST', 'https://api.tookanapp.com/v2/get_job_details_by_order_id');
@@ -43,7 +52,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             console.log('Headers:', this.getAllResponseHeaders());
                             console.log('Body:', this.responseText);
 
-                            localStorage.setItem("lastCS", document.getElementById("csName").value);
+                            document.getElementById("trackingNum").value = json_responsejd.data[0].job_id;
+
+                            localStorage.setItem("lastCS", document.getElementById("csNameTemp").value);
                             document.getElementById("selfCollect").submit();
                         }
                     };
@@ -53,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         'merchant_id': 1180025,
                         'job_id': json_responsejd.data[0].job_id,
                         'team_id': 921691,
-                        'fleet_id': document.getElementById("csName").value,
+                        'fleet_id': document.getElementById("csNameTemp").value,
                         'job_status': '2'
                     };
                     request.send(JSON.stringify(body));
