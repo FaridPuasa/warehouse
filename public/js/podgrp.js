@@ -491,7 +491,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                                         var body = {
                                             'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
-                                            "job_ids": [json_responsejd.data[0].job_id],
+                                            "job_ids": [json_responsetn.data[0].job_id],
                                             'layout_type': 0,
                                             'start_time': document.getElementById("dateTime").value,
                                             'end_time': document.getElementById("dateTimeClose").value
@@ -505,7 +505,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 var body = {
                                     'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
                                     'merchant_id': 1180025,
-                                    'job_id': document.getElementById("trackingNumber").value,
+                                    'job_id': json_responsetn.data[0].job_id,
                                     'team_id': 921691,
                                     'fleet_id': document.getElementById("agent").value,
                                     'job_status': '0'
@@ -667,7 +667,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                                         var body = {
                                             'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
-                                            "job_ids": [json_responsejd.data[0].job_id],
+                                            "job_ids": [json_responsetn.data[0].job_id],
                                             'layout_type': 0,
                                             'start_time': document.getElementById("dateTime").value,
                                             'end_time': document.getElementById("dateTimeClose").value
@@ -681,7 +681,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 var body = {
                                     'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
                                     'merchant_id': 1180025,
-                                    'job_id': document.getElementById("trackingNumber").value,
+                                    'job_id': json_responsetn.data[0].job_id,
                                     'team_id': 921691,
                                     'fleet_id': document.getElementById("agent").value,
                                     'job_status': '0'
