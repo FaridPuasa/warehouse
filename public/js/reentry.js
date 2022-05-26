@@ -178,37 +178,14 @@ function checkTrackingNum(field, autoMove) {
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    var jobStatus = "";
-    var decision = "";
     document.getElementById("reEntry").style.display = 'none';
     document.getElementById("trackingNum").focus();
 
     document.getElementById("submitButton").addEventListener("click", submitForm);
 
     function submitForm() {
-
-        if (document.getElementById("reason").value == "Cancelled Delivery") {
-            jobStatus = 9;
-            decision = 1;
-        }
-
-        if ((document.getElementById("reason").value == "Failed Delivery") || (document.getElementById("reason").value == "Unattempted Delivery")) {
-            decision = 0;
-        }
-
-        if ((document.getElementById("reason").value == "Change Address") || (document.getElementById("reason").value == "Reschedule Delivery") ||
-        (document.getElementById("reason").value == "Change to Self Collect")) {
-            decision = 1;
-            jobStatus = 8;
-        }
-
-        if (decision == 0) {
-            document.getElementById("reEntry").submit();
-        }
-
-        if (decision == 1) {
+        function declineTask() {
             var request = new XMLHttpRequest();
-
             request.open('POST', 'https://api.tookanapp.com/v2/update_task_status');
             request.setRequestHeader('Content-Type', 'application/json');
             request.onreadystatechange = function () {
@@ -216,17 +193,69 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     console.log('Status:', this.status);
                     console.log('Headers:', this.getAllResponseHeaders());
                     console.log('Body:', this.responseText);
-
-                    document.getElementById("reEntry").submit();
                 }
             };
-
             var body = {
                 'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
                 'job_id': document.getElementById("trackingNumber").value,
-                'job_status': jobStatus
+                'job_status': '8'
             };
             request.send(JSON.stringify(body));
         }
+
+        function cancelDelivery() {
+            var request = new XMLHttpRequest();
+            request.open('POST', 'https://api.tookanapp.com/v2/update_task_status');
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    console.log('Status:', this.status);
+                    console.log('Headers:', this.getAllResponseHeaders());
+                    console.log('Body:', this.responseText);
+                }
+            };
+            var body = {
+                'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                'job_id': document.getElementById("trackingNumber").value,
+                'job_status': '9'
+            };
+            request.send(JSON.stringify(body));
+        }
+
+        function assignWarehouse() {
+            var request = new XMLHttpRequest();
+            request.open('POST', 'https://api.tookanapp.com/v2/assign_task');
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    console.log('Status:', this.status);
+                    console.log('Headers:', this.getAllResponseHeaders());
+                    console.log('Body:', this.responseText);
+                }
+            };
+            var body = {
+                'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
+                'job_id': document.getElementById("trackingNumber").value,
+                'fleet_id': '1125101',
+                'team_id': '921691',
+                'job_status': '7'
+            };
+            request.send(JSON.stringify(body));
+        }
+
+        if (document.getElementById("reason").value == "Cancelled Delivery") {
+            cancelDelivery();
+        }
+
+        if ((document.getElementById("reason").value == "Failed Delivery") || (document.getElementById("reason").value == "Unattempted Delivery")) {
+            assignWarehouse();
+        }
+
+        if ((document.getElementById("reason").value == "Change Address") || (document.getElementById("reason").value == "Reschedule Delivery") ||
+            (document.getElementById("reason").value == "Change to Self Collect")) {
+            declineTask();
+            assignWarehouse();
+        }
+        document.getElementById("reEntry").submit();
     }
 });
