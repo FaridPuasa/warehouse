@@ -212,6 +212,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     console.log('Status:', this.status);
                     console.log('Headers:', this.getAllResponseHeaders());
                     console.log('Body:', this.responseText);
+
+                    document.getElementById("reEntry").submit();
                 }
             };
             var body = {
@@ -231,6 +233,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     console.log('Status:', this.status);
                     console.log('Headers:', this.getAllResponseHeaders());
                     console.log('Body:', this.responseText);
+
+                    document.getElementById("reEntry").submit();
                 }
             };
             var body = {
@@ -256,6 +260,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
             declineTask();
             assignWarehouse();
         }
-        document.getElementById("reEntry").submit();
     }
 });
