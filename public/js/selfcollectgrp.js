@@ -13,10 +13,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("loading").style.display = 'block';
         document.getElementById("wronginput").style.display = 'none';
 
-        var jobidentitynum = '';
-        jobidentitynum = document.getElementById("trackingNumber").value;
-        document.getElementById('trackingNumber').value = '';
-
         if (document.getElementById("csNameTemp").value == "1138696") {
             document.getElementById("csName").value = "CS NISA";
         }
@@ -52,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             console.log('Headers:', this.getAllResponseHeaders());
                             console.log('Body:', this.responseText);
 
-                            document.getElementById("trackingNum").value = json_responsejd.data[0].job_id;
+                            document.getElementById("trackingNum").value = document.getElementById("trackingNumber").value;
 
                             localStorage.setItem("lastCS", document.getElementById("csNameTemp").value);
                             document.getElementById("selfCollect").submit();
@@ -71,17 +67,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }
 
                 if (json_responsejd.status == 404) {
+                    document.getElementById('trackingNumber').value = '';
                     document.getElementById("inputCSArea").style.display = 'block';
                     document.getElementById("inputTnArea").style.display = 'block';
                     document.getElementById("loading").style.display = 'none';
                     document.getElementById("wronginput").style.display = 'block';
+                    document.getElementById("trackingNumber").focus();
                 }
             }
         };
 
         var body = {
             'api_key': '53626885f0400f401d527c6514516c471ae7cdfe2fdf7c38591403c4',
-            'order_ids': [document.getElementById("trackingNum").value],
+            'order_ids': [document.getElementById("trackingNumber").value],
             'include_task_history': 0
         };
         request.send(JSON.stringify(body));
