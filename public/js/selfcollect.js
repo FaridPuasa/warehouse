@@ -5,11 +5,6 @@ function checkTrackingNum(field, autoMove) {
         document.getElementById("loading").style.display = 'block';
         document.getElementById("wronginput").style.display = 'none';
 
-        var jobidentitynum = '';
-        jobidentitynum = document.getElementById("trackingNumber").value;
-        document.getElementById("trackingNum").value = jobidentitynum;
-        document.getElementById('trackingNumber').value = '';
-
         if (document.getElementById("csNameTemp").value == "1138696") {
             document.getElementById("csName").value = "CS NISA";
         }
@@ -45,6 +40,8 @@ function checkTrackingNum(field, autoMove) {
                             console.log('Headers:', this.getAllResponseHeaders());
                             console.log('Body:', this.responseText);
 
+                            document.getElementById("trackingNum").value = document.getElementById("trackingNumber").value;
+
                             localStorage.setItem("lastCS", document.getElementById("csNameTemp").value);
                             document.getElementById("selfCollect").submit();
                         }
@@ -52,7 +49,7 @@ function checkTrackingNum(field, autoMove) {
 
                     var body = {
                         'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-                        'job_id': document.getElementById("trackingNum").value,
+                        'job_id': document.getElementById("trackingNumber").value,
                         'fleet_id': document.getElementById("csNameTemp").value,
                         'job_status': '2'
                     };
@@ -60,17 +57,19 @@ function checkTrackingNum(field, autoMove) {
                 }
 
                 if (json_responsejd.status == 404) {
+                    document.getElementById('trackingNumber').value = '';
                     document.getElementById("inputCSArea").style.display = 'block';
                     document.getElementById("inputTnArea").style.display = 'block';
                     document.getElementById("loading").style.display = 'none';
                     document.getElementById("wronginput").style.display = 'block';
+                    document.getElementById("trackingNumber").focus();
                 }
             }
         };
 
         var body = {
             'api_key': '51676580f24b091114132d38111925401ee4c2f328d978375e1f03',
-            'job_ids': [document.getElementById("trackingNum").value],
+            'job_ids': [document.getElementById("trackingNumber").value],
             'include_task_history': 0
         };
         request.send(JSON.stringify(body));
