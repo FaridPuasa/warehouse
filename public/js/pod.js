@@ -668,6 +668,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("agentName").value = "IFR KEE";
             }
 
+            if (document.getElementById("agentTemp").value == "1373182") {
+                document.getElementById("agentName").value = "IFR MIRAH";
+            }
+
             if (document.getElementById("agentTemp").value == "1003154") {
                 document.getElementById("agentName").value = "IFR DYLAN";
             }
