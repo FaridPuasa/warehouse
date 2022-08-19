@@ -37,7 +37,6 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("patientNum").value = json_responsejd.data[0].order_id;
 
                     document.getElementById("dateArrive").value = document.getElementById("dateArriveTemp").value;
-                    document.getElementById("area").value = document.getElementById("areaCodeTemp").value;
                     document.getElementById("fridge").value = document.getElementById("fridgeTemp").value;
 
                     let address = document.getElementById("address").value.toUpperCase();
