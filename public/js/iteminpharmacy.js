@@ -40,8 +40,6 @@ function checkTrackingNum(field, autoMove) {
                     document.getElementById("area").value = document.getElementById("areaCodeTemp").value;
                     document.getElementById("fridge").value = document.getElementById("fridgeTemp").value;
 
-                    var areaTemp = document.getElementById("area").value;
-
                     let address = document.getElementById("address").value.toUpperCase();
 
                     var kampong = "";
@@ -408,28 +406,6 @@ function checkTrackingNum(field, autoMove) {
 
                     document.getElementById("areaLoc").value = kampong;
 
-                    document.getElementById("area").value = areaTemp;
-
-                    if (areaTemp == "SP") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountSP")) + 1;
-                    }
-
-                    if (areaTemp == "EP") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountEP")) + 1;
-                    }
-
-                    if (areaTemp == "IP") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountIP")) + 1;
-                    }
-
-                    if (areaTemp == "TTGP") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountTTGP")) + 1;
-                    }
-
-                    if (areaTemp == "KBP") {
-                        document.getElementById("parcelNumber").value = parseInt(localStorage.getItem("lastCountKBP")) + 1;
-                    }
-
                     //getSubmittedDate
                     var today = new Date();
                     var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
@@ -492,55 +468,6 @@ function checkTrackingNum(field, autoMove) {
 
 document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById("itemIn").style.display = 'none';
-
-    if (localStorage.getItem("lastPArea") == null) {
-        localStorage.setItem("lastPArea", "");
-        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastPArea");
-    }
-    if (localStorage.getItem("lastPArea") != null) {
-        document.getElementById("areaCodeTemp").value = localStorage.getItem("lastPArea");
-    }
-
-    if (localStorage.getItem("lastCountSP") == null) {
-        localStorage.setItem("lastCountSP", 0);
-        document.getElementById("lastCountSP").innerText = "Standard: " + parseInt(localStorage.getItem("lastCountSP"));
-    }
-    if (localStorage.getItem("lastCountSP") != null) {
-        document.getElementById("lastCountSP").innerText = "Standard: " + parseInt(localStorage.getItem("lastCountSP"));
-    }
-
-    if (localStorage.getItem("lastCountEP") == null) {
-        localStorage.setItem("lastCountEP", 0);
-        document.getElementById("lastCountEP").innerText = "Express: " + parseInt(localStorage.getItem("lastCountEP"));
-    }
-    if (localStorage.getItem("lastCountEP") != null) {
-        document.getElementById("lastCountEP").innerText = "Express: " + parseInt(localStorage.getItem("lastCountEP"));
-    }
-
-    if (localStorage.getItem("lastCountIP") == null) {
-        localStorage.setItem("lastCountIP", 0);
-        document.getElementById("lastCountIP").innerText = "Immidiate: " + parseInt(localStorage.getItem("lastCountIP"));
-    }
-    if (localStorage.getItem("lastCountIP") != null) {
-        document.getElementById("lastCountIP").innerText = "Immidiate: " + parseInt(localStorage.getItem("lastCountIP"));
-    }
-
-    if (localStorage.getItem("lastCountTTGP") == null) {
-        localStorage.setItem("lastCountTTGP", 0);
-        document.getElementById("lastCountTTGP").innerText = "Tutong: " + parseInt(localStorage.getItem("lastCountTTGP"));
-    }
-    if (localStorage.getItem("lastCountTTGP") != null) {
-        document.getElementById("lastCountTTGP").innerText = "Tutong: " + parseInt(localStorage.getItem("lastCountTTGP"));
-    }
-
-    if (localStorage.getItem("lastCountKBP") == null) {
-        localStorage.setItem("lastCountKBP", 0);
-        document.getElementById("lastCountKBP").innerText = "KB: " + parseInt(localStorage.getItem("lastCountKBP"));
-    }
-    if (localStorage.getItem("lastCountKBP") != null) {
-        document.getElementById("lastCountKBP").innerText = "KB: " + parseInt(localStorage.getItem("lastCountKBP"));
-    }
-
     if (localStorage.getItem("lastArriveDate") == null) {
         localStorage.setItem("lastArriveDate", "");
         document.getElementById("dateArriveTemp").value = localStorage.getItem("lastArriveDate");
@@ -572,63 +499,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("submitButton").style.display = 'none';
 
         $(document).ready(function () {
-            if (document.getElementById("area").value == "SP") {
-                localStorage.setItem("lastCountSP", document.getElementById("parcelNumber").value);
-                
-            }
-
-            if (document.getElementById("area").value == "B2") {
-                localStorage.setItem("lastCountEP", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "G1") {
-                localStorage.setItem("lastCountIP", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "G2") {
-                localStorage.setItem("lastCountTTGP", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "JT1") {
-                localStorage.setItem("lastCountKBP", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "JT2") {
-                localStorage.setItem("lastCountJT2", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "JT3") {
-                localStorage.setItem("lastCountJT3", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "TUTONG") {
-                localStorage.setItem("lastCountTUTONG", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "KB / SERIA") {
-                localStorage.setItem("lastCountKBSERIA", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "LUMUT") {
-                localStorage.setItem("lastCountLUMUT", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "SERIA") {
-                localStorage.setItem("lastCountSERIA", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "KB") {
-                localStorage.setItem("lastCountKB", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "TEMBURONG") {
-                localStorage.setItem("lastCountTEMBURONG", document.getElementById("parcelNumber").value);
-            }
-
-            if (document.getElementById("area").value == "N/A") {
-                localStorage.setItem("lastCountNA", document.getElementById("parcelNumber").value);
-            }
-
             localStorage.setItem("lastArriveDate", document.getElementById("dateArrive").value);
             localStorage.setItem("lastPArea", document.getElementById("area").value);
 
