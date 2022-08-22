@@ -499,8 +499,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         $(document).ready(function () {
             localStorage.setItem("lastArriveDate", document.getElementById("dateArrive").value);
-            localStorage.setItem("lastPArea", document.getElementById("area").value);
-
             document.getElementById("itemIn").submit();
         });
     });
