@@ -683,6 +683,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             if (document.getElementById("agentTemp").value == "1003154") {
                 document.getElementById("agentName").value = "IFR DYLAN";
             }
+            
+            if (document.getElementById("agentTemp").value == "1113825") {
+                document.getElementById("agentName").value = "IFR MADAN";
+            }
 
             var today = new Date();
             var todayDate = "";
