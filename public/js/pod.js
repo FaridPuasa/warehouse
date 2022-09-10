@@ -696,8 +696,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("agentName").value = "EFR ARIF";
             }
 
-            if (document.getElementById("agentTemp").value == "1466900") {
-                document.getElementById("agentName").value = "EFR ARIF";
+            if (document.getElementById("agentTemp").value == "1467543") {
+                document.getElementById("agentName").value = "IFR MARIN";
             }
 
             var today = new Date();
