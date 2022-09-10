@@ -696,6 +696,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("agentName").value = "EFR ARIF";
             }
 
+            if (document.getElementById("agentTemp").value == "1466900") {
+                document.getElementById("agentName").value = "EFR ARIF";
+            }
+
             var today = new Date();
             var todayDate = "";
             var todayMonth = "";
