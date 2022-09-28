@@ -660,7 +660,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("agentName").value = "IFR NISA";
             }
 
-            if (document.getElementById("agentTemp").value == "1339173") {
+            if (document.getElementById("agentTemp").value == "1477192") {
                 document.getElementById("agentName").value = "IFR FATHIN";
             }
 
@@ -706,6 +706,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             
             if (document.getElementById("agentTemp").value == "1474462") {
                 document.getElementById("agentName").value = "EFR JEFRY";
+            }
+            
+            if (document.getElementById("agentTemp").value == "1133485") {
+                document.getElementById("agentName").value = "IFR NAIZAM";
             }
 
             var today = new Date();
