@@ -5,11 +5,7 @@ function checkTrackingNum(field, autoMove) {
         document.getElementById("loading").style.display = 'block';
         document.getElementById("wronginput").style.display = 'none';
 
-        if (document.getElementById("csNameTemp").value == "1138696") {
-            document.getElementById("csName").value = "CS NISA";
-        }
-
-        if (document.getElementById("csNameTemp").value == "1339173") {
+        if (document.getElementById("csNameTemp").value == "1477192") {
             document.getElementById("csName").value = "CS FATHIN";
         }
 
