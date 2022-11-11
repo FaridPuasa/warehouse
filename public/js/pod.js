@@ -719,6 +719,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
             if (document.getElementById("agentTemp").value == "1486903") {
                 document.getElementById("agentName").value = "EFR HANADY";
             }
+            
+            if (document.getElementById("agentTemp").value == "1354438") {
+                document.getElementById("agentName").value = "EFR ERMA";
+            }
+            
+            if (document.getElementById("agentTemp").value == "1503953") {
+                document.getElementById("agentName").value = "IFR ZUL";
+            }
 
             var today = new Date();
             var todayDate = "";
