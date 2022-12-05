@@ -728,8 +728,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("agentName").value = "IFR ZUL";
             }
             
-            if (document.getElementById("agentTemp").value == "1510587") {
-                document.getElementById("agentName").value = "FD YUZREIN";
+            if (document.getElementById("agentTemp").value == "1517823") {
+                document.getElementById("agentName").value = "FD THAQIF";
             }
 
             var today = new Date();
